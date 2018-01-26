@@ -1,0 +1,43 @@
+method create_traffic_options:without_db {              // the stuff after thew  colon : ? is this some kind of overload-identifier
+        in {
+            String language_marc_code
+            UInt32 request_radius_km
+            UInt32 retry_timeout_ms
+            String config_file_path
+        }
+        out {
+            TrafficOptions.Instance instance
+        }
+    }
+
+    method create_traffic_options:with_db {
+        in {
+        String language_marc_code
+            String traffic_db_path
+            UInt32 request_radius_km
+            UInt32 retry_timeout_ms
+            String config_file_path
+        }
+        out {
+            TrafficOptions.Instance instance
+        }
+    }
+
+// -------------------------------------------------------------------------------------------------
+
+LteKey[] lte_keys                   // array?
+\
+
+// -------------------------------------------------------------------------------------------------
+
+enumeration ErrorCode {
+        <** @description: No error occurred **>                             // just another way of documenting ?
+
+// -------------------------------------------------------------------------------------------------
+
+method init {
+        in {
+            KeyValueStorage.Instance storage
+        }
+        error CommonTypes.ErrorCode                                        // like "throws"?
+    }

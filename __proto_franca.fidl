@@ -1,0 +1,94 @@
+package my_package                                      //affiliated package
+
+import traffic.* from "MapModel.fidl"
+
+/**
+ * Doxygen-Style Docstring
+ *
+ * @ingroup traffic
+ */
+interface MyExtendedInterface extends MyBaseInterface {
+
+    version {
+        major 1
+        minor 0
+    }
+
+    public typedef Instance is CommonTypes.InstanceId
+
+    enumeration Urgency
+    {
+        NORMAL = 0,
+        URGENT,
+        EXTREMELY_URGENT
+    }
+
+    struct Quantifier
+    {
+
+        /** @description:
+         * Docstring
+         */
+        UInt16 event_code
+
+        <**
+        @description: Another kind of comment
+        **>
+        typedef TimestampMs is Int64
+        UInt8 uint8value
+        MeasurementUnit measurement_unit
+        Float quantifier_value
+    }
+
+    method get_value {
+        in {
+            Instance instance
+            String key
+        }
+        out {
+            Double value
+        }
+    }
+
+    method init {
+        in {
+            Instance instance
+            MapModel.Instance map_model
+            TrafficOptions.Instance options
+            Connection.Instance connection
+            TrafficTypes.TrafficEncryption encryption
+            TimeProvider.Instance time_provider
+            KeyValueStorage.Instance storage
+        }
+        error CommonTypes.ErrorCode
+    }
+
+
+
+}
+
+
+typeCollection PositioningTypes {
+    version {
+        major 1
+        minor 0
+    }
+
+    <**
+    @description: timestamp in milliseconds
+    **>
+    typedef TimestampMs is Int64
+
+    struct Position {
+        CommonTypes.GeoCoordinate position
+        Float heading_degrees
+    }
+
+    enumeration LinkTravelDirection {
+        FORWARD = 0
+        BACKWARD = 1
+    }
+
+    array MapMatchedPositionCollection of MapMatchedPosition
+
+}

@@ -1,0 +1,21 @@
+{{>java/CopyrightHeader}}       // that's a partial. Partials are rendered at runtime as opposed to a compile time Oo
+
+
+{{#javaPackage}}                // section begin
+    This will be rendered iff the variable javaPackage exists and is not false :)
+{{/javaPackage}}                // section end
+
+{{>java/Enum}}
+
+
+{{#if hasSortedMembers}}
+
+    This appears only if
+    the boolean function "hasSortedMembers()" returns true :)
+
+{{/if}}
+
+
+{{#this}}
+package {{join myList delimiter="."}};        // joins the elements of myList with the "." delimeter
+{{/this}}

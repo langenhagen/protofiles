@@ -1,0 +1,62 @@
+@startuml
+
+' Full line comment
+/' several lines
+comment '/
+
+' care first about the data and then about the layout. It likely changes.
+
+package myPackage {
+
+    abstract A
+    A : foo( B ) void
+
+    note top of A : Maus
+    note left of A : Katze
+    note right of A : Hund 
+    note bottom of A : Vogel
+
+    class B {
+        __public methods__
+        + foo() : void
+        __
+        - i : int
+        - j : double
+    }
+}
+
+note bottom
+    This **bold** connected to the last class
+    that has been //italic// defined!
+end note
+
+interface p
+class Q<T>
+
+' inheritance
+D --|> E
+F <|-- G
+
+
+' composition
+Crowd *-- Person
+Nose --* Person
+
+' aggregation
+Room o-- Chair
+Car --o ParkingLot  
+
+class BlueClass #blue {
+    + foo()
+}
+
+note "This is Me, a floatig note" as N1
+
+' the lenght of the arrows indicates the togetherness of the classes!
+Together1 -[hidden]--- Together2
+TogetherRight -[hidden]left- TogetherLeft
+TogetherRight -[hidden]down- TogetherDown
+TogetherRight -up- TogetherDown
+TogetherRight -[hidden]- Together2
+
+@enduml
