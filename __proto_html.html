@@ -1,2 +1,67 @@
-<!--comment-->
+<!--this is a comment, it is multiline capable-->
 
+// -------------------------------------------------------------------------------------------------
+// basics
+
+<tag attribute="value">my content</tag>
+<tag attribute="value"/>
+
+<body myownattribute="I can define my own attributes">
+
+
+
+<br> Breaks lines.
+
+<body style="margin: 0px; overflow: hidden">    CSS    can be put into the "style" tag.</body>
+
+
+
+
+
+// -------------------------------------------------------------------------------------------------
+// white spaces
+
+Usually, html browsers eat   several  spaces and just display  one      space.
+Use &nbsp; to insert several spaces like this&nbsp;&nbsp;&nbsp;,yeah.
+You might also use &#160;
+The &nbsp; is called non-breaking space because it prevents a line break at its location.
+Use it rarely.
+
+&ensp; — named after the "N" block of a printing press, the en space is about the width of two normal spaces
+&emsp; — the em space, roughly four normal spaces
+
+
+Typical elements:
+
+<canvas id="canvas" style="position: absolute; width: 100%; height: 100%;"/>
+
+
+
+// -------------------------------------------------------------------------------------------------
+// Typical structure of an HTML page:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Webpage title</title>
+</head>
+<body>
+    *** Webpage Content ***
+</body>
+</html>
+
+
+
+// -------------------------------------------------------------------------------------------------
+// WebGL stuff:
+
+<script type="x-shader/x-vertex" id="my-vertex-shader">
+    // vertex shader
+</script>
+<script type="x-shader/x-fragment" id="my-fragment-shader">
+   // fragment shader
+</script>
+
+<script type="text/javascript" id="my-own-javascript">
+    // javascript
+</script>

@@ -15,6 +15,11 @@ CTest scripts are the right place for CI specific settings.
               Keep these out of the project.
 
 # --------------------------------------------------------------------------------------------------
+# True and false values in CMake
+TRUE     true    1   !=0    "non-empty-string"                          ON
+FALSE    false   0          ""                      "blah-NOTFOUND"     OFF
+
+# --------------------------------------------------------------------------------------------------
 # Imagine Targets as Objects:
     Ctors:
         add_executable()
@@ -77,6 +82,11 @@ cmake -H. -Bmy-build-with-feature-on -DFOO_FEATURE=ON       # sets path of the b
 cmake -H. -Bmy-build-with-feature-off -DFOO_FEATURE=OFF     # sets path of the build dir with the disabled feature
 cmake -H. -Bbuild-xcode -G xcode                            # sets path of the build dir with xcode generator
 cmake -C <initial-cache-file>
+
+cmake . --trace-expand 2>&1 | tee trace-output.txt
+    --debug-output
+    --trace
+    --trace-expand
 
 
 # --------------------------------------------------------------------------------------------------
@@ -179,7 +189,7 @@ target_link_libraries(MyApp libMySharedLib)
 
 
 # --------------------------------------------------------------------------------------------------
-# Here a CMake function in a file
+# Exepmplaric CMake function in a file
 
 if(DEFINED includeguard_MyIncludeGuardNamedExactlyLikeTheFile)
   return()
@@ -217,6 +227,8 @@ endfunction(my_function_name)
 message("A normal message")
 message(STATUS "A status message, possibly just a normal message")
 message(FATAL_ERROR "An error occured! FATAL_ERROR also aborts the configure process.")
+
+here_message(SEND_ERROR "Linker doesn't support neither '--whole-archive' nor '-force_load'")
 
 
 # --------------------------------------------------------------------------------------------------
@@ -285,6 +297,14 @@ else()
     # ...
 endif()
 
+
+# nested ifs are possible
+if( "one" STREQUAL "one" )
+    if( "two" STREQUAL "two")
+        message("second level if")
+    endif()
+    message("first level if")
+endif()
 
 # --------------------------------------------------------------------------------------------------
 # Lists
@@ -659,6 +679,10 @@ ctest -R 'Foo.' -j4 --output-on-failure
 # HERE specific CMake commands (excerpt)
 # look here:    https://mos.cci.in.here.com/job/here-cmake-tests-trigger/HTML_Report/
 
+
+#  ideally, use cmake 3.5
+#  include path best practices: include/here/blubb
+
 here.MYPROJECT for projects     # dot-delimeter for projects
 here::MYTARGET for targets      # colon-colon delimeter for targets
 
@@ -682,6 +706,15 @@ here_finalize_exports(NO_NAMESPACE) # for external libraries that don't have no 
 add_library(here::traffic_client INTERFACE IMPORTED)            # i noted that down from the slides
 here_add_library(here::traffic_client INTERFACE IMPORTED)       # but maybe this is more correct...
 
+
+cmake -DHERE_DEBUG_CMAKE=ON  # more verbose output
+cmake -DCMAKE_INSTALL_COMPONENT
+
+
+# dealing with options
+here_declare_option
+here_use_option
+here_set_option
 
 
 # check for features - not platforms

@@ -10,7 +10,7 @@ var enabled: Bool {
 /* looks like if let foo = bar {
                 * do something with or to foo *
               }
- 
+
 is necessary doing something to something if it is not nil, that is, i believe, it unwraps
 the optional-object Bar (which is an Optional<Bar>, or so).
 */
@@ -201,3 +201,13 @@ class DeinitListener : EmptyListener {
 
 // -------------------------------------------------------------------------------------------------
 
+@IBInspectable
+@IBAction
+
+// -------------------------------------------------------------------------------------------------
+
+var isMapLoaded: Bool = false {
+    willSet {                                       // probably related to didSet.. but.. what ??
+     self.noMapDataView?.isHidden = newValue
+    }
+}
