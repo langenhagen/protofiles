@@ -174,7 +174,7 @@ func foo( xCoord: Float, yCoord: Float, radius: Int) -> String {
 foo( xCoord: 1.1, yCoord: 2.2, radius: 12)
 
 
-// Use underscores to omit variable names on method invocation
+// Use underscores _ to omit variable names on method invocation
 func foo2(_ myParamName: Int, _ alsoNotNeededParamName: Float) -> Void {
     print(" \(myParamName) and \(alsoNotNeededParamName)")
 }
@@ -302,6 +302,12 @@ public enum MyEnum : Int {
     case wau
     case yocat
 }
+
+func funcThatTakesEnum(myInput: MyEnum) {
+    print(myInput);
+}
+funcThatTakesEnum(myInput: .mauz)
+
 
 // -------------------------------------------------------------------------------------------------
 // defer statement

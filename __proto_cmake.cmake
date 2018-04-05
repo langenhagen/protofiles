@@ -237,6 +237,8 @@ here_message(SEND_ERROR "Linker doesn't support neither '--whole-archive' nor '-
 include ( MyCMakeFile.cmake )
 include (Boost.cmake)
 
+# it seems, you have to specify the file ending, e.g. cmake. I think, HERE macros somehow avoid that
+
 add_subdirectory ( <source subdirectory> )  # creates a new scope and executes the CMakeLists.txt from the subdirectory.
 include_directories ( <directoryName> )
 link_directories ( <directoryName> )
