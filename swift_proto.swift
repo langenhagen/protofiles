@@ -10,7 +10,7 @@ var myVariable = 12;
 var myVariable: Int = 13;
 var myVariable = String(42)  // works
 // var myVariable: String = 42  // does not work
-var myNullable: String? = "I can be nil!"  // optionals
+var myNullable: String? = "I can be nil"  // optionals
 
 let myConstant = "ima const"
 
@@ -27,6 +27,7 @@ myNullableInt?.hashValue  // will be executed
 
 ?.hashValue
 let radius = optionalCircle?.radius
+
 
 // -------------------------------------------------------------------------------------------------
 // if let guards for nullables / optionals
@@ -48,6 +49,10 @@ let name: String? = nil
 let defaultName: String = "John Appleseed"
 let myString = "Hi \(name ?? defaultName)"  // ?? default
 let myString2 = "Hi \(name ?? "also a default :)")"  // ?? default
+
+
+var myOptional: Int? = "hahahaha"
+myOptional!.negate()  // forced unwrapping: myOptional! gives the Int value if it exists, runtime error if it is nil
 
 
 // -------------------------------------------------------------------------------------------------
@@ -105,7 +110,10 @@ if 51 > 50 {
 
 switch myEnumInstance {
 case .mauz:
-    // I dont need no 'break' statement!
+    print("MauZ")
+    // I dont need no 'break' statement :)))
+caus .miep:
+    break  // 'case' label in a 'switch' should have at least one executable statement!, so, if no other statement is there
 case .wau:
     // I also don't need to specify the whole EnumType.enumValue
     // but just the enumValue :)
@@ -263,7 +271,7 @@ myInstance.myVar = 8
 
 
 class MyClassWithInit {
-    var myVar = 12.3
+    var myVar: Double // not having a std valeu forces you to init the value in an init function
 
     init(v: Double) {
         print("Addin an init function disables the standard init function")
@@ -271,7 +279,7 @@ class MyClassWithInit {
     }
 }
 //var myInstance = MyClassWithInit() // does not work
-var myInstance = MyClassWithInit(8) // works
+var myInstance = MyClassWithInit(v:8) // works
 
 
 public class MyClassWithVisibilitySpecifiers {
@@ -307,6 +315,13 @@ func funcThatTakesEnum(myInput: MyEnum) {
     print(myInput);
 }
 funcThatTakesEnum(myInput: .mauz)
+
+
+public enum MyTypedEnum String {
+    case day = "Its daytime!"
+    case night = "Time to sleep :)"
+    var text: String { return self.rawValue } // returns the according string
+}
 
 
 // -------------------------------------------------------------------------------------------------
@@ -347,6 +362,10 @@ extension MyClass {
 // -------------------------------------------------------------------------------------------------
 // Protocols getters and setters
 
+class ClassWithAttributesThatHaveGettersAndSetters {
+
+
+
 public protocol MyProtocol: class {
     var myAttribute: String { get set }
 }
@@ -383,3 +402,32 @@ extension Collection where Element: Collection, Element.Element == UInt8  {
         // ...
     }
 }
+
+
+// -------------------------------------------------------------------------------------------------
+// an inner type cannot be named Type, since it would collide with foo.Type
+
+class C { enum Type : UInt32 { case DAY ; case NIGHT } } // doesn't work
+
+
+
+
+// -------------------------------------------------------------------------------------------------
+// subscripts
+
+struct TimesTable {
+    let multiplier: Int
+    subscript(index: Int) -> Int {
+        return multiplier * index
+    }
+}
+let threeTimesTable = TimesTable(multiplier: 3)
+print("six times three is \(threeTimesTable[6])")
+// Prints "six times three is 18"
+
+
+// subscripts can work not only on ints but also on arbitrary data types, e.g. Strings
+
+
+// -------------------------------------------------------------------------------------------------
+

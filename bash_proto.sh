@@ -25,6 +25,9 @@ set -u      # treat unset variables as an error and exit immediately upon their 
 echo "Output into nothing" >/dev/null
 echo "Append output stream to file and error stream to same as output stream" >myfile.txt 2>&1
 
+echo "exclamation marks at the end with double quotes do NOT work!"  # doesn't work
+echo 'exclamation marks at the end with single quotes DO work!'  # works
+echo exclamation marks at the end without quotes DO work!  # works
 
 # --------------------------------------------------------------------------------------------------
 # Variables
@@ -40,12 +43,22 @@ echo ${my_array[1]}         # prints b
 echo ${my_array[2]}         # prints c
 echo ${my_array[11000]}     # prints nothing
 echo ${my_array[@]}         # prints all values in one line: a b
+echo ${#my_array[@]}        # prints 3, i.e. the length of the array
+
+for i in ${my_array[@]} ; do
+    echo "jo $i"
+done
 
 
+declare -a my_explicit_array=()             # explicitly declare an array variable
+typeset -a my_other_explicit_array=()       # declare and typeset are exact synonyms
 
 my_long_var="blakeks"
 my_short_var=${my_long_var#bla}  # cuts the first part of the given var, i.e. "bla", leaving just "keks"
 echo ${my_short_var}
+
+readonly var=32
+#var=128  # does not work
 
 
 # --------------------------------------------------------------------------------------------------
@@ -61,6 +74,11 @@ done
 
 for value in (seq 1 5) ; do
     echo $value # prints 1 2 3 4 5
+done
+
+my_array=("one" "two" "three")
+for value in "${my_array[@]}" ; do
+    echo $value
 done
 
 # --------------------------------------------------------------------------------------------------
@@ -86,8 +104,8 @@ if [ "$expressions" = 'should_be_evaluated_either_by_test_or_wrapped_into_square
     # ...
 fi
 
-# -eq is for numbers
-if [ "1" -eq "1" ] ; then
+# -eq should be used for numbers, also  -ne, -gt -ge, -lt, -le
+if [ 1 -eq 1 ] ; then
     echo "WELT";
 fi
 
@@ -95,7 +113,7 @@ if commands_should_not_go_into_square_brackets ; then
     # ...
 fi
 
-
+# == and != should be used for strings
 if [ "$foo" == "staging" ]  || [ "$foo" == "stage" ]; then
     echo "OR concatenation ||"
 elif [ "$foo" == "Andreas" ]  && [ "$bar" == "Langenhagen" ]; then
@@ -104,6 +122,14 @@ else
     echo "else case"
 fi
 
+
+
+if [[ "Does this string contain a substring?" == *"contain a"* ]] ; then
+    # note the [[ ... ]], if it is [ ... ], it's the other way round.
+    # Works also with "Does" and "ubstring?", i.e. at the edges.
+    # is case specific.
+    echo 'Substring found!'
+fi
 
 # --------------------------------------------------------------------------------------------------
 # switch case :)
@@ -120,6 +146,14 @@ case "$status_code" in
         ;;
 esac
 
+# --------------------------------------------------------------------------------------------------
+# inline command code execution
+myvar=$(pwd)
+myvar=`pwd`
+
+echo "$(pwd)"  # some people prefer this over backticks
+echo "`pwd`"
+
 
 # --------------------------------------------------------------------------------------------------
 # have a die function :)
@@ -130,6 +164,18 @@ function die {
 }
 
 [ -n "$version" ] || die "Version string must not be empty"    # use like this, for example :)
+
+
+# --------------------------------------------------------------------------------------------------
+# traps
+# code that will be executed on certain signals
+
+function finish {
+  # cleanup code goes here
+}
+trap finish EXIT  # calls finish on exit
+
+trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 
 
 # --------------------------------------------------------------------------------------------------
@@ -145,13 +191,13 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# Use Cat to create a file
+# Use cat to create a file
 
-cat > "AMS Sample Places/Main/ADAConfiguration.h" << ADACONFIGURATION_EOF
+cat > "path/to/my-file.txt" << MYFILE_EOF
 This is the input of the file
 It can span
 several lines.
-ADACONFIGURATION_EOF
+MYFILE_EOF
 
 
 # --------------------------------------------------------------------------------------------------
@@ -391,9 +437,14 @@ command -v xcrun >/dev/null || die "Xcode command line tools are mandatory"
 # read
 
 read -e -n10 -p "my prompt: " value  # -e newline after input is read  -n10 capture 10 characters
-
 read -t2 key  # read into key variable  with a 2 seconds timeout
+read -en1  # newline after input is read, read 1 char, throw var away
 
+
+read -p "Please type your password: " -s  # -s: input not promted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
+
+read -n1 -p 'Press any key to exit' -s ; echo  # does not work with -e, therefore echo afterwards
+trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 
 # --------------------------------------------------------------------------------------------------
 # read yes no ?
@@ -414,7 +465,7 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# calculations with arithmetic expressions
+# calculations with arithmetic expressions -- math
 
 a=12
 b=13
@@ -455,3 +506,7 @@ TEXT=`eval "echo \"${TEMPLATE_TEXT}\""`  # eval echo evaluates the variables fou
 echo ${TEMPLATE_TEXT}  # plain template text
 echo "-----------------------------------------------------------------"
 echo ${TEXT}  # text with templates substituted with the variables's values
+
+# --------------------------------------------------------------------------------------------------
+# idioms
+

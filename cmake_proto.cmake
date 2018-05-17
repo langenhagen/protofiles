@@ -82,6 +82,8 @@ cmake -H. -Bmy-build-with-feature-on -DFOO_FEATURE=ON       # sets path of the b
 cmake -H. -Bmy-build-with-feature-off -DFOO_FEATURE=OFF     # sets path of the build dir with the disabled feature
 cmake -H. -Bbuild-xcode -G xcode                            # sets path of the build dir with xcode generator
 cmake -C <initial-cache-file>
+cmake -Wno-dev                              # suppress warnings
+
 
 cmake . --trace-expand 2>&1 | tee trace-output.txt
     --debug-output
@@ -215,10 +217,7 @@ cmake_minimum_required(VERSION 3.5)
 
 
 function(my_function_name my_arguments)
-
     # YOUR FUNCTION CODE GOES HERE
-
-
 endfunction(my_function_name)
 
 # --------------------------------------------------------------------------------------------------
@@ -321,6 +320,13 @@ set(l4 a "b;c")
 
 list(LENGTH mylist mylist_len)
 list(GET mylist 2 element_at_second_position)  # 0-indexed
+
+if( "a" IN_LIST l0)
+    message("a is in!")
+endif()
+if( "A" IN_LIST l0)
+    message("a is in!")  # should not be
+endif()
 
 
 # --------------------------------------------------------------------------------------------------
@@ -475,9 +481,11 @@ execute_process(
 math(EXPR MY_SUM "1 + 1")
 
 # --------------------------------------------------------------------------------------------------
-# Return function values to parent scope with PARENT_SCOPE
+# output return function values to parent scope with PARENT_SCOPE
 
-function(doubleIt VARNAME VALUE)
+## CAUTION: argument variable names must differ from parameter names.
+
+function(doubleIt VARNAME VALUE)  # the parameter name must not match the argument's name Oo
     math(EXPR RESULT "${VALUE} * 2")
     set(${VARNAME} "${RESULT}" PARENT_SCOPE)    # Set the named variable in caller's scope
 endfunction()
@@ -549,6 +557,7 @@ Leave control of BUILD_SHARED_LIBS to your clients.
 Prefer to link against namespaced targets.
 Avoid adding options/definitions to CMAKE_CXX_FLAGS
 Don't add -std=c++11 CMAKE_CXX_FLAGS, don't pass -std=c++11 to target_compile_options()
+-DCMAKE_CXX_FLAGS="-I/path/to/an/additional/include/dir/"
 Goal: no custom variables
 Goal: no custom functions
 Explicit is better than implicit
@@ -800,6 +809,15 @@ configure_file(src/pugiconfig.hpp.in src/pugiconfig.hpp @ONLY)
 
 # the configured file pugiconfig.hpp could then be found inside the
 # ${CMAKE_CURRENT_BINARY_DIR}/src/pugiconfig.hpp
+
+
+# --------------------------------------------------------------------------------------------------
+# variable watch prints notifications when a variable has changed
+
+variable_watch(MYVAR)
+
+# ...
+set(MYVAR "foo")  # triggers a notification since variable_watch is activated.
 
 
 # --------------------------------------------------------------------------------------------------
