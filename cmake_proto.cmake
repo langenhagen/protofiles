@@ -20,6 +20,20 @@ TRUE     true    1   !=0    "non-empty-string"                          ON
 FALSE    false   0          ""                      "blah-NOTFOUND"     OFF
 
 # --------------------------------------------------------------------------------------------------
+# comments
+
+# comments
+foo(ARG_A "hallo"
+    ARG_B "welt"
+    MULTI_VAL_ARG "one"
+    MULTI_VAL_ARG "two"            # you can
+    MULTI_VAL_ARG "three"          # comment multi-line-function invocations like this
+    MULTI_VAL_ARG "four;five;six"  # without problems
+    MULTI_VAL_ARG seven eight)
+
+
+
+# --------------------------------------------------------------------------------------------------
 # Imagine Targets as Objects:
     Ctors:
         add_executable()
@@ -118,6 +132,9 @@ add_custom_target()
 # --------------------------------------------------------------------------------------------------
 # add executable targets and alias them with a namespace
 
+
+set( SOURCE_FILES scr/main.cpp
+
 add_executable(tool
     main.cpp
     another_file.cpp
@@ -177,9 +194,9 @@ endif()
 # Header files location
 include_directories(include)
 
-file(GLOB SOURCES "src/*.cpp")
-file(GLOB SHAREDLIB_SOURCES "src_sharedlib/*.cpp")
-file(GLOB STATICLIB_SOURCES "src_staticlib/*.cpp")
+set(SOURCES
+    "src/main.cpp"
+    "src/other.cpp")
 
 add_library(MyStaticLib STATIC ${STATICLIB_SOURCES})
 add_library(MySharedLib SHARED ${SHAREDLIB_SOURCES})
@@ -233,8 +250,8 @@ here_message(SEND_ERROR "Linker doesn't support neither '--whole-archive' nor '-
 # --------------------------------------------------------------------------------------------------
 # includes & subdirectories
 
-include ( MyCMakeFile.cmake )
-include (Boost.cmake)
+include(MyCMakeFile.cmake)
+include(Boost.cmake)
 
 # it seems, you have to specify the file ending, e.g. cmake. I think, HERE macros somehow avoid that
 
@@ -344,7 +361,7 @@ endforeach()
 
 foreach(x RANGE 10)
 foreach(x RANGE 3 8)
-foreach(x RANGE 10 14 2) # begin end step
+foreach(x RANGE 10 14 2) # start stop step
 
 
 # exit loops early
@@ -372,6 +389,11 @@ set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${apigen_transpil
 set_target_properties(${target} PROPERTIES
             APIGEN_JAVA_JAR ${APIGEN_JAVA_JAR})
 get_target_property(MY_NEW_VAR ${target} VAR_AS_NAMED_INSIDE_THE_GIVEN_TARGET)
+
+# globbing for sources is discouraged but works like this:
+file(GLOB SOURCES "src/*.cpp")
+file(GLOB SHAREDLIB_SOURCES "src_sharedlib/*.cpp")
+file(GLOB STATICLIB_SOURCES "src_staticlib/*.cpp")
 
 file(GLOB_RECURSE GENERATED_CPP_SOURCES ${OUTPUT_DIR}/cpp/*.cpp)
 source_group("Generated BaseApi\\Source Files" FILES ${GENERATED_CPP_SOURCES})
@@ -402,6 +424,9 @@ endif()
 
 
 message(STATUS "${operationVerb} '${apigen_transpile_TARGET}' with '${apigen_transpile_GENERATOR}' the rest is my message ... ")
+
+execute_process(COMMAND echo "Hello World!")
+execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${directory})
 
 execute_process(
     COMMAND ${CMAKE_COMMAND} -E make_directory ${TRANSPILER_OUTPUT_DIR} # otherwise java.io.File won't have permissions to create files at configure time
@@ -513,22 +538,6 @@ endfunction()
 doubleEach(5 6 7 8)                     # Prints 10, 12, 14, 16 on separate lines
 
 
-
-# --------------------------------------------------------------------------------------------------
-# (SEEMINGLY) Builtin CMAKE variables
-
-${CMAKE_COMMAND}
-${CMAKE_CURRENT_BINARY_DIR}
-
-${Java_JAVAC_EXECUTABLE}                # maybe this one comes by using the     find_package(Java COMPONENTS Development REQUIRED)
-${Java_JAR_EXECUTABLE}
-
-
-${CMAKE_ANDROID_ARCH_ABI}
-
-
-$<TARGET_FILE_NAME:${target}>
-
 # --------------------------------------------------------------------------------------------------
 # useful notes
 
@@ -628,20 +637,30 @@ CMAKE_SOURCE_DIR              always carries root of the tree (see -H)
 
 CMAKE_SOURCE_DIR
 CMAKE_BINARY_DIR
-PROJECT_SOURCE_DIR
+${PROJECT_SOURCE_DIR}  # file where the CMakeLists.txt lies in, the project's root
 PROJECT_BINARY_DIR
 CMAKE_CURRENT_SOURCE_DIR
-CMAKE_CURRENT_BINARY_DIR
+${CMAKE_CURRENT_BINARY_DIR}
 
 CMAKE_CURRENT_LIST_FILE
 CMAKE_CURRENT_LIST_LINE
-CMAKE_CURRENT_LIST_DIR   #  always points to the directory path of the CMakeLists file
+CMAKE_CURRENT_LIST_DIR  #  always points to the directory path of the CMakeLists file / or the .cmake file (the latter is a guess with one indication)
 CMAKE_PARENT_LIST_FILE
 
 # recommendatiom from CGold: just remember the following variables:
 # (https://cgold.readthedocs.io/en/latest/tutorials/cmake-sources/includes.html#id3)
 CMAKE_CURRENT_LIST_DIR
 CMAKE_CURRENT_BINARY_DIR
+
+${CMAKE_COMMAND}
+
+${Java_JAVAC_EXECUTABLE}                # maybe this one comes by using the     find_package(Java COMPONENTS Development REQUIRED)
+${Java_JAR_EXECUTABLE}
+
+${CMAKE_ANDROID_ARCH_ABI}  # comes with the Android Toolchain, I believe
+
+
+$<TARGET_FILE_NAME:${target}>
 
 
 # --------------------------------------------------------------------------------------------------
@@ -828,7 +847,6 @@ target_compile_definitions(boo PUBLIC "BOO_USE_SHORT_INT")    # bubbles to the t
 
 
 
-execute_process()           # runs a command at configure time
 execute_process(COMMAND ssh -p 29418 "${GERRIT_USER}@${GERRIT_SERVER}"
                         gerrit query "${QUERY_STRING}"
 

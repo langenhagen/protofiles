@@ -45,6 +45,10 @@ class ClassWithVolatile() {
     @Volatile private var mapInitialized = false
 }
 
+class ClassWithPublicVar() {
+    public var i = 42
+}
+
 // -------------------------------------------------------------------------------------------------
 // visibility modifiers
 
@@ -58,8 +62,9 @@ public  // everywhere visible, if declaring class is visible; default
 // data class
 // data classes work like c++ structs
 
-data class PersonData(val name: String, val age: Int)
+data class MyDataClass(val age: Int)
 
+data class PersonData(val name: String, val age: Int)
 val theToni: PersonData = PersonData("Toni", 23)
 println(theToni.name + "'s age is " + theToni.age)
 
@@ -89,6 +94,11 @@ var myNotNullable: Int = 13
 var myNullable: String? = null  // only safe ?. or asserted calls !!. are allowed on nullables
 myNullable!!.length  // asserted call; will throw an exception, if myNullable is null
 myNullable?.length  // safe call; will not try to access the member if myNullable is null
+
+
+if( myNullable?.length == 23 /*resolves to false if myNullable is null*/) {
+    println( "Will never happen when myNullable is null" )
+}
 
 // -------------------------------------------------------------------------------------------------
 // null check / else case, aka elvis operator
@@ -170,4 +180,28 @@ return (0 until event.pointerCount).map {
         event.getX(it), event.getY(it), 0.0f, 0.0f, timestamp,
         event.getPointerId(it).toLong()
     )
+}
+
+
+
+override fun newArray(size: Int): Array<SavedState?> {
+    return arrayOfNulls<SavedState?>(size)  // arrayOfNulls<SavedState>
+}
+
+
+class ClassWithShortFunctions {
+    fun getMyName(): String = "myClassName"
+}
+
+
+myObject.property1 = 42        # this
+myObject.property2 = 12.3      # ...
+myObject.property3 = ":)"      # ...
+// ...
+
+myObject.apply {               # can be accumulated with .apply { ... }
+    property1 = 42
+    property2 = 12.3
+    property3 = ":)"
+    // ...
 }

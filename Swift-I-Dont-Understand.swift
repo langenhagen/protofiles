@@ -211,3 +211,8 @@ var isMapLoaded: Bool = false {
      self.noMapDataView?.isHidden = newValue
     }
 }
+
+
+
+
+@objc  // indicates functions that use objective c framework

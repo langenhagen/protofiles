@@ -8,7 +8,7 @@
 set -e      # the script immediately exits on error
 set +e      # any errors that occur down the line will NOT cause the script to exit, the script will keep running
 
-set -x      # print every command to the output -- you can use it as bash's debug mode
+set -x      # print every command to the output -- you can use it as bash's debug mode; comments are not printed
 set +x      # disable print every command to the output
 
 set -o pipefail     # bail out when a command at one pipe returns with a non-zero status
@@ -30,9 +30,31 @@ echo 'exclamation marks at the end with single quotes DO work!'  # works
 echo exclamation marks at the end without quotes DO work!  # works
 
 # --------------------------------------------------------------------------------------------------
+# source files / sourcing files
+
+. "path/to/file/to/be/sourced.inc"
+. works/also/but/better/to/quote/when/whitespaces/can/occur
+
+# --------------------------------------------------------------------------------------------------
+# the no-op
+
+: # noop as in
+
+for i in A B C ; do
+    :                   # empty loop is not possible without noop, syntax error
+done
+
+# --------------------------------------------------------------------------------------------------
+# apostrophes and quotation marks
+
+printf "stuff inside double quotation marks expands, e.g. ${variables}, $variables, special\nchars like \\ and \ "
+printf 'stuff inside single quotation marks does not expand, at least not ${variables}, $variables, but special\nchars like \\ and \ '
+echo -e stuff without quotation resolves into several arguments which expand, at least not ${variables}, $variables, but special\nchars like \\ and \
+
+# --------------------------------------------------------------------------------------------------
 # Variables
 
-export GLOBAL_VARIABLE="HELLO"
+export GLOBAL_VARIABLE='HELLO'
 local_variable=World
 
 
@@ -42,12 +64,17 @@ echo ${my_array}            # prints a
 echo ${my_array[1]}         # prints b
 echo ${my_array[2]}         # prints c
 echo ${my_array[11000]}     # prints nothing
-echo ${my_array[@]}         # prints all values in one line: a b
+echo -e "-e flag enables echo to process escape sequences, like \n, or \t. Works with single and double quotes"
+printf '%s\n' "${my_array[@]}"         # @ returns all values as sep string (here in a new line each)
+printf '%s\n' "${my_array[*]}"         # * returns all values as one string (here in the same line each)
+
 echo ${#my_array[@]}        # prints 3, i.e. the length of the array
 
 for i in ${my_array[@]} ; do
     echo "jo $i"
 done
+
+printf '%s\n' "${my_array[@]}"    # print an array with newline delimiting each entry
 
 
 declare -a my_explicit_array=()             # explicitly declare an array variable
@@ -61,6 +88,10 @@ readonly var=32
 #var=128  # does not work
 
 
+
+echo "$_"    # prints "echo" ; $_ is the invoking command
+printf "$_"  # prints "printf"
+
 # --------------------------------------------------------------------------------------------------
 # for loops
 
@@ -72,7 +103,7 @@ for value in {1..5} ; do
     echo $value  # prints 1 2 3 4 5
 done
 
-for value in (seq 1 5) ; do
+for value in $(seq 1 5) ; do
     echo $value # prints 1 2 3 4 5
 done
 
@@ -131,6 +162,10 @@ if [[ "Does this string contain a substring?" == *"contain a"* ]] ; then
     echo 'Substring found!'
 fi
 
+if [[ "Also check for regular expressions is possible with equalstilde" =~ r.*r ]] ; then
+    echo "Regex found!"
+fi
+
 # --------------------------------------------------------------------------------------------------
 # switch case :)
 
@@ -182,11 +217,12 @@ trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 # use $0 or better ${BASH_SOURCE[0]} to refer to the script's name
 
 # ${BASH_SOURCE[0]} is not sh compatible
-# but there was an advantage for BASH_SOURCE[0] which I don't recall currently :)
+# but there was an advantage for ${BASH_SOURCE[0]} which I don't recall currently :)
 echo "[$0] vs. [${BASH_SOURCE[0]}]"
 
-if [ $# -ne 1 ] ; then
-    die "Usage: $0 [PARAMETER_NAME]\n\n\tExample: $0 MyParam"
+if [ $# != 1 ] ; then
+    printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"
+    exit
 fi
 
 
@@ -205,7 +241,7 @@ MYFILE_EOF
 # functions seem to work with /bin/bash but not with /bin/sh
 
 function myFunction {
-    local my_var=42
+    local my_var=42  # local var does not leak outside function scope
     return $my_var
 }
 
@@ -256,8 +292,11 @@ fi
 
 printf "The value of param #1 is $1\n"
 
-echo This '$(pwd)': $(pwd) equals '${PWD}': ${PWD} but not '${pwd}: ' ${pwd}, which stays empty
+echo This '$(pwd)': $(pwd) equals '${PWD}': ${PWD} but not '${pwd}: ' ${pwd} stays empty
 
+
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)  # directory of the given script
+script_path=${BASH_SOURCE[0]}  # path to the script from where you are, I believe
 
 # --------------------------------------------------------------------------------------------------
 # command line parsing -- stupenduously simple -- it's so simple, don't do it :)
@@ -407,13 +446,18 @@ function echo-warn {
 }
 
 
-function check_if_this_computer_is_a_mac {
-    if echo $HOME | grep -v -q "/Users/" ; then
-        echo "we're not on mac"
-    else
-        echo "we're on mac"
-    fi
-}
+printf "%s${no_color}" "$line"  # prints a given string raw, i.e. with special characters like %
+
+# read a variable line by line.
+while read -r line; do  # trims line
+    echo "..." $line
+done <<< "$some_multiline_string"
+
+# OR
+
+while IFS= read -r line; do  # declaring IFS variable configures read not to trim
+    echo "..." $line
+done <<< "$some_multiline_string"
 
 # --------------------------------------------------------------------------------------------------
 # sleeping / waiting
@@ -436,7 +480,7 @@ command -v xcrun >/dev/null || die "Xcode command line tools are mandatory"
 # --------------------------------------------------------------------------------------------------
 # read
 
-read -e -n10 -p "my prompt: " value  # -e newline after input is read  -n10 capture 10 characters
+read -e -n10 -p "my prompt: " value  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
 read -t2 key  # read into key variable  with a 2 seconds timeout
 read -en1  # newline after input is read, read 1 char, throw var away
 
@@ -470,10 +514,10 @@ fi
 a=12
 b=13
 
-# with double quotes"
+# with double ((parentheses))
 (( res1 = a - b ))               # sets variable res1 to -1
 
-# or wit expr:
+# or with expr:
 res2=`expr $a + $b`  # spaces are important
 # res2=`expr ( $a + $b )`  # doesnt work - expr seems to have problems with parentheses in equations
 
@@ -490,6 +534,25 @@ my_absolute_number=${my_negative_number#-}
 
 my_number=-12
 my_number=${my_numberr#-}               # works :)
+
+
+# --------------------------------------------------------------------------------------------------
+# string substitution
+
+firstString="I am a Cat"
+secondString="Dog"
+echo "${firstString/Cat/$secondString}"    # prints "I am a Dog"
+
+# --------------------------------------------------------------------------------------------------
+# handing over variables to awk
+
+variable="line one\nline two"
+awk -v var="$variable" 'BEGIN {print var}'  # -v variable name="..."
+
+# --------------------------------------------------------------------------------------------------
+# sed
+
+sed -i "s/oldstring/newstring/" myfile.txt  # replace in file
 
 
 # --------------------------------------------------------------------------------------------------
@@ -510,3 +573,51 @@ echo ${TEXT}  # text with templates substituted with the variables's values
 # --------------------------------------------------------------------------------------------------
 # idioms
 
+
+# --------------------------------------------------------------------------------------------------
+# functions
+
+
+function increment_count {
+    # Given a file path and a grep pattern,
+    # finds corresponding line in the given file and applies an +1 increment
+    # to the last column in the line.
+    # The line's last column must consist of a number.
+    # There should exactly be one matching line.
+    # The file should exist.
+    # The function does no erroch checking!
+    #
+    # Parameters:
+    #   $1:  the grep-pattern for which to look for.
+    #   $2:  the file name in which to find the line whose last column is to be incremented.
+    #
+    # Example:
+    #   contents of myfile.txt before execution:
+    #       Hello world,
+    #       The current count is: 0
+    #
+    #   # invoke function
+    #   increment_count "current count is: " "path/to/my/file.txt"
+    #
+    #   contents of myfile.txt after execution:
+    #       Hello world,
+    #       The current count is: 1
+    # .
+
+    local line=`grep "$1" "$2"`
+    local current_count=`echo $line | awk '{print $NF}'`
+    local new_count=`expr $current_count + 1`
+    local new_line=`echo $line | awk -v nc="$new_count" '{$NF = nc; print}'`
+    sed -i "s/$line/$new_line/" "$2"
+}
+
+
+function check_if_this_computer_is_a_mac {
+    # Checks if the given unix system is a mac by checking the home directory
+    # There are other ways, but this is one.
+    if echo $HOME | grep -v -q "/Users/" ; then
+        echo "we're not on mac"
+    else
+        echo "we're on mac"
+    fi
+}

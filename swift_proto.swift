@@ -2,6 +2,10 @@
 // Imports
 import Foundation
 
+// -------------------------------------------------------------------------------------------------
+// Types
+
+Bool
 
 // -------------------------------------------------------------------------------------------------
 // Variables, Types and Aliases
@@ -47,7 +51,7 @@ print(greeting)
 
 let name: String? = nil
 let defaultName: String = "John Appleseed"
-let myString = "Hi \(name ?? defaultName)"  // ?? default
+let myString = "Hi \(name ?? defaultName)"  // ?? choses name, and defaultName, if name is nil
 let myString2 = "Hi \(name ?? "also a default :)")"  // ?? default
 
 
@@ -182,12 +186,19 @@ func foo( xCoord: Float, yCoord: Float, radius: Int) -> String {
 foo( xCoord: 1.1, yCoord: 2.2, radius: 12)
 
 
-// Use underscores _ to omit variable names on method invocation
-func foo2(_ myParamName: Int, _ alsoNotNeededParamName: Float) -> Void {
-    print(" \(myParamName) and \(alsoNotNeededParamName)")
+// use outer argument labels to use a label different from the inside of the variable name
+func foo2(myLabel myParamName: Int) -> Void {
+    print(" \(myParamName) with myLabel")
 }
-foo2(3, 5.8)
-// foo2(myParamName: 3, alsoNotNeededParamName: 5.8)  // doesn't work
+foo2(myLabel: 3)
+
+
+// Use underscores _ to omit variable names on method invocation
+func foo3(_ myParamName: Int, _ alsoNotNeededParamName: Float) -> Void {
+    print(" \(myParamName) and \(alsoNotNeededParamName) with underscore")
+}
+foo3(3, 5.8)
+// foo3(myParamName: 3, alsoNotNeededParamName: 5.8)  // doesn't work
 
 
 func returnATuple() -> (min: Int, max: Int, sum: Int) {
@@ -274,12 +285,31 @@ class MyClassWithInit {
     var myVar: Double // not having a std valeu forces you to init the value in an init function
 
     init(v: Double) {
-        print("Addin an init function disables the standard init function")
+        print("Adding an init function disables the standard init function")
         self.myVar = v
+        // super.init() // you have to call super.init() manually
+    }
+
+    deinit {
+        print("Use optional deinit to create a deinitializer if you need to perform cleanup before the object is deallocated.")
     }
 }
 //var myInstance = MyClassWithInit() // does not work
 var myInstance = MyClassWithInit(v:8) // works
+
+class MySuperClass {
+    // ...
+    func myFunc() {
+        // ...
+    }
+}
+
+class MySubclass: MySuperClass {
+    // ...
+    override func myFunc() {
+        // ...
+    }
+}
 
 
 public class MyClassWithVisibilitySpecifiers {
@@ -302,14 +332,23 @@ open class OpenChargerProvider: NSObject, AMSRouteChargingStationProviderProtoco
     /**
      * Doc
      */
-    open class func fpp(param: ParamType) -> ReturnType
+    open class func foo(param: ParamType) -> ReturnType {
+        // ...
+    }
 }
 
-public enum MyEnum : Int {
+// -------------------------------------------------------------------------------------------------
+// enumerations
+
+enum MyEnum : Int {
     case mauz
     case wau
     case yocat
 }
+let myEnumObject = MyEnum.mauz // = .mauz
+let myEnumObjectRawValue = MyEnum.mauz.rawValue // = 0 rawValue behave like C++ enum values, if int or not specified
+let anotherEnumObjectFromRawValue = MyEnum(rawValue: 2) // = yocat
+
 
 func funcThatTakesEnum(myInput: MyEnum) {
     print(myInput);
@@ -317,11 +356,72 @@ func funcThatTakesEnum(myInput: MyEnum) {
 funcThatTakesEnum(myInput: .mauz)
 
 
-public enum MyTypedEnum String {
+// Also strings and floats are possible raw values
+enum MyTypedEnum String {
     case day = "Its daytime!"
     case night = "Time to sleep :)"
     var text: String { return self.rawValue } // returns the according string
 }
+
+
+enum EnumWithMethod: Int {
+    case ace = 1
+    case two, three, four, five, six, seven, eight, nine, ten
+    case jack, queen, king
+    func simpleDescription() -> String {
+        switch self {
+        case .ace:
+            return "ace"
+        case .jack:
+            return "jack"
+        case .queen:
+            return "queen"
+        case .king:
+            return "king"
+        default:
+            return String(self.rawValue)
+        }
+    }
+}
+let ace = Rank.ace
+let aceDescription = ace.simpleDescription()
+
+
+
+enum MyEnumWithMixedRawTypes {
+    case sunriseAndSunset(String, String)  // raw values can be multiple values
+    case failure(String)         // raw value types can differ from case to case
+}
+let failure = MyEnumWithMixedRawTypes.failure("Out of cheese.")
+let success = MyEnumWithMixedRawTypes.sunriseAndSunset("6:00 am", "8:09 pm")
+
+switch success {
+case let .sunriseAndSunset(sunrise, sunset):  // getting raw values out of the enum ojects
+    print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
+case let .failure(message):
+    print("Failure...  \(message)")
+}
+
+
+// -------------------------------------------------------------------------------------------------
+// willSet and didSet
+
+class ClassWithWillSetAndDidSet {
+    var varWithWillSet: Int {
+        willSet {
+            print("Called before setting the variable")
+        }
+    }
+    var varWithWillSetAndDidSet: Int {
+        willSet {
+            print("Called before setting the variable")
+        }
+        didSet {
+            print("Called after setting the variable")
+        }
+    }
+}
+
 
 
 // -------------------------------------------------------------------------------------------------
@@ -330,6 +430,9 @@ public enum MyTypedEnum String {
 public static func helloWorldMethod(inputString: String) -> String? {
     defer {
         // will be executed before going out of the block, as second
+
+        // defer statements will also be executed if the function would throw an error
+        // and thus can be used for cleanup
     }
     defer {
         // will be executed before going out of the block, as first
@@ -364,15 +467,11 @@ extension MyClass {
 
 class ClassWithAttributesThatHaveGettersAndSetters {
 
-
-
 public protocol MyProtocol: class {
     var myAttribute: String { get set }
 }
 
-
 open class MyClass: MyProtocol {
-
     public var displayPois: Bool {
         set {
             myAttribute = newValue
@@ -381,12 +480,59 @@ open class MyClass: MyProtocol {
     }
 }
 
+
+// -------------------------------------------------------------------------------------------------
+// errors, throws, throw, do catch try
+
+// error enums
+enum PrinterError: Error {  // adopts the error protocol
+    case outOfPaper
+    case noToner
+    case onFire
+}
+
+func canThrowAnError(job: Int, toPrinter printerName: String) throws -> String {
+    if printerName == "Never Has Toner" {
+        throw PrinterError.noToner  // throws an error here
+    }
+    return "Job sent"
+}
+
+do {
+    let result = try canThrowAnError(job: 1040, toPrinter: "MyPrinter")  // try things
+    print(result)
+} catch {
+    print(error)  // errors are implicitly automatically called 'error' unless we call them otherwise
+}
+
+
+// multiple catch blocks to handle different errors and error types
+do {
+    let result = try send(job: 1440, toPrinter: "Gutenberg")
+    print(result)
+} catch PrinterError.onFire {
+    print("catch blocks are then like switch/case blocks")
+} catch let myPrinterError as PrinterError {
+    print("Printer error: \(PrinterError).")
+} catch {
+    print("Any other error type: \(error)")
+}
+
+
+// if canThrowAnError() throws, the return value will e nil
+let optionalResult = try? canThrowAnError(job: 1885, toPrinter: "Never Has Toner")
+
+// if an error was thrown, crash the app
+let optionalResult = try! canThrowAnError(job: 1885, toPrinter: "Never Has Toner")
+
+
+
 // -------------------------------------------------------------------------------------------------
 // escaping
 
 class DeinitListener : EmptyListener {
     let deinitCallback: () -> Void
-    init(callOnDeinit: @escaping () -> Void) {        // escaping lets you call things from inside the closure outside the closure
+    init(callOnDeinit: @escaping () -> Void) {  // escaping lets you call things from inside the closure outside the closure
         self.deinitCallback = callOnDeinit
     }
     deinit {
@@ -417,17 +563,19 @@ class C { enum Type : UInt32 { case DAY ; case NIGHT } } // doesn't work
 
 struct TimesTable {
     let multiplier: Int
-    subscript(index: Int) -> Int {
+    subscript(index: Int) -> Int {      // you must specify return type
         return multiplier * index
+    }
+    subscript(aNonIntSubscriptParam: String) -> Void {
+        return print("Hello from \(aNonIntSubscriptParam)")
     }
 }
 let threeTimesTable = TimesTable(multiplier: 3)
-print("six times three is \(threeTimesTable[6])")
-// Prints "six times three is 18"
+print("six times three is \(threeTimesTable[6])")   // Prints "six times three is 18"
+threeTimesTable["Berlin"] // Prints "Hello from Berlin"
 
-
-// subscripts can work not only on ints but also on arbitrary data types, e.g. Strings
 
 
 // -------------------------------------------------------------------------------------------------
+// unsorted
 
