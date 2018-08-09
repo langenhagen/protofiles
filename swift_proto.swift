@@ -28,10 +28,10 @@ myNullableInt?.hashValue  // will NOT executed
 myNullableInt = 23
 myNullableInt?.hashValue  // will be executed
 
-
 ?.hashValue
 let radius = optionalCircle?.radius
 
+return myvalue ?? "myvalue was null"  // the value after the ?? is returned if myvalue is null
 
 // -------------------------------------------------------------------------------------------------
 // if let guards for nullables / optionals

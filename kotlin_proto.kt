@@ -94,7 +94,7 @@ var myNotNullable: Int = 13
 var myNullable: String? = null  // only safe ?. or asserted calls !!. are allowed on nullables
 myNullable!!.length  // asserted call; will throw an exception, if myNullable is null
 myNullable?.length  // safe call; will not try to access the member if myNullable is null
-
+myNullable.length  // should still work but might break
 
 if( myNullable?.length == 23 /*resolves to false if myNullable is null*/) {
     println( "Will never happen when myNullable is null" )
