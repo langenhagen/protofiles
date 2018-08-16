@@ -60,6 +60,7 @@ local_variable=World
 
 my_array=("a" "b" "c")
 my_array=("a", "b", "c")
+my_array+=('d')             # adds a new element
 echo ${my_array}            # prints a
 echo ${my_array[1]}         # prints b
 echo ${my_array[2]}         # prints c
@@ -575,7 +576,7 @@ echo ${TEXT}  # text with templates substituted with the variables's values
 
 
 # --------------------------------------------------------------------------------------------------
-# functions
+# functions / recipes
 
 
 function increment_count {
@@ -611,13 +612,33 @@ function increment_count {
     sed -i "s/$line/$new_line/" "$2"
 }
 
-
 function check_if_this_computer_is_a_mac {
     # Checks if the given unix system is a mac by checking the home directory
     # There are other ways, but this is one.
+    # .
     if echo $HOME | grep -v -q "/Users/" ; then
         echo "we're not on mac"
     else
         echo "we're on mac"
     fi
+}
+
+function is_folder_empty {
+    # Checks if the given folder is empty.
+    # Beware of whitespaces, maybe.
+    # .
+    if [ -z "$(ls -A $1)" ]; then
+        echo 'given folder is empty'
+    else
+        echo 'given folder is NOT empty'
+    fi
+}
+
+function write_find_output_into_array() {
+    # taken from: https://stackoverflow.com/questions/23356779/how-can-i-store-find-command-result-as-arrays-in-bash
+    array=()
+    while IFS=  read -r -d $'\0'; do
+        echo $REPLY
+        array+=("$REPLY")
+    done < <(find . -type d -print0)
 }

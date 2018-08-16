@@ -532,7 +532,9 @@ let optionalResult = try! canThrowAnError(job: 1885, toPrinter: "Never Has Toner
 
 class DeinitListener : EmptyListener {
     let deinitCallback: () -> Void
-    init(callOnDeinit: @escaping () -> Void) {  // escaping lets you call things from inside the closure outside the closure
+    // If a closure is passed as an argument to a function and it is invoked after
+    // the function returns, the closure is escaping.
+    init(callOnDeinit: @escaping () -> Void) {
         self.deinitCallback = callOnDeinit
     }
     deinit {
@@ -556,8 +558,6 @@ extension Collection where Element: Collection, Element.Element == UInt8  {
 class C { enum Type : UInt32 { case DAY ; case NIGHT } } // doesn't work
 
 
-
-
 // -------------------------------------------------------------------------------------------------
 // subscripts
 
@@ -573,6 +573,27 @@ struct TimesTable {
 let threeTimesTable = TimesTable(multiplier: 3)
 print("six times three is \(threeTimesTable[6])")   // Prints "six times three is 18"
 threeTimesTable["Berlin"] // Prints "Hello from Berlin"
+
+
+// -------------------------------------------------------------------------------------------------
+// @objc and @objcMembers
+
+public class MyClassWithObjCAvailableMembers {
+
+    @objc  // member available to objective c
+    let multiplier: Int
+
+    @objc  // member fun available to objective c
+    myObjCCompatibleMethod() {
+        // ...
+    }
+
+}
+
+@objcMembers  // marks a whole class available to objective c code
+public class ObjCClass {
+    // ...
+}
 
 
 

@@ -21,7 +21,7 @@ class RouteTypeCell: UITableViewCell {
 
     @IBOutlet var segmentedControl: UISegmentedControl!                 // what is the @IBOutlet? what is the !
 
-    weak var delegate: RouteTypeCellDelegate?                           // what is weak? what is ? ?
+    weak var delegate: RouteTypeCellDelegate?                           // what is weak?
 
     var routeType: AMSDataRouteType {
         didSet {
@@ -56,7 +56,7 @@ class RouteTypeCell: UITableViewCell {
 
     @IBAction func segmentedControlDidChange(_ sender: UISegmentedControl) {
 
-        var routeType: AMSDataRouteType?                                // ?
+        var routeType: AMSDataRouteType?
         switch sender.selectedSegmentIndex {
         case 0:
             routeType = .fastest
@@ -69,7 +69,7 @@ class RouteTypeCell: UITableViewCell {
         }
 
         if let routeType = routeType {
-            self.delegate?.routeTypeCell(self, didChangeRouteType: routeType)           // ?
+            self.delegate?.routeTypeCell(self, didChangeRouteType: routeType)
         }
     }
 }
@@ -103,7 +103,7 @@ if let route = segment.route, let mapRoute = NMAMapRoute(route),
 for index in 1...limitRoutes {
             let route
                 = AMSDataRoute(segments: [createRandomSegment(index), createRandomSegment(index)])
-            route.name = "QA:Route[\(index)]\(route.routeHash() ?? "unknown")"                        // ??
+            route.name = "QA:Route[\(index)]\(route.routeHash() ?? "unknown")"
             route.addTag(AMSDataTagBuilder.sharedTag())
             routes.append(route)
         }
@@ -111,29 +111,13 @@ for index in 1...limitRoutes {
 // -------------------------------------------------------------------------------------------------
 
 
-let request = URLRequest(url: url)                                      // what's the difference to var ?
-
-open func remove(_ clusterLayer: NMAClusterLayer!) -> Bool          // open?   _ ?    ! ?/
+open func remove(_ clusterLayer: NMAClusterLayer!) -> Bool          // open?
 
 
 //--------------------------------------------------------------------------------------------------
 
 self?                       // what does this mean ?
 weak self                   // same game
-
-//--------------------------------------------------------------------------------------------------
-
-let stylesURL = Bundle(for: type(of: self)).bundleURL.appendingPathComponent("MapStyles")       // ??
-
-//--------------------------------------------------------------------------------------------------
-
-func configureCustomMapStyles(from srcFolderURL: URL, key mapStylesKey: String) -> Bool      // from, key ??
-
-
-//--------------------------------------------------------------------------------------------------
-
-let contents = try fileManager.subpathsOfDirectory(atPath: src.path)                  // try without catch ??
-
 
 //--------------------------------------------------------------------------------------------------
 
@@ -176,28 +160,9 @@ deinit {                                            // is it like a d'tor?
 
 // -------------------------------------------------------------------------------------------------
 
-public class MyWrapper<T> : Collection {
-    public subscript(position: Int) -> T { get }  // like a Cpp operator overload MyWrapper<String>[42]
-}
-
-// -------------------------------------------------------------------------------------------------
-
 public static func explicitArrayMethod<T>(input: T) -> T where T : Collection, T.Element == Arrays.SyncResult {  // == ??
         return examples_Arrays_explicitArrayMethod(input)
     }
-
-// -------------------------------------------------------------------------------------------------
-
-class DeinitListener : EmptyListener {
-    let deinitCallback: () -> Void
-    init(callOnDeinit: @escaping () -> Void) {        // escaping
-        self.deinitCallback = callOnDeinit
-    }
-
-    deinit {
-        deinitCallback()
-    }
-}
 
 // -------------------------------------------------------------------------------------------------
 
