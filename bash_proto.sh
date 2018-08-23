@@ -22,7 +22,7 @@ set -u      # treat unset variables as an error and exit immediately upon their 
 # --------------------------------------------------------------------------------------------------
 # output into stream
 
-echo "Output into nothing" >/dev/null
+echo "Output into nothing / silence the output" >/dev/null
 echo "Append output stream to file and error stream to same as output stream" >myfile.txt 2>&1
 
 echo "exclamation marks at the end with double quotes do NOT work!"  # doesn't work
@@ -638,7 +638,6 @@ function write_find_output_into_array() {
     # taken from: https://stackoverflow.com/questions/23356779/how-can-i-store-find-command-result-as-arrays-in-bash
     array=()
     while IFS=  read -r -d $'\0'; do
-        echo $REPLY
         array+=("$REPLY")
     done < <(find . -type d -print0)
 }
