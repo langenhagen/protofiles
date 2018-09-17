@@ -29,6 +29,9 @@ echo "exclamation marks at the end with double quotes do NOT work!"  # doesn't w
 echo 'exclamation marks at the end with single quotes DO work!'  # works
 echo exclamation marks at the end without quotes DO work!  # works
 
+>&2 echo "This outputs to the stderr error stream."
+(>&2 echo "error")  # To avoid interaction with other redirections use subshell
+
 # --------------------------------------------------------------------------------------------------
 # source files / sourcing files
 
@@ -223,7 +226,7 @@ echo "[$0] vs. [${BASH_SOURCE[0]}]"
 
 if [ $# != 1 ] ; then
     printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"
-    exit
+    exit 1
 fi
 
 

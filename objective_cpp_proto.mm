@@ -63,3 +63,14 @@ NSDictionary<KeyType *, ValueType *> dict = [[NSDictionary alloc] init];
 
 // -------------------------------------------------------------------------------------------------
 //
+
+/**
+ *  Perform a runtime cast to the given class, but only if the class matches.
+ *  If the class does not match, return nil instead.
+ *
+ *  @param x The object to cast
+ *  @param c The class to be cast to
+ *
+ *  @return The object x cast to class c or nil.
+ */
+#define AMSStrictCast(x, c) ((c *) ([x isKindOfClass:[c class]] ? x : nil))

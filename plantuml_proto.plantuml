@@ -13,7 +13,7 @@ package myPackage {
 
     note top of A : Maus
     note left of A : Katze
-    note right of A : Hund 
+    note right of A : Hund
     note bottom of A : Vogel
 
     class B {
@@ -44,7 +44,7 @@ Nose --* Person
 
 ' aggregation
 Room o-- Chair
-Car --o ParkingLot  
+Car --o ParkingLot
 
 class BlueClass #blue {
     + foo()
