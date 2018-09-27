@@ -264,7 +264,7 @@ myFunction2 "The first param given to the function"
 # --------------------------------------------------------------------------------------------------
 # Check if current computer is a Mac
 
-if [ `uname` == "Darwin" ] ; then
+if [ "$(uname)" == "Darwin" ] ; then
     echo "we're on Mac"
 elif [ `uname` == "Linux" ] ; then
     echo "we're on a Linux"
@@ -623,6 +623,17 @@ function check_if_this_computer_is_a_mac {
         echo "we're not on mac"
     else
         echo "we're on mac"
+    fi
+}
+
+function check_if_this_computer_is_a_mac_2 {
+    # Checks if the given unix system is a mac by checking the home directory
+    # There are other ways, but this is one.
+    # .
+    if [ "$(uname)" != "Darwin" ] ; then
+        echo "we're not on mac"
+    else
+        echo "We're on Mac"
     fi
 }
 
