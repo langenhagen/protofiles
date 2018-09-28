@@ -170,6 +170,10 @@ if [[ "Also check for regular expressions is possible with equalstilde" =~ r.*r 
     echo "Regex found!"
 fi
 
+if [[ 'Is any of the given substrings contained?' =~ ('any'|'mooooh') ]]; then
+    echo 'should work'
+fi
+
 # --------------------------------------------------------------------------------------------------
 # switch case :)
 
