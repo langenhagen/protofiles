@@ -480,9 +480,17 @@ sleep 5d # Waits 5 days.
 # --------------------------------------------------------------------------------------------------
 # find a program
 
-command -v  # similar to `which`, but builtin
+command -v  MYPRGRAM  # similar to `which`, but builtin
 
 command -v xcrun >/dev/null || die "Xcode command line tools are mandatory"
+
+
+if [ "$(command -v brew)" ] ; then
+    echo "Exec"
+    echo "multiple commands"
+fi
+
+command -v MYPROGRAM >/dev/null && echo "exec single command"
 
 
 # --------------------------------------------------------------------------------------------------
