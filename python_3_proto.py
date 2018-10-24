@@ -1,8 +1,10 @@
 # author: langenhagen
-# version: 18-10-21
+# version: 18-10-22
+
+#!/usr/bin/env python3                 # the correct shebang for a Python 3 script
 
 # --------------------------------------------------------------------------------------------------
-#comments
+#comments ^ docstrings
 
 
 # -*- coding: utf-8 -*-  # this line you often see at the 1st or 2nd line in a script
@@ -18,6 +20,18 @@ Comment
 multiline
 comment
 """
+
+r"""For consistency, always use \"\"\"triple double quotes\"\"\"
+around docstrings. Use r\"\"\"raw triple double quotes\"\"\"
+if you use any backslashes in your docstrings.
+For Unicode docstrings, use u\"\"\"Unicode triple-quoted strings."""
+
+def foo:
+"""One-Line Docstrings are fine. note: there's no blank line between docstring and code."""
+    pass
+
+u"""I may be a unicode Docstring 😁😁😁."""
+
 
 # function with a one-line focstring, perfectly fine
 def add(a, b):
@@ -52,10 +66,28 @@ def random_number_generator(arg1, arg2):
 # The Sphinx-Extension  sphinx.ext.napoleon  can handly Numpy-Syle Docstrings
 
 
+# see: https://www.python.org/dev/peps/pep-0257/
+
 # --------------------------------------------------------------------------------------------------
 #input
 
 my_input = input('please enter a number: ');  # type(my_input) will be 'str'
+
+# --------------------------------------------------------------------------------------------------
+
+# variables are dynamically typed
+x = 'string'
+x = 12
+x = None
+x = 12.3
+
+del x  # everything in python is an object and you can delete objects
+
+
+if foo is None:
+    pass
+
+
 
 # --------------------------------------------------------------------------------------------------
 # functions
@@ -132,6 +164,82 @@ for i, elem in enumerate(['foo', 'bar', 'baz'], start_at_index):
 for i, elem in enumerate(range(3)):
     print(f'{i}: {elem}')    # prints 0: 0 \n 1: 1 \n 2: 2
 
+# --------------------------------------------------------------------------------------------------
+# es
+
+class MyClass:
+    pass
+
+class MyClass():
+    """This is a one-liner class doc-string"""
+    my_class_var = 42
+
+    # def __new__(cls, *args, **kwargs):
+    #     """handles object construction
+    #     Usually, you don't want or need to overwrite it.
+    #     """
+    #     instance = super().__new__(cls)
+    #     return instance
+
+    def __init__(self, my_param):
+        """handles object initialization"""
+        self.my_member_var = my_param
+
+    def my_method(self):
+        pass
+
+    @classmethod  # use classmethods e.g. for factory methods, helpful in combination with Inheritance
+    def from_string(cls, my_param=None):
+        return cls(my_param)
+
+    @staticmethod
+    def my_staticmethod():
+        pass
+
+    @property
+    def my_member(self):
+        print( '... do some in the getter here ...')
+        return self.my_member_var
+
+    @my_member.setter
+    def my_member(self, value):
+        print( '... do some stuff in the setter here ...')
+        self.my_member_var = value
+
+class MyChildClass(MyClass):
+    pass
+
+MyClass.my_staticmethod()
+MyClass.from_string()  # creates a MyClass object
+MyChildClass.my_staticmethod()
+MyChildClass.from_string()  # creates a MyChildClass object
+
+my_object = MyClass("Hi there!")
+my_object.my_method()
+my_object.my_member = 'Jowas'
+print(my_object.my_member)
+
+
+
+# Abstract classes
+from abc import ABC, abstractmethod
+
+class MyAbstractBaseClass(ABC):
+
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def do_something(self):
+        pass
+
+class MyConcreteClass(MyAbstractBaseClass):
+    def do_something(self):
+        return 42
+
+#a = MyAbstractBaseClass()  # throws an error
+b = MyConcreteClass()  # works
+
 
 # --------------------------------------------------------------------------------------------------
 # decorators
@@ -146,7 +254,7 @@ def do_twice(func):
 @do_twice
 def foo()
     print('This function is decorated')
-    pas
+    pass
 
 
 
@@ -194,7 +302,7 @@ with open('file.txt') as f:
 
 # implement a context manager via a class:
 # use this approach when the Context Management is complex
-class MyOpen(object):
+class MyOpen:
     def __init__(self, filename):
         self.file = open(filename)
 
@@ -209,7 +317,7 @@ with MyOpen('file') as f:
     contents = f.read()
 
 
-# implemen a context manager via python's own contextlib
+# implement a context manager via python's own contextlib
 # use this approach when the context management is simple
 from contextlib import contextmanager
 
