@@ -101,6 +101,44 @@ def my_function(my_param):
     pass
 
 
+def my_function(a=1, b=2, c=3):
+   print(f'{a}; {b}; {c}')
+
+my_function()
+my_function(1,2)
+my_function(3, 4, 5)
+my_function(c=6,b=7,a=8)
+my_function(b=9)
+
+my_params = {'a': 10, 'b': 11, 'c': 12}
+my_function(**my_params)  # ** in a function extracts a dict as function params
+
+
+
+def my_vararg_function(*args):  # *arg means non-keyworded, variable-length argument list
+    print (type(args))  # type: class 'tuple'
+    for i in args:
+      print (i)
+
+my_vararg_function(1,'Hello',3)
+
+
+
+def my_keyworded_vararg_function(a, **kwargs):  # **kwargs means keyworded, variable-length argument list
+    print (type(kwargs))  # type: class 'dict'
+    for k,v in kwargs.items():
+      print (f'{k}: {v}')
+
+my_keyworded_vararg_function(a='AAAAA',b='Hello',c=3)
+my_params = {'d': 'one', 'e': 'two', 'f': 'three'}
+my_keyworded_vararg_function('AAAAA', **my_params)
+
+
+# following throws a TypeError, since param 'a' would be assigned twice in the function call
+#my_params = {'a': 'BBBBB'}
+#my_keyworded_vararg_function('AAAAA', **my_params)
+
+
 # --------------------------------------------------------------------------------------------------
 # string types
 
@@ -388,3 +426,17 @@ my_set = {1, 2, 3, 4}
 my_dict = {'Andreas': 'echt cool', 'Salome': 'auch cool', 3: 'auch cool ;)' }
 
 list(map(lambda x: 2**x, [1,2,3,4]))  # =[2, 4, 8, 16]
+
+
+x, y, z = 0, 1, 0
+if any((x, y, z)):
+    print('passed')  # works
+
+
+# --------------------------------------------------------------------------------------------------
+# Tricks
+
+# merge two dictionaries
+x = {'a': 1, 'b': 2}
+y = {'b': 3, 'c': 4}
+my_merged_dict = {**x, **y}
