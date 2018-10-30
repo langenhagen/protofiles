@@ -81,6 +81,9 @@ done
 printf '%s\n' "${my_array[@]}"    # print an array with newline delimiting each entry
 
 
+my_folders_array=('.' '..' $(ls))  # puts ., .. and all the files/folders given by `ls` into an array
+
+
 declare -a my_explicit_array=()             # explicitly declare an array variable
 typeset -a my_other_explicit_array=()       # declare and typeset are exact synonyms
 
@@ -290,8 +293,13 @@ if [ -d "<path>" ]; then
     echo "Is a directory"
 fi
 
-if [ -L "<path>" ]; then
+if [ -L "<path>" ]; then  # symlinks are not identified as files (-f)
     echo "Is a symlink"
+fi
+
+# you can use `readlink` to find out where a symlink points to and check this target
+if [ -L "<path>" -a -d "$(readlink -f "<path>")" ]; then  # no escaping needed inside $()
+    echo "Is a symlink that points to a dir"
 fi
 
 
