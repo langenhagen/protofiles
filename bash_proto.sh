@@ -285,21 +285,16 @@ fi
 # Symlinks can also be files or directories.
 
 
-if [ -f "<path>" ]; then
+if [ -f "<path>" ]; then  # symlinks are identified too
     echo "Is a file"
 fi
 
-if [ -d "<path>" ]; then
+if [ -d "<path>" ]; then  # symlinks are identified too
     echo "Is a directory"
 fi
 
-if [ -L "<path>" ]; then  # symlinks are not identified as files (-f)
+if [ -L "<path>" ]; then
     echo "Is a symlink"
-fi
-
-# you can use `readlink` to find out where a symlink points to and check this target
-if [ -L "<path>" -a -d "$(readlink -f "<path>")" ]; then  # no escaping needed inside $()
-    echo "Is a symlink that points to a dir"
 fi
 
 
