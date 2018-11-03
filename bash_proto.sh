@@ -670,3 +670,10 @@ function write_find_output_into_array {
         array+=("$REPLY")
     done < <(find . -type d -print0)
 }
+
+function count_occurences_of_substring_in_string {
+    # Prints the number of occurences of a given substring $1 in a given string $2.
+    # Found on:  https://stackoverflow.com/questions/26212889/bash-counting-substrings-in-a-string
+    local recuced_string=${2//"$1"}
+    echo "$(((${#2} - ${#recuced_string}) / ${#1}))"
+}
