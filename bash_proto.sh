@@ -663,7 +663,7 @@ function is_folder_empty {
     fi
 }
 
-function write_find_output_into_array() {
+function write_find_output_into_array {
     # taken from: https://stackoverflow.com/questions/23356779/how-can-i-store-find-command-result-as-arrays-in-bash
     array=()
     while IFS=  read -r -d $'\0'; do
