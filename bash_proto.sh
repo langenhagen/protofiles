@@ -326,7 +326,7 @@ fi
 # --------------------------------------------------------------------------------------------------
 # command line parsing -- very simple
 
-my_cmd_arg=$1
+my_cmd_arg="${1}"
 if [ "$my_cmd_arg" == "" ] ; then
     echo "my cmd arg not provided"
 elif [ "$my_cmd_arg" == "Hello" ] ; then
@@ -343,7 +343,7 @@ logfile="default.log"
 send_alive_pushover=false
 while [ $# -gt 0 ] ; do
     key="$1"
-    case $key in
+    case ${key} in
     -a|--alive)
         send_alive_pushover=true
         ;;
@@ -591,7 +591,17 @@ echo "-----------------------------------------------------------------"
 echo ${TEXT}  # text with templates substituted with the variables's values
 
 # --------------------------------------------------------------------------------------------------
-# idioms
+# idioms and caveats
+
+# using user defined functions with `find`'s `-exec` `-execdir` and so on
+# you have to call the function using `bash -c`
+function my_function_called_by_find {
+    printf "Hi \033[1m${PWD}\033[0m\n"
+}
+export -f my_function_called_by_find  # since the subshell should you open below in find
+                                      # should know about the function, you have export -f it
+
+find . -maxdepth 3 -type d -iname "*.git" -execdir bash -c 'my_function_called_by_find' '{}' \;
 
 
 # --------------------------------------------------------------------------------------------------
