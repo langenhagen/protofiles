@@ -63,6 +63,11 @@ local_variable=World
 
 my_array=("a" "b" "c")
 my_array=("a", "b", "c")
+my_array=(
+    "a"
+    "b"
+    "c"
+    )
 my_array+=('d')             # adds a new element
 echo ${my_array}            # prints a
 echo ${my_array[1]}         # prints b
@@ -645,7 +650,7 @@ function check_if_this_computer_is_a_mac {
     # Checks if the given unix system is a mac by checking the home directory
     # There are other ways, but this is one.
     # .
-    if echo $HOME | grep -v -q "/Users/" ; then
+    if echo $HOME | grep -v -q "/Users/" ; then  # grep -q: quiet
         echo "we're not on mac"
     else
         echo "we're on mac"
