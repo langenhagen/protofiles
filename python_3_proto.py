@@ -110,10 +110,16 @@ my_function(3, 4, 5)
 my_function(c=6,b=7,a=8)
 my_function(b=9)
 
-my_params = {'a': 10, 'b': 11, 'c': 12}
-my_function(**my_params)  # ** in a function extracts a dict as function params
+# --------------------------------------------------------------------------------------------------
+# argument unpacking
 
+# tuple unpacking
+my_params_as_a_tuple = {8, 9, 10}
+my_function(**my_params_as_a_tuple)  # ** in a function extracts a dict as function params
 
+# dict unpacking
+my_params_as_a_dict = {'a': 10, 'b': 11, 'c': 12}
+my_function(**my_params_as_a_dict)  # ** in a function extracts a dict as function params
 
 def my_vararg_function(*args):  # *arg means non-keyworded, variable-length argument list
     print (type(args))  # type: class 'tuple'

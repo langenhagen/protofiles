@@ -22,3 +22,11 @@ def download_file(url: str, tar_path: pathlib.Path, **request_kwargs):
 
 
 
+@property  # decorator
+
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+
+
+# :rtype:  # maybe .rst doc's equivalent to doxygen's @return statement

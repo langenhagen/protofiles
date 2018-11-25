@@ -18,3 +18,55 @@ my_car.color  # red
 my_car.mileage # 3812.4
 
 # my_car.mileage = 1234 # doesn't work; like tuples, namedtuples are immutable:
+
+# --------------------------------------------------------------------------------------------------
+# json
+
+import json
+my_mapping = {'a': 23, 'b': 42, 'c': 0xc0ffee}
+print(json.dumps(my_mapping, indent=4, sort_keys=True))
+# returns
+# {
+#     "a": 23,
+#     "b": 42,
+#     "c": 12648430
+# }
+
+
+# --------------------------------------------------------------------------------------------------
+# nice idioms
+
+path = path or some_alternative_path
+
+
+der my_function_yet_to_be_implemented(self):
+    raise ExecutionFailed("Not implemented!")
+
+
+# if the logging in Python does not work, then you can do this
+raise ValueError("I can serve as a log message")
+
+# --------------------------------------------------------------------------------------------------
+# threading
+server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+server_thread.start()
+
+# --------------------------------------------------------------------------------------------------
+# timeit
+# The "timeit" module lets you measure the execution time of small bits of Python code
+
+import timeit
+timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)    # takes 0.3412662749997253
+timeit.timeit('"-".join([str(n) for n in range(100)])', number=10000)  # takes 0.2996307989997149
+timeit.timeit('"-".join(map(str, range(100)))', number=10000)          # takes 0.2458147069992264
+
+
+# --------------------------------------------------------------------------------------------------
+# pitfalls
+
+# def foo( from = None):  # from causes invalid syntax; from is a word that you use in impoirt .. from
+#   pass
+
+# better do:
+# def foo( from_ = None):
+#   pass
