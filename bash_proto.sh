@@ -124,6 +124,8 @@ for value in "${my_array[@]}" ; do
     echo $value
 done
 
+for i in $(seq $(tput cols)); do printf '*'; done;  # print a character repeatedly; that's the best I came up with after 1 hr googling
+
 # --------------------------------------------------------------------------------------------------
 # until loops
 
@@ -243,13 +245,19 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# Use cat to create a file
+# Use cat or ech to create a file
 
 cat > "path/to/my-file.txt" << MYFILE_EOF
 This is the input of the file
 It can span
 several lines.
 MYFILE_EOF
+
+
+echo 'Some Trext\n' >> path/to/my/file  # does not work in write-protected directories
+
+echo 'Some Text\n' | sudo tee /etc/sysctl.d/idea.conf  # works in secure folders
+
 
 
 # --------------------------------------------------------------------------------------------------
@@ -373,7 +381,7 @@ done
 SHORT=p:b:a:
 LONG=product:,build_type:,arch:
 if [[ $# -lt 2 ]]; then
-   usage "Incorrect number of parameters"
+   show_usage "Incorrect number of parameters"
 fi
 PARSED=`getopt --options $SHORT --longoptions $LONG --name "$0" -- "$@"`
 eval set -- "$PARSED"
@@ -397,7 +405,7 @@ while true; do
             break
             ;;
         *)
-            usage "Unknown parameter: $@"
+            show_usage "Unknown parameter: $@"
             ;;
     esac
 done
@@ -413,13 +421,13 @@ while getopts ":s:p:" o; do
     case "${o}" in
         s)
             s=${OPTARG}
-            ((s == 45 || s == 90)) || usage
+            ((s == 45 || s == 90)) || show_usage
             ;;
         p)
             p=${OPTARG}
             ;;
         *)
-            usage
+            show_usage
             ;;
     esac
 done
@@ -445,6 +453,8 @@ GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 BOLD='\033[1m'
+
+printf "\033[1mSOMETHING IN BOLD\033[0m\n"
 
 function echo-error {
     printf "${RED}${@}${NC}\n"
@@ -516,12 +526,18 @@ read -n1 -p 'Press any key to exit' -s ; echo  # does not work with -e, therefor
 trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 
 # --------------------------------------------------------------------------------------------------
-# read yes no ?
+# read yes no ? or yes or no :)
 
 # -e read line, i.e. go to next line after input is read
-read -e -n1 -p "Continue? [yY/nN]: " key
-if [ "$key" == "y" ] || [ "$key" == "Y" ] ; then
-    echo "Yess"
+read -e -n1 -p 'Continue? [yY/nN]: ' key
+if [ "$key" == 'y' ] || [ "$key" == 'Y' ] ; then
+    echo 'You pressed Yess'
+fi
+
+read -e -n1 -p 'Continue? [yY/nN]: ' key
+if [ "$key" != 'y' ] && [ "$key" != 'Y' ] ; then
+    echo 'Good Bye!'
+    exit 1
 fi
 
 
@@ -541,6 +557,9 @@ b=13
 
 # with double ((parentheses))
 (( res1 = a - b ))               # sets variable res1 to -1
+
+res2=0
+(( res2 += 2 ))  # updates res2 to 2
 
 # or with expr:
 res2=`expr $a + $b`  # spaces are important
@@ -611,6 +630,19 @@ find . -maxdepth 3 -type d -iname "*.git" -execdir bash -c 'my_function_called_b
 
 # --------------------------------------------------------------------------------------------------
 # functions / recipes
+
+echo $(((RANDOM%1000+1)))  # create a random number
+
+
+echo *.log | xargs -n1 cp /dev/null  # delete the contents of multiple files
+
+
+# colorize tail-ed output with awk (your tail version has to support stream flushing)
+tail -f var/log/nginx/*.log | awk '
+  /warn/ {print "\033[32m" $0 "\033[39m"; next}
+  /error/ {print "\033[33m" $0 "\033[39m"; next}
+  {print}
+'
 
 
 function increment_count {
@@ -692,4 +724,80 @@ function count_occurences_of_substring_in_string {
     # Found on:  https://stackoverflow.com/questions/26212889/bash-counting-substrings-in-a-string
     local recuced_string=${2//"$1"}
     echo "$(((${#2} - ${#recuced_string}) / ${#1}))"
+}
+
+function generate_random_pronounceable_word {
+    # Given a word length, generates a random pronounceable word in lower case and returns it.
+    # The word is created letter by letter, i.e. each character is added sequentially. A vovel is
+    # created with the chance of 1/3 and an a consonant with the chance of 2/3, but no more than 2
+    # consonants are created after one another.
+    #
+    # Usage:
+    #   $0 <number>
+    #
+    # Example:
+    #   $0 7
+
+    local word_length=${1}
+    local num_consonants_since_last_vovel=0
+    local random_word
+    for v in $(seq 1 ${word_length}) ; do
+        if [[ num_consonants_since_last_vovel -ge 2 ]] || [[ $(((RANDOM%3))) -eq 0 ]] ; then
+            local random_letter=$(cat /dev/urandom | tr -dc 'aeiou' | head -c 1)
+            ((num_consonants_since_last_vovel = 0))
+        else
+            local random_letter=$(cat /dev/urandom | \
+            tr -dc 'bcdfghjklmnpqrstvwxyz' | \
+            head -c 1)
+            ((num_consonants_since_last_vovel += 1))
+        fi
+        random_word=${random_word}${random_letter}
+    done
+
+    echo ${random_word}
+}
+
+function show_usage {
+    # Given the name of the script, prints the usage string.
+    #
+    # Usage:
+    #   $0
+
+    script_name="$(basename $0)"
+
+    printf 'Usage:\n'
+    printf "  ${script_name} [-d|--depth <number>] [<path>] [-- <command>]\n"
+    printf '\n'
+    printf 'Examples:\n'
+    printf "  ${script_name}                      # lists the found git repositories\n"
+    printf "  ${script_name} -d 2 -- ls           # calls \`ls\` from all git repos in this file level and one level below\n"
+    printf "  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the given path\n"
+    printf "  ${script_name} -- realpath .        # prints the \`$PWD\` variable for all git repos below the current path\n"
+    printf "  ${script_name} -h                   # prints the usage message\n"
+    printf "  ${script_name} --help               # prints the usage message\n"
+}
+
+function show_usage {
+    # Given the name of the script and an optional error message, prints this error message in color
+    # and prints the usage string.
+    #
+    # Usage:
+    #   $0 <error_message>
+    #
+    # Examples:
+    #   $0
+    #   $0 "Incorrect number of parameters"
+
+   script_name="$(basename $0)"
+
+    if ! [ -z "${2}" ] ; then
+        printf "\033[0;31m${2}\033[0m\n"
+    fi
+    printf 'Usage:\n'
+    printf "  ${script_name} <my_param>\n         # <does something>\n"
+    printf "  ${script_name} -h                   # prints the usage message\n"
+    printf "  ${script_name} --help               # prints the usage message\n"
+    printf '\n'
+    printf 'Example:\n'
+    printf "  ${script_name} https://codereview.mycompany.com/15481\n"
 }
