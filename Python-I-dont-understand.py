@@ -10,7 +10,7 @@ def download_file(url: str, tar_path: pathlib.Path, **request_kwargs):
                 f.write(chunk)
     return tar_path
 
-
+# --------------------------------------------------------------------------------------------------
 
 # andreasl: maybe the following just has something to do with inheritance and self.command not
 # directly being accessible via children
@@ -21,12 +21,19 @@ def download_file(url: str, tar_path: pathlib.Path, **request_kwargs):
         return self.command
 
 
-
 @property  # decorator
 
+# --------------------------------------------------------------------------------------------------
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+# :rtype:  # probably .rst doc's equivalent to doxygen's @return statement
+
+# --------------------------------------------------------------------------------------------------
 
 
-
-# :rtype:  # maybe .rst doc's equivalent to doxygen's @return statement
+@pytest.fixture
+def request_factory():
+    def make_request(body):
+        request = Request({}, body=json.dumps(body))
+        request.errors = Errors()
+        return request
+    return make_request

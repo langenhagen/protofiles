@@ -4,6 +4,13 @@
 # This file contains general python and python2 related prototypical information
 
 # --------------------------------------------------------------------------------------------------
+# printing
+
+'foo {} and {!s}'.format('bar','baz')  # {} and {!s} print the __str__ result of the given object
+'foo {!r}'.format('bar')               # {!r} prints the __repr__ result of the given object
+
+
+# --------------------------------------------------------------------------------------------------
 # namedtuples
 # Using namedtuple is way shorter than
 # defining a class manually:
@@ -45,6 +52,9 @@ der my_function_yet_to_be_implemented(self):
 
 # if the logging in Python does not work, then you can do this
 raise ValueError("I can serve as a log message")
+
+
+a, b = b, a  # swap two vars without using a tmp var
 
 # --------------------------------------------------------------------------------------------------
 # threading
