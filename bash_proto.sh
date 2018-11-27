@@ -124,7 +124,7 @@ for value in "${my_array[@]}" ; do
     echo $value
 done
 
-for i in $(seq $(tput cols)); do printf '*'; done;  # print a character repeatedly; that's the best I came up with after 1 hr googling
+for i in $(seq $(tput cols)); do printf '*'; done;  # one-liner for loop; print a character repeatedly; that's the best I came up with after 1 hr googling
 
 # --------------------------------------------------------------------------------------------------
 # until loops
@@ -245,7 +245,7 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# Use cat or ech to create a file
+# Use cat or echo to create a file or a long text inside a variable
 
 cat > "path/to/my-file.txt" << MYFILE_EOF
 This is the input of the file
@@ -258,6 +258,14 @@ echo 'Some Trext\n' >> path/to/my/file  # does not work in write-protected direc
 
 echo 'Some Text\n' | sudo tee /etc/sysctl.d/idea.conf  # works in secure folders
 
+
+myvar=$(cat << MYVAR_EOF
+This is the input of a variable
+It can span
+several lines, but echo won't print linebreaks.
+printf will.
+MYVAR_EOF
+)
 
 
 # --------------------------------------------------------------------------------------------------
