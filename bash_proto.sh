@@ -256,7 +256,8 @@ MYFILE_EOF
 
 echo 'Some Trext\n' >> path/to/my/file  # does not work in write-protected directories
 
-echo 'Some Text\n' | sudo tee /etc/sysctl.d/idea.conf  # works in secure folders
+printf 'Some Text\n' | sudo tee /etc/sysctl.d/idea.conf  # works in secure folders, overwrites file
+printf 'Some Text\n' | sudo tee -a mysecurefile  # works in secure folders, tee -a: appends file
 
 
 myvar=$(cat << MYVAR_EOF
@@ -266,6 +267,9 @@ several lines, but echo won't print linebreaks.
 printf will.
 MYVAR_EOF
 )
+
+
+printf "Copy me to clipboard" | xclip -i -f -selection primary | xclip -i -selection clipboard  # copies to clipboards
 
 
 # --------------------------------------------------------------------------------------------------
@@ -463,6 +467,7 @@ NC='\033[0m' # No Color
 BOLD='\033[1m'
 
 printf "\033[1mSOMETHING IN BOLD\033[0m\n"
+printf "\033[0;31mSOMETHING IN RED\033[0m\n"
 
 function echo-error {
     printf "${RED}${@}${NC}\n"
@@ -651,6 +656,15 @@ tail -f var/log/nginx/*.log | awk '
   /error/ {print "\033[33m" $0 "\033[39m"; next}
   {print}
 '
+
+# check if myfile is a binary
+myfile="05-2raumwohnung-ich_bin_der_regen.mp3"
+myfile_charset="$(file -i "${myfile}" | awk '{print $3}' | grep 'charset=binary')"
+if [[ $? -eq 0 ]] ; then
+    echo "${myfile} is a binary file: ${myfile_charset}"
+else
+    echo "${myfile} is not a binary file: ${myfile_charset}"
+fi
 
 
 function increment_count {
