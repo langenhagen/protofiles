@@ -11,6 +11,20 @@
 
 
 # --------------------------------------------------------------------------------------------------
+# 'is' checks for identity, "==" checks for equality
+a = [1, 2, 3]
+b = a
+
+a is b  # True
+a == b  # True
+
+c = list(a)
+a == c  # True
+a is c  # False
+
+
+
+# --------------------------------------------------------------------------------------------------
 # namedtuples
 # Using namedtuple is way shorter than
 # defining a class manually:
@@ -41,7 +55,7 @@ print(json.dumps(my_mapping, indent=4, sort_keys=True))
 
 
 # --------------------------------------------------------------------------------------------------
-# nice idioms
+# nice (pythonic) idioms
 
 path = path or some_alternative_path
 
@@ -57,9 +71,21 @@ raise ValueError("I can serve as a log message")
 a, b = b, a  # swap two vars without using a tmp var
 
 # --------------------------------------------------------------------------------------------------
+# time and sleeping
+
+import time
+time.sleep(5)  # sleeps for 5 seconds
+
+# --------------------------------------------------------------------------------------------------
 # threading
 server_thread = threading.Thread(target=server.serve_forever, daemon=True)
 server_thread.start()
+
+# --------------------------------------------------------------------------------------------------
+# debugging, python debugger, pdb
+
+import pdb; pdb.set_trace();  # put it somewhere to set a breakpoint then press ? when you reached it
+import sys, pdb; pdb.Pdb(stdout=sys.__stdout__).set_trace()  # python debugger for robot framework
 
 # --------------------------------------------------------------------------------------------------
 # timeit
