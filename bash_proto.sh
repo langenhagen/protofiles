@@ -243,6 +243,11 @@ if [ $# != 1 ] ; then
     exit 1
 fi
 
+# use ${FUNCNAME[0]} to refer to the current function's name
+function foo {
+    echo ${FUNCNAME[0]}  # prints foo
+}
+
 
 # --------------------------------------------------------------------------------------------------
 # Use cat or echo to create a file or a long text inside a variable
@@ -517,9 +522,12 @@ command -v  MYPRGRAM  # similar to `which`, but builtin
 command -v xcrun >/dev/null || die "Xcode command line tools are mandatory"
 
 
-if [ "$(command -v brew)" ] ; then
-    echo "Exec"
-    echo "multiple commands"
+if [ "$(command -v apt)" ] ; then
+    echo "The command exists"
+fi
+
+if [ ! "$(command -v brew)" ] ; then
+    echo "The command does not exist"
 fi
 
 command -v MYPROGRAM >/dev/null && echo "exec single command"
@@ -620,12 +628,12 @@ TEMPLATE_FILE="my-template.txt"  # contains arbitrary content with ${PLACEHOLDER
 PLACEHOLDER_1="Katze"  # will be replaced accordingly
 PLACEHOLDER_2="Hundi"
 
-TEMPLATE_TEXT="`cat ${TEMPLATE_FILE}`"
-TEXT=`eval "echo \"${TEMPLATE_TEXT}\""`  # eval echo evaluates the variables found in TEMPLATE_FILE
+TEMPLATE_TEXT="$(cat ${TEMPLATE_FILE})"
+TEXT="$(eval "echo \"${TEMPLATE_TEXT}\"")"  # eval echo evaluates the variables found in TEMPLATE_FILE
 
-echo ${TEMPLATE_TEXT}  # plain template text
+echo "${TEMPLATE_TEXT}"  # plain template text
 echo "-----------------------------------------------------------------"
-echo ${TEXT}  # text with templates substituted with the variables's values
+echo "${TEXT}"  # text with templates substituted with the variables's values
 
 # --------------------------------------------------------------------------------------------------
 # idioms and caveats
@@ -640,6 +648,15 @@ export -f my_function_called_by_find  # since the subshell should you open below
 
 find . -maxdepth 3 -type d -iname "*.git" -execdir bash -c 'my_function_called_by_find' '{}' \;
 
+# --------------------------------------------------------------------------------------------------
+# Temporary dirs
+
+# possible workflow
+
+tmp_dir_path="$(mktemp -d)"
+cd "${tmp_dir_path}"
+# ...
+rm -rf "${tmp_dir_path}"
 
 # --------------------------------------------------------------------------------------------------
 # functions / recipes
@@ -755,10 +772,10 @@ function generate_random_pronounceable_word {
     # consonants are created after one another.
     #
     # Usage:
-    #   $0 <number>
+    #   ${FUNCNAME[0]} <number>
     #
     # Example:
-    #   $0 7
+    #   ${FUNCNAME[0]} 7
 
     local word_length=${1}
     local num_consonants_since_last_vovel=0
@@ -783,7 +800,7 @@ function show_usage {
     # Given the name of the script, prints the usage string.
     #
     # Usage:
-    #   $0
+    #   ${FUNCNAME[0]}
 
     script_name="$(basename $0)"
 
@@ -804,11 +821,11 @@ function show_usage {
     # and prints the usage string.
     #
     # Usage:
-    #   $0 <error_message>
+    #   ${FUNCNAME[0]} <error_message>
     #
     # Examples:
-    #   $0
-    #   $0 "Incorrect number of parameters"
+    #   ${FUNCNAME[0]}
+    #   ${FUNCNAME[0]} "Incorrect number of parameters"
 
    script_name="$(basename $0)"
 
