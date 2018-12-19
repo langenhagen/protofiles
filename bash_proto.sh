@@ -60,6 +60,18 @@ echo -e stuff without quotation resolves into several arguments which expand, at
 export GLOBAL_VARIABLE='HELLO'
 local_variable=World
 
+my_long_var="blakeks"
+my_short_var=${my_long_var#bla}  # cuts the first part of the given var, i.e. "bla", leaving just "keks"
+echo ${my_short_var}
+
+readonly var=32
+#var=128  # does not work
+
+echo "$_"    # prints "echo" ; $_ is the invoking command
+printf "$_"  # prints "printf"
+
+# --------------------------------------------------------------------------------------------------
+# arrays
 
 my_array=("a" "b" "c")
 my_array=("a", "b", "c")
@@ -92,17 +104,6 @@ my_folders_array=('.' '..' $(ls))  # puts ., .. and all the files/folders given 
 declare -a my_explicit_array=()             # explicitly declare an array variable
 typeset -a my_other_explicit_array=()       # declare and typeset are exact synonyms
 
-my_long_var="blakeks"
-my_short_var=${my_long_var#bla}  # cuts the first part of the given var, i.e. "bla", leaving just "keks"
-echo ${my_short_var}
-
-readonly var=32
-#var=128  # does not work
-
-
-
-echo "$_"    # prints "echo" ; $_ is the invoking command
-printf "$_"  # prints "printf"
 
 # --------------------------------------------------------------------------------------------------
 # for loops
@@ -274,7 +275,7 @@ MYVAR_EOF
 )
 
 
-printf "Copy me to clipboard" | xclip -i -f -selection primary | xclip -i -selection clipboard  # copies to clipboards
+printf "Copy me to clipboard" | xclip -i -f -selection primary | xclip -i -selection clipboard  # copies to primary and to clipboard clipboards
 
 
 # --------------------------------------------------------------------------------------------------
@@ -336,8 +337,8 @@ printf "The value of param #1 is $1\n"
 echo This '$(pwd)': $(pwd) equals '${PWD}': ${PWD} but not '${pwd}: ' ${pwd} stays empty
 
 
-script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)  # directory of the given script
-script_path=${BASH_SOURCE[0]}  # path to the script from where you are, I believe
+absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the given script
+relative_script_file_path="${BASH_SOURCE[0]}"  # path to the script from where you are, I believe
 
 # --------------------------------------------------------------------------------------------------
 # command line parsing -- stupenduously simple -- it's so simple, don't do it :)
@@ -619,6 +620,22 @@ awk -v var="$variable" 'BEGIN {print var}'  # -v variable name="..."
 
 sed -i "s/oldstring/newstring/" myfile.txt  # replace in file
 
+# --------------------------------------------------------------------------------------------------
+# Write and overwrite blocks or sections of text into files:
+
+begin_section_line='# === BEGIN SUBLIME TEXT BLOCK - DO NOT TOUCH MANUALLY ===';
+end_section_line='# === END SUBLIME TEXT BLOCK ===';
+
+hosts_file_section=$(cat << SECTION_EOF
+${begin_section_line}
+Your message goes here
+${end_section_line}
+SECTION_EOF
+)
+
+hosts_file_path="/etc/hosts";
+sudo sed -i "/${begin_section_line}/,/${end_section_line}/d" "${hosts_file_path}";
+printf "${hosts_file_section}" | sudo tee -a "${hosts_file_path}";
 
 # --------------------------------------------------------------------------------------------------
 # use text-templates and set the variables later
@@ -682,6 +699,14 @@ if [[ $? -eq 0 ]] ; then
 else
     echo "${myfile} is not a binary file: ${myfile_charset}"
 fi
+
+
+# grep to a variable and retain lines, e.g. for further grepping
+current_results=$(grep -i '#snippet' "${data_file}")
+printf '%s' "${current_results}"  | grep -i 'hello' # using '%s'  retains possible \n characters in
+                                                    # the content, i.e. they are given as \n as
+                                                    # opposed to break lines like  printf
+                                                    # "${current_results}"  would do
 
 
 function increment_count {
