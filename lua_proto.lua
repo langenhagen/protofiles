@@ -61,3 +61,6 @@ string.gsub(require('cjson').encode(decoded_user_info)
 
 -- nginx logs a (pretty) printed jsonified dict
 ngx.log(ngx.WARN, '\nmy '..string.gsub(require('cjson').encode(decoded_user_info), ",", ",\nmy ")..'\n')
+
+-- lua cannot gracefully concatenate strings and bools, thus do:
+ngx.log(ngx.WARN, '\nmy use use_geoip2: '..tostring(use_geoip2)..'\n')
