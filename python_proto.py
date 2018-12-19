@@ -23,6 +23,29 @@ a == c  # True
 a is c  # False
 
 
+# --------------------------------------------------------------------------------------------------
+# range
+
+range(3)  # yields [0,1,2]
+
+# --------------------------------------------------------------------------------------------------
+# list comprehensions
+
+# Python's list comprehensions are awesome.
+
+vals = [expression
+        for value in collection
+        if condition]
+
+# ...  is equivalent to:
+
+vals = []
+for value in collection:
+    if condition:
+        vals.append(expression)
+
+
+even_squares = [x * x for x in range(10) if not x % 2]  # [0, 4, 16, 36, 64]
 
 # --------------------------------------------------------------------------------------------------
 # namedtuples
@@ -106,3 +129,12 @@ timeit.timeit('"-".join(map(str, range(100)))', number=10000)          # takes 0
 # better do:
 # def foo( from_ = None):
 #   pass
+
+
+# --------------------------------------------------------------------------------------------------
+# Python's integrated simple http server:
+
+python -m SimpleHTTPServer 8000  # Python 2; serves the current directory at http://localhost:8000
+python3 -m http.server  # Python 3
+
+

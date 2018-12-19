@@ -415,6 +415,13 @@ class MyClass:
     def ima_static_method(arg1, arg2, ...):
         pass
 
+# --------------------------------------------------------------------------------------------------
+# type annotations
+
+# Python 3.5+ supports type annotations that can be used with tools like Mypy to have static typing
+def foo(a: int, b: int) -> int:
+    return a + b
+
 
 # --------------------------------------------------------------------------------------------------
 # nice standard functions
