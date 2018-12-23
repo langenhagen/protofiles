@@ -41,10 +41,10 @@ echo exclamation marks at the end without quotes DO work!  # works
 # --------------------------------------------------------------------------------------------------
 # the no-op
 
-: # noop as in
+: # noOp as in the following loop:
 
 for i in A B C ; do
-    :                   # empty loop is not possible without noop, syntax error
+    :                   # empty loop is not possible without noOp, syntax error
 done
 
 # --------------------------------------------------------------------------------------------------
@@ -337,7 +337,7 @@ printf "The value of param #1 is $1\n"
 echo This '$(pwd)': $(pwd) equals '${PWD}': ${PWD} but not '${pwd}: ' ${pwd} stays empty
 
 
-absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the given script
+absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the current script
 relative_script_file_path="${BASH_SOURCE[0]}"  # path to the script from where you are, I believe
 
 # --------------------------------------------------------------------------------------------------
@@ -633,9 +633,14 @@ ${end_section_line}
 SECTION_EOF
 )
 
+# for root secured files:
 hosts_file_path="/etc/hosts";
 sudo sed -i "/${begin_section_line}/,/${end_section_line}/d" "${hosts_file_path}";
 printf "${hosts_file_section}" | sudo tee -a "${hosts_file_path}";
+# OR for normal user files:
+hosts_file_path="/etc/hosts";
+sed -i "/${begin_section_line}/,/${end_section_line}/d" "${hosts_file_path}";
+printf "${hosts_file_section}" >> "${hosts_file_path}";
 
 # --------------------------------------------------------------------------------------------------
 # use text-templates and set the variables later

@@ -9,6 +9,16 @@
 'foo {} and {!s}'.format('bar','baz')  # {} and {!s} print the __str__ result of the given object
 'foo {!r}'.format('bar')               # {!r} prints the __repr__ result of the given object
 
+# --------------------------------------------------------------------------------------------------
+# pretty printing
+
+import pprint
+
+pp = pprint.PrettyPrinter()
+
+obj = {'my':'rather', 'complex':{'object':True}, 'full':'of', 'an':'ugly', 'amount':'of', 'stuff':None}
+
+pp.pprint(entities, depth:12)
 
 # --------------------------------------------------------------------------------------------------
 # 'is' checks for identity, "==" checks for equality
