@@ -101,6 +101,21 @@ printf '%s\n' "${my_array[@]}"    # print an array with newline delimiting each 
 my_folders_array=('.' '..' $(ls))  # puts ., .. and all the files/folders given by `ls` into an array
 
 
+
+my_multiline_string="this
+is my
+multiline\nstring"
+
+mapfile -t my_array <<< "$my_multiline_string"
+
+printf '%s\n' "${my_array[@]}"    # prints 'this' 'is my'  'multiline\nstring' in separate lines
+
+for file in "${my_array[@]}" ; do  # iterates safely over an array and retains whitespaces
+    echo $file
+done
+
+
+
 declare -a my_explicit_array=()             # explicitly declare an array variable
 typeset -a my_other_explicit_array=()       # declare and typeset are exact synonyms
 
@@ -186,12 +201,12 @@ if [[ 'Is any of the given substrings contained?' =~ ('any'|'mooooh') ]]; then
 fi
 
 # --------------------------------------------------------------------------------------------------
-# switch case :)
+# switch case
 
 case "$status_code" in
     "200")
         return 0
-        ;;              ## ;; is how end a case clause :)
+        ;;              ## ;; is how end a case clause
     "404"|"666")
         return 1
         ;;
@@ -210,14 +225,14 @@ echo "`pwd`"
 
 
 # --------------------------------------------------------------------------------------------------
-# have a die function :)
+# have a die function
 
 function die {
     echo -e "$@"
     exit 1
 }
 
-[ -n "$version" ] || die "Version string must not be empty"    # use like this, for example :)
+[ -n "$version" ] || die "Version string must not be empty"    # use like this, for example
 
 
 # --------------------------------------------------------------------------------------------------
@@ -236,7 +251,7 @@ trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 # use $0 or better ${BASH_SOURCE[0]} to refer to the script's name
 
 # ${BASH_SOURCE[0]} is not sh compatible
-# but there was an advantage for ${BASH_SOURCE[0]} which I don't recall currently :)
+# but there was an advantage for ${BASH_SOURCE[0]} which I don't recall currently
 echo "[$0] vs. [${BASH_SOURCE[0]}]"
 
 if [ $# != 1 ] ; then
@@ -341,7 +356,7 @@ absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # dire
 relative_script_file_path="${BASH_SOURCE[0]}"  # path to the script from where you are, I believe
 
 # --------------------------------------------------------------------------------------------------
-# command line parsing -- stupenduously simple -- it's so simple, don't do it :)
+# command line parsing -- stupenduously simple -- it's so simple, don't do it
 
 
 if [ "$1" == "" ] ; then
@@ -350,7 +365,7 @@ if [ "$1" == "" ] ; then
 elif [ "$1" == "Hello" ] ; then
     echo "my cmd arg is Hello"
 else
-    echo "my cmd arg is something else :)"
+    echo "my cmd arg is something else"
 fi
 
 
@@ -363,12 +378,12 @@ if [ "$my_cmd_arg" == "" ] ; then
 elif [ "$my_cmd_arg" == "Hello" ] ; then
     echo "my cmd arg is Hello"
 else
-    echo "my cmd arg is something else :)"
+    echo "my cmd arg is something else"
 fi
 
 
 # --------------------------------------------------------------------------------------------------
-# command line parsing -- simple and complete, I guess :) -- I believe this is the best way
+# command line parsing -- simple and complete, I guess -- I believe this is the best way
 
 logfile="default.log"
 send_alive_pushover=false
@@ -599,7 +614,32 @@ my_negative_number=-10
 my_absolute_number=${my_negative_number#-}
 
 my_number=-12
-my_number=${my_numberr#-}               # works :)
+my_number=${my_numberr#-}               # works
+
+# --------------------------------------------------------------------------------------------------
+# Default values in Bash
+# found here: https://unix.stackexchange.com/questions/122845/using-a-b-for-variable-assignment-in-scripts/122878
+# There are more variants to this, look in the link or for terms like "Parameter Expansion" and 
+# "Parameter Substitution"
+
+
+# the following substitutes non-existent and empty vars:
+echo "$my_nonexisting_or_null_var"  # empty / non-existent
+my_substituted_var="${my_nonexisting_or_null_var:-default value}"
+echo "$my_substituted_var"  # prints 'default value'
+# vs.
+my_var="has value"
+echo "$my_var" # prints 'has value'
+my_substituted_var="${my_var:-default value}"
+echo "$my_substituted_var" # prints 'has value'
+
+# the following substitutes non-existing vars:
+myvar_with_default_value="${my_nonexisting_var-I am the default value}"
+echo "$myvar_with_default_value" # prints 'I am the default value'
+
+my_existing_var="Hello"
+myvar_with_default_value="${my_existing_var-I am the default value}"
+echo "$myvar_with_default_value" # prints 'Hello'
 
 
 # --------------------------------------------------------------------------------------------------
@@ -608,6 +648,7 @@ my_number=${my_numberr#-}               # works :)
 firstString="I am a Cat"
 secondString="Dog"
 echo "${firstString/Cat/$secondString}"    # prints "I am a Dog"
+
 
 # --------------------------------------------------------------------------------------------------
 # handing over variables to awk
@@ -621,7 +662,7 @@ awk -v var="$variable" 'BEGIN {print var}'  # -v variable name="..."
 sed -i "s/oldstring/newstring/" myfile.txt  # replace in file
 
 # --------------------------------------------------------------------------------------------------
-# Write and overwrite blocks or sections of text into files:
+# Write and overwrite blocks or sections of text into files
 
 begin_section_line='# === BEGIN SUBLIME TEXT BLOCK - DO NOT TOUCH MANUALLY ===';
 end_section_line='# === END SUBLIME TEXT BLOCK ===';
