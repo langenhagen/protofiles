@@ -114,10 +114,33 @@ for file in "${my_array[@]}" ; do  # iterates safely over an array and retains w
     echo $file
 done
 
-
-
 declare -a my_explicit_array=()             # explicitly declare an array variable
 typeset -a my_other_explicit_array=()       # declare and typeset are exact synonyms
+
+
+# --------------------------------------------------------------------------------------------------
+# dictionaries, or associative arrays
+
+declare -A animals
+animals=( ['cow']='moo' ['dog']='woof')
+
+declare -A animals=( ['cow']='moo' ['dog']='woof')
+
+declare -A animals
+animals=(
+    ['cow']='moo'
+    ['dog']='woof'
+)
+
+animals['cat']='miau'    # set a value
+echo ${animals['dog']}  # get a value; returns 'woof'
+
+animal_names="${animals[@]}"    # expands the values
+animal_sounds="${!animals[@]}"  # expands the keys
+
+for key in "${!animals[@]}"; do
+    echo "$key - ${animals[$key]}";
+done
 
 
 # --------------------------------------------------------------------------------------------------
@@ -141,6 +164,9 @@ for value in "${my_array[@]}" ; do
 done
 
 for i in $(seq $(tput cols)); do printf '*'; done;  # one-liner for loop; print a character repeatedly; that's the best I came up with after 1 hr googling
+
+# you can use  continue  and  break
+
 
 # --------------------------------------------------------------------------------------------------
 # until loops
@@ -198,6 +224,11 @@ fi
 
 if [[ 'Is any of the given substrings contained?' =~ ('any'|'mooooh') ]]; then
     echo 'should work'
+fi
+
+
+if [ ! -f 'myfile' -o -x 'myexecutable' -a -f 'mythirdfile' ] ; then
+    echo 'Complex if-statement with files and and / or concatenators'
 fi
 
 # --------------------------------------------------------------------------------------------------
@@ -289,6 +320,9 @@ printf will.
 MYVAR_EOF
 )
 
+
+# --------------------------------------------------------------------------------------------------
+# copying to clipboard
 
 printf "Copy me to clipboard" | xclip -i -f -selection primary | xclip -i -selection clipboard  # copies to primary and to clipboard clipboards
 
@@ -400,8 +434,14 @@ while [ $# -gt 0 ] ; do
     -y|--yesterday)
         logfile="yesterday.log"
         ;;
+    --)
+        shift # past argument
+        command="$@"
+        break
+        ;;
     -h|--help)
         show_usage
+        exit 0
     *) # unknown option
         ;;
     esac
@@ -477,9 +517,35 @@ echo "p = ${p}"
 [[ $# -gt 0 ]] ; echo $#    # "new test" or "extended test" - less portable, but but more versatile, e.g. it can test whether a string matches a regular expression
 
 
+cd ~
+if [ $? != 0 ] ; then
+    echo 'Error!'  # does not go in here
+fi
+
+cd does/not/exist
+if [ $? != 0 ] ; then
+    echo 'Error!'  # goes in here. I recommend this way to test $?. It works
+fi
+
+# test changes the last return value. if you test against several cases, use either switch or put
+# the return value into a variable:
+git pull --rebase origin master
+code="${?}"
+if [ "${code}" == 0 ] ; then
+    echo 'all good'
+elif [ "${code}" == 1 ] ; then
+    echo 'branch does not exist'
+elif [ "${code}" == 128 ] ; then
+    echo 'merge conflicts'
+else
+    echo 'unknown error'
+fi
+
+
 # --------------------------------------------------------------------------------------------------
 # Coloring and printing
 
+# color codes; overwrite with empty string '' if you want to disable them dynamically
 CYAN='\033[1;36m'
 RED='\033[0;31m'
 GREEN='\033[1;32m'
@@ -487,8 +553,16 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 BOLD='\033[1m'
 
+# or in short form
+r='\033[0;31m'
+b='\033[1m'
+rb='\033[1;31m'
+n='\033[0m'
+
 printf "\033[1mSOMETHING IN BOLD\033[0m\n"
 printf "\033[0;31mSOMETHING IN RED\033[0m\n"
+printf "\033[1;32mSOMETHING IN GREEN\033[0m\n"
+
 
 function echo-error {
     printf "${RED}${@}${NC}\n"
@@ -509,6 +583,10 @@ function echo-warn {
 
 printf "%s${no_color}" "$line"  # prints a given string raw, i.e. with special characters like %
 
+printf '%-50s' 'Some filled string'; printf 'some string starting after 50 characters\n';
+
+
+# --------------------------------------------------------------------------------------------------
 # read a variable line by line.
 while read -r line; do  # trims line
     echo "..." $line
@@ -533,20 +611,19 @@ sleep 5d # Waits 5 days.
 # --------------------------------------------------------------------------------------------------
 # find a program
 
-command -v  MYPRGRAM  # similar to `which`, but builtin
+command -v  MYPRGRAM  # similar to `which`, but builtin, and thus generally preferred
 
 command -v xcrun >/dev/null || die "Xcode command line tools are mandatory"
+command -v xcrun >/dev/null && echo "Program exists, do something"
 
 
 if [ "$(command -v apt)" ] ; then
-    echo "The command exists"
+    echo "apt exists"
 fi
 
 if [ ! "$(command -v brew)" ] ; then
-    echo "The command does not exist"
+    echo "brew dows not exist"
 fi
-
-command -v MYPROGRAM >/dev/null && echo "exec single command"
 
 
 # --------------------------------------------------------------------------------------------------
@@ -554,7 +631,7 @@ command -v MYPROGRAM >/dev/null && echo "exec single command"
 
 read -e -n10 -p "my prompt: " value  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
 read -t2 key  # read into key variable  with a 2 seconds timeout
-read -en1  # newline after input is read, read 1 char, throw var away
+read -en1  # throw var away -e: makes read print a newline after character is read  -n1: read 1 char
 
 
 read -p "Please type your password: " -s  # -s: input not promted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
@@ -587,6 +664,12 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
+# time - measure execution time of something
+
+time ls
+time myscript.sh  # returns the execution time in minuts seconds
+
+# --------------------------------------------------------------------------------------------------
 # calculations with arithmetic expressions -- math
 
 a=12
@@ -595,8 +678,8 @@ b=13
 # with double ((parentheses))
 (( res1 = a - b ))               # sets variable res1 to -1
 
-res2=0
-(( res2 += 2 ))  # updates res2 to 2
+res2=1
+(( res2 += 2 ))  # increases res2 to 3
 
 # or with expr:
 res2=`expr $a + $b`  # spaces are important
@@ -619,7 +702,7 @@ my_number=${my_numberr#-}               # works
 # --------------------------------------------------------------------------------------------------
 # Default values in Bash
 # found here: https://unix.stackexchange.com/questions/122845/using-a-b-for-variable-assignment-in-scripts/122878
-# There are more variants to this, look in the link or for terms like "Parameter Expansion" and 
+# There are more variants to this, look in the link or for terms like "Parameter Expansion" and
 # "Parameter Substitution"
 
 
@@ -659,7 +742,21 @@ awk -v var="$variable" 'BEGIN {print var}'  # -v variable name="..."
 # --------------------------------------------------------------------------------------------------
 # sed
 
-sed -i "s/oldstring/newstring/" myfile.txt  # replace in file
+sed -i 's/oldstring/newstring/g' myfile           # replace oldstring with newstring in myfile.txt -i: write result inplace back to file
+sed -i '/pattern to match/d' myfile          # delete containing pattern in file
+
+sed '/BEGIN MARKER/,/END Marker/d' myfile       # delete all lines between and including the given markers
+
+sed -n '/Begin Match/,/End Match/p' myfile        # print all lines between and including Begin Match and End Match; -n: quiet the rest of the output
+
+sed '0,/replace_this/s//with_that/' my.lua  # replaces the first occurence of 'replace_this' with 'with_that'; only work in gnu sed
+sed '0,/this/d' my.lua  # deletes the first line containing 'this'; only with gnu sed
+
+echo 'willNotChange:WillAlsoNotChange:ThisAfterLastColonWillChange' | sed 's|\(.*\):.*|\1:AChange|'  # changes everything after the last colon; uses the capture group \1
+
+sed 's/[ \t]*$//'                                 # remove trailing whitespaces or tabs
+fold -s -w 72 myfile.txt | sed 's/[ \t]*$//'      # fold myfile's contents at 72 characters, sed removes trailing whitespaces
+
 
 # --------------------------------------------------------------------------------------------------
 # Write and overwrite blocks or sections of text into files
@@ -684,19 +781,20 @@ sed -i "/${begin_section_line}/,/${end_section_line}/d" "${hosts_file_path}";
 printf "${hosts_file_section}" >> "${hosts_file_path}";
 
 # --------------------------------------------------------------------------------------------------
-# use text-templates and set the variables later
+# templates text files and set the variables later
 
-TEMPLATE_FILE="my-template.txt"  # contains arbitrary content with ${PLACEHOLDER_1} and ${PLACEHOLDER_2}
+template_file="my-template.txt"  # contains arbitrary content with ${placeholder_1} and ${placeholder_2}
 
-PLACEHOLDER_1="Katze"  # will be replaced accordingly
-PLACEHOLDER_2="Hundi"
+placeholder_1="Katze"  # will be replaced accordingly
+placeholder_2="Hundi"
 
-TEMPLATE_TEXT="$(cat ${TEMPLATE_FILE})"
-TEXT="$(eval "echo \"${TEMPLATE_TEXT}\"")"  # eval echo evaluates the variables found in TEMPLATE_FILE
+text_template="$(cat ${template_file})"
+text="$(eval "echo \"${text_template}\"")"  # eval echo evaluates the variables found in TEMPLATE_FILE
 
-echo "${TEMPLATE_TEXT}"  # plain template text
+echo "${text_template}"  # plain template text
 echo "-----------------------------------------------------------------"
-echo "${TEXT}"  # text with templates substituted with the variables's values
+echo "${text}"  # text with templates substituted with the variables's values
+
 
 # --------------------------------------------------------------------------------------------------
 # idioms and caveats
@@ -710,6 +808,21 @@ export -f my_function_called_by_find  # since the subshell should you open below
                                       # should know about the function, you have export -f it
 
 find . -maxdepth 3 -type d -iname "*.git" -execdir bash -c 'my_function_called_by_find' '{}' \;
+
+# --------------------------------------------------------------------------------------------------
+# emulating ternary operator with boolean concatenation
+
+test "${1}" == '--moo' && is_moo='yes' || is_moo='no'
+
+
+# --------------------------------------------------------------------------------------------------
+# a nice and readable way to abstract variables to booleans
+
+is_moo="$(test "${1}" == '--moo'; echo ${?})"
+if [ "${is_moo}" -eq "0" ] ; then
+    echo 'Mooooo'
+fi
+
 
 # --------------------------------------------------------------------------------------------------
 # Temporary dirs
@@ -781,10 +894,10 @@ function increment_count {
     #       The current count is: 1
     # .
 
-    local line=`grep "$1" "$2"`
-    local current_count=`echo $line | awk '{print $NF}'`
-    local new_count=`expr $current_count + 1`
-    local new_line=`echo $line | awk -v nc="$new_count" '{$NF = nc; print}'`
+    local line="$(grep "$1" "$2")"
+    local current_count="$(echo $line | awk '{print $NF')"
+    local new_count="$(expr $current_count + 1)"
+    local new_line="$(echo $line | awk -v nc="$new_count" '$NF = nc; print}')"
     sed -i "s/$line/$new_line/" "$2"
 }
 
@@ -875,16 +988,27 @@ function show_usage {
 
     script_name="$(basename $0)"
 
-    printf 'Usage:\n'
-    printf "  ${script_name} [-d|--depth <number>] [<path>] [-- <command>]\n"
-    printf '\n'
-    printf 'Examples:\n'
-    printf "  ${script_name}                      # lists the found git repositories\n"
-    printf "  ${script_name} -d 2 -- ls           # calls \`ls\` from all git repos in this file level and one level below\n"
-    printf "  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the given path\n"
-    printf "  ${script_name} -- realpath .        # prints the \`$PWD\` variable for all git repos below the current path\n"
-    printf "  ${script_name} -h                   # prints the usage message\n"
-    printf "  ${script_name} --help               # prints the usage message\n"
+    output='Usage:\n'
+    output="${output} ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
+    output="${output}\n"
+    output="${output}Examples:\n"
+    output="${output}  ${script_name}                      # lists the found git repositories\n"
+    output="${output}  ${script_name} -d 2 -- ls           # lists the found git repositories and"
+    output="${output} calls \`ls\` from all git repos in this file level and one level below\n"
+    output="${output}  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in"
+    output="${output} this file level and one level below but does not list the found gir repos\n"
+    output="${output}  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below"
+    output="${output} the given path\n"
+    output="${output}  ${script_name} -q -- realpath .     # prints the paths of all git repos"
+    output="${output} below the current path\n"
+    output="${output}  ${script_name} -h                   # prints the usage message\n"
+    output="${output}  ${script_name} --help               # prints the usage message\n"
+    output="${output}\n"
+    output="${output}Note:\n"
+    output="${output}  If you want to use subshell related-variables, like e.g. \$PWD, wrap them"
+    output="${output} into single quotation marks so that they will not be expanded ''"
+    output="${output} immediately.\n"
+    printf "${output}"
 }
 
 function show_usage {
@@ -903,11 +1027,12 @@ function show_usage {
     if ! [ -z "${2}" ] ; then
         printf "\033[0;31m${2}\033[0m\n"
     fi
-    printf 'Usage:\n'
-    printf "  ${script_name} <my_param>\n         # <does something>\n"
-    printf "  ${script_name} -h                   # prints the usage message\n"
-    printf "  ${script_name} --help               # prints the usage message\n"
-    printf '\n'
-    printf 'Example:\n'
-    printf "  ${script_name} https://codereview.mycompany.com/15481\n"
+    output='Usage:\n'
+    output="${output}  ${script_name} <my_param>\n         # <does something>\n"
+    output="${output}  ${script_name} -h                   # prints the usage message\n"
+    output="${output}  ${script_name} --help               # prints the usage message\n"
+    output="${output}\n"
+    output="${output}Example:\n"
+    output="${output}  ${script_name} https://codereview.mycompany.com/15481\n"
+    printf "${output}"
 }
