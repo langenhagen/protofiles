@@ -1,4 +1,10 @@
+# Prototypical bash snippets.
+# Use as reference.
+# If there are several ways of solving a specific task, the snippets here exhibit the, to our
+# knowledge and belief, best ways af doing things.
+#
 # author: andreasl
+
 
 
 # --------------------------------------------------------------------------------------------------
@@ -31,6 +37,7 @@ echo exclamation marks at the end without quotes DO work!  # works
 
 >&2 echo "This outputs to the stderr error stream."
 (>&2 echo "error")  # To avoid interaction with other redirections use subshell
+
 
 # --------------------------------------------------------------------------------------------------
 # source files / sourcing files
@@ -543,25 +550,41 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# Coloring and printing
+# Printing
+
+myvar=4
+printf '%0.s=' $(seq 1 $myvar);  printf '\n'  # prints $myvar number of '='
+
+printf "$PWD"; printf '%0.s.' $(seq ${#PWD} 50 );  printf '\n'
+
+
+# --------------------------------------------------------------------------------------------------
+# Coloring
 
 # color codes; overwrite with empty string '' if you want to disable them dynamically
-CYAN='\033[1;36m'
-RED='\033[0;31m'
-GREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
-BOLD='\033[1m'
+# The sheme appear to be combined values, with the first column definining form related things
+# (bold/italic, etc) and the second column defining colors. One can, however, apparently, omit
+# columns.
+
+CYAN='\e[1;36m'
+RED='\e[31m'
+RED='\e[0;31m'
+GREEN='\e[1;32m'
+YELLOW='\e[1;33m'
+NC='\e[m' # No Color
+BOLD='\e[1m'
+
+# \e can also appear as \033, but \e is shorter
 
 # or in short form
-r='\033[0;31m'
-b='\033[1m'
-rb='\033[1;31m'
-n='\033[0m'
+r='\e[31m'
+b='\e[1m'
+rb='\e[1;31m'
+n='\e[m'
 
-printf "\033[1mSOMETHING IN BOLD\033[0m\n"
-printf "\033[0;31mSOMETHING IN RED\033[0m\n"
-printf "\033[1;32mSOMETHING IN GREEN\033[0m\n"
+printf "\e[1mSOMETHING IN BOLD\e[m\n"
+printf "\e[0;31mSOMETHING IN RED\e[m\n"
+printf "\e[1;32mSOMETHING IN GREEN\e[m\n"
 
 
 function echo-error {
@@ -583,7 +606,31 @@ function echo-warn {
 
 printf "%s${no_color}" "$line"  # prints a given string raw, i.e. with special characters like %
 
-printf '%-50s' 'Some filled string'; printf 'some string starting after 50 characters\n';
+printf '%-50s' 'Some filled string '; printf 'some string starting after 50 characters\n';
+
+
+# You can print bold, tinted, italic, underscored and even blinking text. Really fancy
+printf '\e[0mHallo\e[m\n'
+printf '\e[1mHallo\e[m\n'  # bold/bright
+printf '\e[2mHallo\e[m\n'
+printf '\e[3mHallo\e[m\n'
+printf '\e[4mHallo\e[m\n'  # underline
+printf '\e[5mHallo\e[m\n'  # blinking
+printf '\e[6mHallo\e[m\n'
+printf '\e[7mHallo\e[m\n'
+printf '\e[8mHallo\e[m\n'
+printf '\e[1;2mHallo\e[m\n'
+printf '\e[1;5mHallo\e[m\n'  # bold/bright & blinking
+
+# --------------------------------------------------------------------------------------------------
+# Print a color palette
+# found here: https://askubuntu.com/questions/558280/changing-colour-of-text-and-background-of-terminal
+
+for((i=16; i<256; i++)); do
+    printf "\e[48;5;${i}m%03d" $i;
+    printf '\e[0m';
+    [ ! $((($i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
+done
 
 
 # --------------------------------------------------------------------------------------------------
@@ -802,7 +849,7 @@ echo "${text}"  # text with templates substituted with the variables's values
 # using user defined functions with `find`'s `-exec` `-execdir` and so on
 # you have to call the function using `bash -c`
 function my_function_called_by_find {
-    printf "Hi \033[1m${PWD}\033[0m\n"
+    printf "Hi \e[1m${PWD}\e[0m\n"
 }
 export -f my_function_called_by_find  # since the subshell should you open below in find
                                       # should know about the function, you have export -f it
@@ -845,8 +892,8 @@ echo *.log | xargs -n1 cp /dev/null  # delete the contents of multiple files
 
 # colorize tail-ed output with awk (your tail version has to support stream flushing)
 tail -f var/log/nginx/*.log | awk '
-  /warn/ {print "\033[32m" $0 "\033[39m"; next}
-  /error/ {print "\033[33m" $0 "\033[39m"; next}
+  /warn/ {print "\e[32m" $0 "\e[39m"; next}
+  /error/ {print "\e[33m" $0 "\e[39m"; next}
   {print}
 '
 
@@ -1025,7 +1072,7 @@ function show_usage {
    script_name="$(basename $0)"
 
     if ! [ -z "${2}" ] ; then
-        printf "\033[0;31m${2}\033[0m\n"
+        printf "\e[0;31m${2}\e[0m\n"
     fi
     output='Usage:\n'
     output="${output}  ${script_name} <my_param>\n         # <does something>\n"
