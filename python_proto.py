@@ -9,6 +9,12 @@
 'foo {} and {!s}'.format('bar','baz')  # {} and {!s} print the __str__ result of the given object
 'foo {!r}'.format('bar')               # {!r} prints the __repr__ result of the given object
 
+
+# --------------------------------------------------------------------------------------------------
+# Concatenate strings in a List
+mylist = ["Yeah", "can", "do"]
+print(" ".join(mylist)
+
 # --------------------------------------------------------------------------------------------------
 # pretty printing
 
@@ -37,6 +43,24 @@ a is c  # False
 # range
 
 range(3)  # yields [0,1,2]
+
+# --------------------------------------------------------------------------------------------------
+# Loops
+
+a = [1, 2, 3, 4, 5]
+for el in a:
+        if el == 0:
+            break
+else:                           # optional for-else
+    print("for's else gets triggered when no break statement is called")
+
+# --------------------------------------------------------------------------------------------------
+# Chained comparisons
+
+x = 12.3
+print( 7 < x < 11)  # False
+print( 7 < x < 13)  # True
+
 
 # --------------------------------------------------------------------------------------------------
 # list comprehensions
@@ -100,7 +124,7 @@ der my_function_yet_to_be_implemented(self):
 # if the logging in Python does not work, then you can do this
 raise ValueError("I can serve as a log message")
 
-
+a, b = 2, 3
 a, b = b, a  # swap two vars without using a tmp var
 
 # --------------------------------------------------------------------------------------------------
@@ -154,3 +178,6 @@ import collections
 
 c = collections.Counter('helloworld')  # Counter({'l': 3, 'o': 2, 'e': 1, 'd': 1, 'h': 1, 'r': 1, 'w': 1})
 c.most_common(3)  # returns [('l', 3), ('o', 2), ('e', 1)]
+
+
+
