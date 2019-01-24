@@ -180,4 +180,13 @@ c = collections.Counter('helloworld')  # Counter({'l': 3, 'o': 2, 'e': 1, 'd': 1
 c.most_common(3)  # returns [('l', 3), ('o', 2), ('e', 1)]
 
 
+# --------------------------------------------------------------------------------------------------
+# try except exception handling
 
+try:
+    import pymongo  # nice idea :D
+except ImportError as err:
+    print err
+    sys.exit(1)
+except (IDontLikeYouException, YouAreBeingMeanException) as e:
+    prin "Catch multiple types of exceptions in one block"
