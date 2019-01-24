@@ -6,6 +6,10 @@ comment '/
 
 ' care first about the data and then about the layout. It likely changes.
 
+
+' this one can make lines straight
+' skinparam linetype ortho
+
 package myPackage {
 
     abstract A
@@ -29,6 +33,8 @@ note bottom
     This **bold** connected to the last class
     that has been //italic// defined!
 end note
+
+
 
 interface p
 class Q<T>
@@ -58,5 +64,37 @@ TogetherRight -[hidden]left- TogetherLeft
 TogetherRight -[hidden]down- TogetherDown
 TogetherRight -up- TogetherDown
 TogetherRight -[hidden]- Together2
+
+
+
+' Deployment Diagrams
+' found here: http://plantuml.com/deployment-diagram
+
+' specifying "allowmixing" is necessary if you want to mix classes and UML stuff with deployment diagram stuff
+
+allowmixing
+
+actor actor
+agent agent
+artifact artifact
+boundary boundary
+card card
+cloud cloud
+component component
+control control
+database database
+entity entity
+file file
+folder folder
+frame frame
+interface  interface
+node node
+package package
+queue queue
+stack stack
+rectangle rectangle
+storage storage
+usecase usecase
+
 
 @enduml
