@@ -1,9 +1,9 @@
-{{>java/CopyrightHeader}}       // that's a partial. Partials are rendered at runtime as opposed to a compile time Oo
+{{>java/CopyrightHeader}}       <!-- that's a partial. Partials are rendered at runtime as opposed to a compile time Oo -->
 
 
-{{#javaPackage}}                // section begin
+{{#javaPackage}}                <!-- section begin -->
     This will be rendered iff the variable javaPackage exists and is not false :)
-{{/javaPackage}}                // section end
+{{/javaPackage}}                <!-- section end -->
 
 {{>java/Enum}}
 
@@ -17,5 +17,5 @@
 
 
 {{#this}}
-package {{join myList delimiter="."}};        // joins the elements of myList with the "." delimeter
+package {{join myList delimiter="."}};        <!-- joins the elements of myList with the "." delimeter -->
 {{/this}}

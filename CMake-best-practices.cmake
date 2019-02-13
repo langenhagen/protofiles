@@ -42,7 +42,7 @@ message(STATUS "This is a very long
 
 # --------------------------------------------------------------------------------------------------
 # Always quote variable that represent a string:
-# (and consequently, slways quote string when comparing string in an if)
+# (and consequently, always quote string when comparing string in an if)
 
 set(myvar "foo")
 if ("${myvar}" STREQUAL "bar")
