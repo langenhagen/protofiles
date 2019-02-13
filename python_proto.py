@@ -89,8 +89,7 @@ from collections import namedtuple
 Car = namedtuple('Car', 'color mileage')
 
 my_car = Car('red', 3812.4)
-
-# Car(color='red' , mileage=3812.4)
+my_car = Car(color='red' , mileage=3812.4)  # also good
 
 my_car.color  # red
 my_car.mileage # 3812.4
