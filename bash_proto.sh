@@ -557,6 +557,9 @@ printf '%0.s=' $(seq 1 $myvar);  printf '\n'  # prints $myvar number of '='
 
 printf "$PWD"; printf '%0.s.' $(seq ${#PWD} 50 );  printf '\n'
 
+printf "Pad the following number with up to 5 zeros %05d\n" 42;
+printf "Pad the following number with up to 5 spaces %5d\n" 42;
+printf "Pad some text%3s\n" Hi;
 
 # --------------------------------------------------------------------------------------------------
 # Coloring
@@ -566,6 +569,17 @@ printf "$PWD"; printf '%0.s.' $(seq ${#PWD} 50 );  printf '\n'
 # (bold/italic, etc) and the second column defining colors. One can, however, apparently, omit
 # columns.
 
+# Print the 256 colors :)
+for i in {0..15} ; do
+    for j in {0..15} ; do
+        ((c= j * 16 + i ));
+        printf "\x1b[38;5;${c}mcolour%3d " ${c};
+    done
+    printf "\n";
+done
+
+
+# color codes
 CYAN='\e[1;36m'
 RED='\e[31m'
 RED='\e[0;31m'
