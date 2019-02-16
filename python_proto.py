@@ -113,7 +113,7 @@ print(json.dumps(my_mapping, indent=4, sort_keys=True))
 # --------------------------------------------------------------------------------------------------
 # nice (pythonic) idioms
 
-path = path or some_alternative_path
+path = path or my_default_path  # set a default value
 
 
 der my_function_yet_to_be_implemented(self):
