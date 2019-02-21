@@ -139,7 +139,7 @@ animals=(
     ['dog']='woof'
 )
 
-animals['cat']='miau'    # set a value
+animals['katze']='miau'    # set a value
 echo ${animals['dog']}  # get a value; returns 'woof'
 
 animal_names="${animals[@]}"    # expands the values
@@ -413,6 +413,13 @@ fi
 # --------------------------------------------------------------------------------------------------
 # command line parsing -- very simple
 
+# just for help
+if [ "${1}" == '-h' ] || [ "${1}" == '--help' ] ; then
+    show_usage
+fi
+
+
+# also:
 my_cmd_arg="${1}"
 if [ "$my_cmd_arg" == "" ] ; then
     echo "my cmd arg not provided"

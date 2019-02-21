@@ -419,9 +419,11 @@ class MyClass:
 # type annotations
 
 # Python 3.5+ supports type annotations that can be used with tools like Mypy to have static typing
-def foo(a: int, b: int) -> int:
+def foo(a: int, b: int = 42) -> int:
     return a + b
 
+def function_that_returns_none(a: int, b: int = None) -> None:
+    pass
 
 # --------------------------------------------------------------------------------------------------
 # nice standard functions
