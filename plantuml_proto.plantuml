@@ -1,14 +1,22 @@
 @startuml
 
+' specifying "allow_mixing" is necessary if you want to mix classes and UML stuff with deployment
+' diagram stuff
+allow_mixing
+
+' care first about the data and then about the layout. It likely changes.
+
+' this one can make lines straight
+' skinparam linetype ortho
+
+' set tab width
+' skinparam tabSize 2
+
+
 ' Full line comment
 /' several lines
 comment '/
 
-' care first about the data and then about the layout. It likely changes.
-
-
-' this one can make lines straight
-' skinparam linetype ortho
 
 package myPackage {
 
@@ -58,6 +66,13 @@ class BlueClass #blue {
 
 note "This is Me, a floatig note" as N1
 
+note bottom of n1
+    you can also have some explanation with
+    ====
+    --Markdown-- //formatting// ~~elements~~
+end note
+
+
 ' the lenght of the arrows indicates the togetherness of the classes!
 Together1 -[hidden]--- Together2
 TogetherRight -[hidden]left- TogetherLeft
@@ -69,10 +84,6 @@ TogetherRight -[hidden]- Together2
 
 ' Deployment Diagrams
 ' found here: http://plantuml.com/deployment-diagram
-
-' specifying "allowmixing" is necessary if you want to mix classes and UML stuff with deployment diagram stuff
-
-allowmixing
 
 actor actor
 agent agent
@@ -92,9 +103,16 @@ node node
 package package
 queue queue
 stack stack
-rectangle rectangle
 storage storage
 usecase usecase
+rectangle rectangle
+
+' the following doesnt work, but should
+' according to: https://stackoverflow.com/questions/45794732/plantuml-nested-components-with-text-possible
+' folder folder1 [
+'      Some long explanation
+'      \tYeah.
+' ]
 
 
 @enduml
