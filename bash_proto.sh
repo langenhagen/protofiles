@@ -288,7 +288,10 @@ trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 # --------------------------------------------------------------------------------------------------
 # use $0 or better ${BASH_SOURCE[0]} to refer to the script's name
 
+# $0 refers to the called script's name, even when referenced in a file that is sourced by called script
+# ${BASH_SOURCE[0]} would refer to the sourced script name in such case
 # ${BASH_SOURCE[0]} is not sh compatible
+
 # but there was an advantage for ${BASH_SOURCE[0]} which I don't recall currently
 echo "[$0] vs. [${BASH_SOURCE[0]}]"
 

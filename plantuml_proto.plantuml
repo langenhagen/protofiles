@@ -1,5 +1,7 @@
 @startuml
 
+scale 2400*1200
+
 ' specifying "allow_mixing" is necessary if you want to mix classes and UML stuff with deployment
 ' diagram stuff
 allow_mixing
