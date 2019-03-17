@@ -764,11 +764,9 @@ res3=a-b
 
 
 # absolute value of a number:
-my_negative_number=-10
+my_negative_number=-10  # could also be 10
 my_absolute_number=${my_negative_number#-}
 
-my_number=-12
-my_number=${my_numberr#-}               # works
 
 # --------------------------------------------------------------------------------------------------
 # Default values in Bash
