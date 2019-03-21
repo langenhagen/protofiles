@@ -127,6 +127,7 @@ typeset -a my_other_explicit_array=()       # declare and typeset are exact syno
 
 # --------------------------------------------------------------------------------------------------
 # dictionaries, or associative arrays
+# note: the dictionary might be reordered internally.
 
 declare -A animals
 animals=( ['cow']='moo' ['dog']='woof')
@@ -590,25 +591,26 @@ done
 
 
 # color codes
-CYAN='\e[1;36m'
-RED='\e[31m'
-RED='\e[0;31m'
-GREEN='\e[1;32m'
-YELLOW='\e[1;33m'
-NC='\e[m' # No Color
-BOLD='\e[1m'
+cyan='\e[1;36m'
+red='\e[31m'
+red='\e[0;31m'
+green='\e[1;32m'
+yellow='\e[1;33m'
+nc='\e[m' # No Color
+bold='\e[1m'
 
 # \e can also appear as \033, but \e is shorter
 
 # or in short form
 r='\e[31m'
+g='\e[32m'
 b='\e[1m'
 rb='\e[1;31m'
 n='\e[m'
 
 printf "\e[1mSOMETHING IN BOLD\e[m\n"
 printf "\e[0;31mSOMETHING IN RED\e[m\n"
-printf "\e[1;32mSOMETHING IN GREEN\e[m\n"
+printf "\e[1;32mSOMETHING IN BOLD GREEN\e[m\n"
 
 
 function echo-error {
