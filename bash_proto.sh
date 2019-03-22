@@ -308,7 +308,7 @@ function foo {
 
 
 # --------------------------------------------------------------------------------------------------
-# Use cat or echo to create a file or a long text inside a variable
+# Use cat or better read or echo to create a file or a long text inside a variable
 
 cat > "path/to/my-file.txt" << MYFILE_EOF
 This is the input of the file
@@ -323,11 +323,20 @@ printf 'Some Text\n' | sudo tee /etc/sysctl.d/idea.conf  # works in secure folde
 printf 'Some Text\n' | sudo tee -a mysecurefile  # works in secure folders, tee -a: appends file
 
 
-myvar=$(cat << MYVAR_EOF
-This is the input of a variable
+# preferred over cat, since cat is an external command, read is built into bash
+IFS='' read -r -d '' myvar <<EOF
+  This is the input of a variable
 It can span
-several lines, but echo won't print linebreaks.
-printf will.
+    several lines, but echo won't print linebreaks.
+ printf will.
+EOF
+
+
+myvar=$(cat << MYVAR_EOF
+  This is the input of a variable
+It can span
+   several lines, but echo won't print linebreaks.
+ printf will.
 MYVAR_EOF
 )
 
@@ -812,6 +821,9 @@ awk -v var="$variable" 'BEGIN {print var}'  # -v variable name="..."
 
 # --------------------------------------------------------------------------------------------------
 # sed
+
+myvar='This contains some oldstring'
+sed -i 's/oldstring/newstring/g' <<< $myvar           # replace oldstring with newstring in a variable
 
 sed -i 's/oldstring/newstring/g' myfile           # replace oldstring with newstring in myfile.txt -i: write result inplace back to file
 sed -i '/pattern to match/d' myfile          # delete containing pattern in file
