@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # Prototypical bash snippets.
 # Use as reference.
 # If there are several ways of solving a specific task, the snippets here exhibit the, to our
@@ -19,7 +21,7 @@ set +x      # disable print every command to the output
 
 set -o pipefail     # bail out when a command at one pipe returns with a non-zero status
     # example:
-    notexistingcommand | echo "a" # dies after echo "a". Otherwise, it would not die
+    notexistingcommand || echo "a" # dies after echo "a". Otherwise, it would not die
 
 set -u      # treat unset variables as an error and exit immediately upon their usage
 
@@ -81,24 +83,24 @@ printf "$_"  # prints "printf"
 # arrays
 
 my_array=("a" "b" "c")
-my_array=("a", "b", "c")
+my_array=("a", "b", "c")  # linter warning: better use spaces, not commas
 my_array=(
     "a"
     "b"
     "c"
     )
 my_array+=('d')             # adds a new element
-echo ${my_array}            # prints a
-echo ${my_array[1]}         # prints b
-echo ${my_array[2]}         # prints c
-echo ${my_array[11000]}     # prints nothing
+echo "${my_array}"            # prints a
+echo "${my_array[1]}"         # prints b
+echo "${my_array[2]}"         # prints c
+echo "${my_array[11000]}"     # prints nothing
 echo -e "-e flag enables echo to process escape sequences, like \n, or \t. Works with single and double quotes"
 printf '%s\n' "${my_array[@]}"         # @ returns all values as sep string (here in a new line each)
 printf '%s\n' "${my_array[*]}"         # * returns all values as one string (here in the same line each)
 
 echo ${#my_array[@]}        # prints 3, i.e. the length of the array
 
-for i in ${my_array[@]} ; do
+for i in "${my_array[@]}" ; do
     echo "jo $i"
 done
 
@@ -118,7 +120,7 @@ mapfile -t my_array <<< "$my_multiline_string"
 printf '%s\n' "${my_array[@]}"    # prints 'this' 'is my'  'multiline\nstring' in separate lines
 
 for file in "${my_array[@]}" ; do  # iterates safely over an array and retains whitespaces
-    echo $file
+    echo "$file"
 done
 
 declare -a my_explicit_array=()             # explicitly declare an array variable
@@ -155,23 +157,23 @@ done
 # for loops
 
 for value in 0 1 3 ; do
-    echo $value  # prints 0 1 and 3
+    echo "$value"  # prints 0 1 and 3
 done
 
 for value in {1..5} ; do
-    echo $value  # prints 1 2 3 4 5
+    echo "$value"  # prints 1 2 3 4 5
 done
 
 for value in $(seq 1 5) ; do
-    echo $value # prints 1 2 3 4 5
+    echo "$value" # prints 1 2 3 4 5
 done
 
 my_array=("one" "two" "three")
 for value in "${my_array[@]}" ; do
-    echo $value
+    echo "$value"
 done
 
-for i in $(seq $(tput cols)); do printf '*'; done;  # one-liner for loop; print a character repeatedly; that's the best I came up with after 1 hr googling
+for i in $(seq "$(tput cols)"); do printf '*'; done;  # one-liner for loop; print a character repeatedly; that's the best I came up with after 1 hr googling
 
 # you can use  continue  and  break
 
@@ -183,9 +185,9 @@ retry=0
 maxretry=3
 until [ $retry -ge $maxretry ]
 do
-    docker pull $BUILD_DOCKER_IMAGE && break
+    docker pull "$build_docker_image" && break
     sleep 10
-    retry=$[$retry+1]
+    retry=$((retry+1))
 done
 
 
@@ -196,7 +198,7 @@ done
 
 # = is for strings
 if [ "$expressions" = 'should_be_evaluated_either_by_test_or_wrapped_into_square_brackets' ]; then
-    # ...
+    : # ...
 fi
 
 # -eq should be used for numbers, also  -ne, -gt -ge, -lt, -le
@@ -205,7 +207,7 @@ if [ 1 -eq 1 ] ; then
 fi
 
 if commands_should_not_go_into_square_brackets ; then
-    # ...
+    : # ...
 fi
 
 # == and != should be used for strings
@@ -235,7 +237,7 @@ if [[ 'Is any of the given substrings contained?' =~ ('any'|'mooooh') ]]; then
 fi
 
 
-if [ ! -f 'myfile' -o -x 'myexecutable' -a -f 'mythirdfile' ] ; then
+if [ ! -f 'myfile' ] || [ -x 'myexecutable' ] && [ -f 'mythirdfile' ] ; then
     echo 'Complex if-statement with files and and / or concatenators'
 fi
 
@@ -257,10 +259,10 @@ esac
 # --------------------------------------------------------------------------------------------------
 # inline command code execution
 myvar=$(pwd)
-myvar=`pwd`
+myvar=`pwd`  # `..` is legacy, cannot be nested, like $(..)
 
-echo "$(pwd)"  # some people prefer this over backticks
-echo "`pwd`"
+echo "$(pwd)"
+echo "`pwd`"  # `..` is legacy, cannot be nested, like $(..)
 
 
 # --------------------------------------------------------------------------------------------------
@@ -279,7 +281,7 @@ function die {
 # code that will be executed on certain signals
 
 function finish {
-  # cleanup code goes here
+  : # cleanup code goes here
 }
 trap finish EXIT  # calls finish on exit
 
@@ -303,7 +305,7 @@ fi
 
 # use ${FUNCNAME[0]} to refer to the current function's name
 function foo {
-    echo ${FUNCNAME[0]}  # prints foo
+    echo "${FUNCNAME[0]}"  # prints foo
 }
 
 
@@ -317,7 +319,7 @@ several lines.
 MYFILE_EOF
 
 
-echo 'Some Trext\n' >> path/to/my/file  # does not work in write-protected directories
+printf 'Some Trext\n' >> 'path/to/my/file'  # does not work in write-protected directories
 
 printf 'Some Text\n' | sudo tee /etc/sysctl.d/idea.conf  # works in secure folders, overwrites file
 printf 'Some Text\n' | sudo tee -a mysecurefile  # works in secure folders, tee -a: appends file
@@ -353,17 +355,17 @@ printf "Copy me to clipboard" | xclip -i -f -selection primary | xclip -i -selec
 
 function myFunction {
     local my_var=42  # local var does not leak outside function scope
-    return $my_var
+    return "$my_var"
 }
 
 
-echo "Script file name: " $0
-echo "Script's first parameter: " $1
+echo "Script file name: " "$0"
+echo "Script's first parameter: " "$1"
 
 function myFunction2 {
     echo "USAGE"
-    echo "Script's file name: " $0
-    echo "myFunction2's first param" $1  # != $1 of the script
+    echo "Script's file name: " "$0"
+    echo "myFunction2's first param" "$1"  # != $1 of the script
 }
 myFunction2 "The first param given to the function"
 
@@ -373,7 +375,7 @@ myFunction2 "The first param given to the function"
 
 if [ "$(uname)" == "Darwin" ] ; then
     echo "we're on Mac"
-elif [ `uname` == "Linux" ] ; then
+elif [ "$(uname)" == "Linux" ] ; then
     echo "we're on a Linux"
 fi
 
@@ -403,7 +405,7 @@ fi
 
 printf "The value of param #1 is $1\n"
 
-echo This '$(pwd)': $(pwd) equals '${PWD}': ${PWD} but not '${pwd}: ' ${pwd} stays empty
+echo '$(pwd)': $(pwd) equals '${PWD}': ${PWD} but not '${pwd}: ' ${pwd} - the latter stays empty
 
 
 absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the current script
@@ -469,6 +471,7 @@ while [ $# -gt 0 ] ; do
     -h|--help)
         show_usage
         exit 0
+        ;;
     *) # unknown option
         ;;
     esac
@@ -478,12 +481,12 @@ done
 # --------------------------------------------------------------------------------------------------
 # command line parsing -- Getopt
 
-SHORT=p:b:a:
-LONG=product:,build_type:,arch:
+short=p:b:a:
+long=product:,build_type:,arch:
 if [[ $# -lt 2 ]]; then
    show_usage "Incorrect number of parameters"
 fi
-PARSED=`getopt --options $SHORT --longoptions $LONG --name "$0" -- "$@"`
+PARSED=$(getopt --options "$short" --longoptions "$long" --name "$0" -- "$@")
 eval set -- "$PARSED"
 
 while true; do
@@ -623,19 +626,19 @@ printf "\e[1;32mSOMETHING IN BOLD GREEN\e[m\n"
 
 
 function echo-error {
-    printf "${RED}${@}${NC}\n"
+    printf "${red}${@}${nc}\n"
 }
 
 function echo-head {
-    printf "${CYAN}${@}${NC}\n"
+    printf "${cyan}${@}${nc}\n"
 }
 
 function echo-ok {
-    printf "${GREEN}${@}${NC}\n"
+    printf "${green}${@}${nc}\n"
 }
 
 function echo-warn {
-    printf "${YELLOW}${@}${NC}\n"
+    printf "${yellow}${@}${nc}\n"
 }
 
 
@@ -664,7 +667,7 @@ printf '\e[1;5mHallo\e[m\n'  # bold/bright & blinking
 for((i=16; i<256; i++)); do
     printf "\e[48;5;${i}m%03d" $i;
     printf '\e[0m';
-    [ ! $((($i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
+    [ ! $(((i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
 done
 
 
@@ -740,7 +743,7 @@ fi
 # --------------------------------------------------------------------------------------------------
 # date
 
-if [ `date +%w` -eq 0 ] ; then
+if [ $(date +%w) -eq 0 ] ; then
     echo "date +%w  prints weekday with 0 being Sunday"
 fi
 
@@ -764,7 +767,7 @@ res2=1
 (( res2 += 2 ))  # increases res2 to 3
 
 # or with expr:
-res2=`expr $a + $b`  # spaces are important
+res2=`expr $a + $b`  # spaces are important; prefer $((..))
 # res2=`expr ( $a + $b )`  # doesnt work - expr seems to have problems with parentheses in equations
 
 
@@ -823,7 +826,7 @@ awk -v var="$variable" 'BEGIN {print var}'  # -v variable name="..."
 # sed
 
 myvar='This contains some oldstring'
-sed -i 's/oldstring/newstring/g' <<< $myvar           # replace oldstring with newstring in a variable
+sed -i 's/oldstring/newstring/g' <<< "$myvar"   # replace oldstring with newstring in a variable
 
 sed -i 's/oldstring/newstring/g' myfile           # replace oldstring with newstring in myfile.txt -i: write result inplace back to file
 sed -i '/pattern to match/d' myfile          # delete containing pattern in file
@@ -923,7 +926,7 @@ rm -rf "${tmp_dir_path}"
 echo $(((RANDOM%1000+1)))  # create a random number
 
 
-echo *.log | xargs -n1 cp /dev/null  # delete the contents of multiple files
+echo -- *.log | xargs -n1 cp /dev/null  # delete the contents of multiple files
 
 
 # colorize tail-ed output with awk (your tail version has to support stream flushing)
@@ -977,10 +980,14 @@ function increment_count {
     #       The current count is: 1
     # .
 
-    local line="$(grep "$1" "$2")"
-    local current_count="$(echo $line | awk '{print $NF')"
-    local new_count="$(expr $current_count + 1)"
-    local new_line="$(echo $line | awk -v nc="$new_count" '$NF = nc; print}')"
+    local line
+    line="$(grep "$1" "$2")"
+    local current_count
+    current_count="$(echo "$line" | awk '{print $NF')"
+    local new_count
+    new_count="$(expr $current_count + 1)"
+    local new_line
+    new_line="$(echo "$line" | awk -v nc="$new_count" '$NF = nc; print}')"
     sed -i "s/$line/$new_line/" "$2"
 }
 
@@ -1010,7 +1017,7 @@ function is_folder_empty {
     # Checks if the given folder is empty.
     # Beware of whitespaces, maybe.
     # .
-    if [ -z "$(ls -A $1)" ]; then
+    if [ -z "$(ls -A "$1")" ]; then
         echo 'given folder is empty'
     else
         echo 'given folder is NOT empty'
@@ -1044,23 +1051,23 @@ function generate_random_pronounceable_word {
     # Example:
     #   ${FUNCNAME[0]} 7
 
-    local word_length=${1}
+    local word_length="${1}"
     local num_consonants_since_last_vovel=0
     local random_word
-    for v in $(seq 1 ${word_length}) ; do
+    for v in $(seq 1 "${word_length}") ; do
         if [[ num_consonants_since_last_vovel -ge 2 ]] || [[ $(((RANDOM%3))) -eq 0 ]] ; then
-            local random_letter=$(cat /dev/urandom | tr -dc 'aeiou' | head -c 1)
+            local random_letter
+            random_letter=$(tr -dc 'aeiou' < '/dev/urandom' | head -c 1)
             ((num_consonants_since_last_vovel = 0))
         else
-            local random_letter=$(cat /dev/urandom | \
-            tr -dc 'bcdfghjklmnpqrstvwxyz' | \
-            head -c 1)
+            local random_letter
+            random_letter=$(tr -dc 'bcdfghjklmnpqrstvwxyz' < '/dev/urandom' | head -c 1)
             ((num_consonants_since_last_vovel += 1))
         fi
-        random_word=${random_word}${random_letter}
+        random_word="${random_word}${random_letter}"
     done
 
-    echo ${random_word}
+    echo "${random_word}"
 }
 
 function show_usage {
@@ -1069,7 +1076,7 @@ function show_usage {
     # Usage:
     #   ${FUNCNAME[0]}
 
-    script_name="$(basename $0)"
+    script_name="$(basename "$0")"
 
     output='Usage:\n'
     output="${output} ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
@@ -1105,7 +1112,7 @@ function show_usage {
     #   ${FUNCNAME[0]}
     #   ${FUNCNAME[0]} "Incorrect number of parameters"
 
-   script_name="$(basename $0)"
+   script_name="$(basename "$0")"
 
     if ! [ -z "${2}" ] ; then
         printf "\e[0;31m${2}\e[0m\n"
