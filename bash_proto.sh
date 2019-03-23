@@ -412,7 +412,7 @@ absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # dire
 relative_script_file_path="${BASH_SOURCE[0]}"  # path to the script from where you are, I believe
 
 # --------------------------------------------------------------------------------------------------
-# command line parsing -- stupenduously simple -- it's so simple, don't do it
+# command line option parsing -- stupenduously simple -- it's so simple, don't do it
 
 
 if [ "$1" == "" ] ; then
@@ -426,7 +426,7 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# command line parsing -- very simple
+# command line option parsing -- very simple
 
 # just for help
 if [ "${1}" == '-h' ] || [ "${1}" == '--help' ] ; then
@@ -446,7 +446,7 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# command line parsing -- simple and complete, I guess -- I believe this is the best way
+# command line option parsing -- simple and complete, I guess -- I believe this is the best way
 
 logfile="default.log"
 send_alive_pushover=false
