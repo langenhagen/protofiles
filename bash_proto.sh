@@ -80,6 +80,23 @@ echo "$_"    # prints "echo" ; $_ is the invoking command
 printf "$_"  # prints "printf"
 
 # --------------------------------------------------------------------------------------------------
+# here-documents and here-strings
+
+# here-document - a multiline string input
+wc -w << EOF
+    here-documents
+    allow you to
+    import
+    several lines of text
+EOF
+
+# here-string - a single line string input
+wc -w <<< 'this should work'
+
+myvar='this works, too'
+wc -w <<< $myvar
+
+# --------------------------------------------------------------------------------------------------
 # arrays
 
 my_array=("a" "b" "c")
