@@ -26,7 +26,6 @@ set -o pipefail     # bail out when a command at one pipe returns with a non-zer
 set -u      # treat unset variables as an error and exit immediately upon their usage
 
 
-
 # --------------------------------------------------------------------------------------------------
 # output into stream
 
@@ -56,12 +55,14 @@ for i in A B C ; do
     :                   # empty loop is not possible without noOp, syntax error
 done
 
+
 # --------------------------------------------------------------------------------------------------
 # apostrophes and quotation marks
 
 printf "stuff inside double quotation marks expands, e.g. ${variables}, $variables, special\nchars like \\ and \ "
 printf 'stuff inside single quotation marks does not expand, at least not ${variables}, $variables, but special\nchars like \\ and \ '
 echo -e stuff without quotation resolves into several arguments which expand, at least not ${variables}, $variables, but special\nchars like \\ and \
+
 
 # --------------------------------------------------------------------------------------------------
 # Variables
@@ -79,6 +80,7 @@ readonly var=32
 echo "$_"    # prints "echo" ; $_ is the invoking command
 printf "$_"  # prints "printf"
 
+
 # --------------------------------------------------------------------------------------------------
 # here-documents and here-strings
 
@@ -95,6 +97,7 @@ wc -w <<< 'this should work'
 
 myvar='this works, too'
 wc -w <<< $myvar
+
 
 # --------------------------------------------------------------------------------------------------
 # arrays
