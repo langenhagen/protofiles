@@ -56,6 +56,12 @@ for i in A B C ; do
 done
 
 
+while : ; do
+  echo "Infinite loop"
+  sleep 1
+done
+
+
 # --------------------------------------------------------------------------------------------------
 # apostrophes and quotation marks
 
