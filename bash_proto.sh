@@ -145,7 +145,7 @@ mapfile -t my_array <<< "$my_multiline_string"
 
 printf '%s\n' "${my_array[@]}"    # prints 'this' 'is my'  'multiline\nstring' in separate lines
 
-for file in "${my_array[@]}" ; do  # iterates safely over an array and retains whitespaces
+for file in "${my_array[@]}" ; do  # iterates safely over an array and retain whitespaces
     echo "$file"
 done
 
@@ -1104,6 +1104,8 @@ function show_usage {
 
     script_name="$(basename "$0")"
 
+    output="${script_name}\n"
+    output="${output}\n"
     output='Usage:\n'
     output="${output} ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
     output="${output}\n"
@@ -1141,8 +1143,10 @@ function show_usage {
    script_name="$(basename "$0")"
 
     if ! [ -z "${2}" ] ; then
-        printf "\e[0;31m${2}\e[0m\n"
+        printf "\e[0;31m${2}\e[0m\n\n"
     fi
+    output="${script_name}\n"
+    output="${output}\n"
     output='Usage:\n'
     output="${output}  ${script_name} <my_param>\n         # <does something>\n"
     output="${output}  ${script_name} -h                   # prints the usage message\n"
