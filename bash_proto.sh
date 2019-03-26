@@ -133,6 +133,7 @@ done
 printf '%s\n' "${my_array[@]}"    # print an array with newline delimiting each entry
 
 
+
 my_folders_array=('.' '..' $(ls))  # puts ., .. and all the files/folders given by `ls` into an array
 
 
@@ -295,7 +296,7 @@ echo "`pwd`"  # `..` is legacy, cannot be nested, like $(..)
 # have a die function
 
 function die {
-    echo -e "$@"
+    echo -e "$*"
     exit 1
 }
 
@@ -438,6 +439,35 @@ absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # dire
 relative_script_file_path="${BASH_SOURCE[0]}"  # path to the script from where you are, I believe
 
 # --------------------------------------------------------------------------------------------------
+# command line options
+
+#consider following
+my_script some input "some more input"
+# or
+my_function some input "some more input"
+
+
+$* # refers to the input as a string - good in most cases
+for a in "$*"; do
+    echo $a; # prints five lines: some input some more input
+done
+
+for a in "$*"; do
+    echo $a; # prints just one line
+done
+
+
+$@ # refers to the input as an array - good when you want to iterate over it
+for a in "$@"; do
+    echo $a;  # prints three lines: some input "some more input"
+done
+
+for a in $@; do
+    echo $a;  # prints five lines: some input some more input
+done
+
+
+# --------------------------------------------------------------------------------------------------
 # command line option parsing -- stupenduously simple -- it's so simple, don't do it
 
 
@@ -491,7 +521,7 @@ while [ $# -gt 0 ] ; do
         ;;
     --)
         shift # past argument
-        command="$@"
+        command="$*"
         break
         ;;
     -h|--help)
@@ -512,7 +542,7 @@ long=product:,build_type:,arch:
 if [[ $# -lt 2 ]]; then
    show_usage "Incorrect number of parameters"
 fi
-PARSED=$(getopt --options "$short" --longoptions "$long" --name "$0" -- "$@")
+PARSED=$(getopt --options "$short" --longoptions "$long" --name "$0" -- "$*")
 eval set -- "$PARSED"
 
 while true; do
@@ -534,7 +564,7 @@ while true; do
             break
             ;;
         *)
-            show_usage "Unknown parameter: $@"
+            show_usage "Unknown parameter: $*"
             ;;
     esac
 done
@@ -652,19 +682,19 @@ printf "\e[1;32mSOMETHING IN BOLD GREEN\e[m\n"
 
 
 function echo-error {
-    printf "${red}${@}${nc}\n"
+    printf "${red}${*}${nc}\n"
 }
 
 function echo-head {
-    printf "${cyan}${@}${nc}\n"
+    printf "${cyan}${*}${nc}\n"
 }
 
 function echo-ok {
-    printf "${green}${@}${nc}\n"
+    printf "${green}${*}${nc}\n"
 }
 
 function echo-warn {
-    printf "${yellow}${@}${nc}\n"
+    printf "${yellow}${*}${nc}\n"
 }
 
 
