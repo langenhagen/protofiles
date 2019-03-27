@@ -310,7 +310,7 @@ function die {
 function finish {
   : # cleanup code goes here
 }
-trap finish EXIT  # calls finish on exit
+trap finish EXIT  # calls finish on exit, whether on script's normal exit, ctrl+c or via kill <pid>, but not kill -9
 
 trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 
@@ -353,7 +353,7 @@ printf 'Some Text\n' | sudo tee -a mysecurefile  # works in secure folders, tee 
 
 
 # preferred over cat, since cat is an external command, read is built into bash
-IFS='' read -r -d '' myvar <<EOF
+IFS= read -r -d '' myvar << EOF
   This is the input of a variable
 It can span
     several lines, but echo won't print linebreaks.
