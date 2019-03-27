@@ -9,6 +9,10 @@
 'foo {} and {!s}'.format('bar','baz')  # {} and {!s} print the __str__ result of the given object
 'foo {!r}'.format('bar')               # {!r} prints the __repr__ result of the given object
 
+# --------------------------------------------------------------------------------------------------
+# set -x equivalent
+
+python3 -m trace --ignore-dir /home/barn/miniconda3/ -t myscript
 
 # --------------------------------------------------------------------------------------------------
 # Concatenate strings in a List
