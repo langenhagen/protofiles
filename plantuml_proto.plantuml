@@ -14,6 +14,7 @@ allow_mixing
 ' set tab width
 ' skinparam tabSize 2
 
+' infos abt colors: http://plantuml.com/skinparam
 
 ' Full line comment
 /' several lines
@@ -42,6 +43,7 @@ package myPackage {
 note bottom
     This **bold** connected to the last class
     that has been //italic// defined!
+    Also, I like <back:salmon>salmon</back>.
 end note
 
 
@@ -73,6 +75,12 @@ note bottom of n1
     ====
     --Markdown-- //formatting// ~~elements~~
 end note
+
+legend left
+You can also have a legend.
+But for some reason beyond my understanding,
+you can only have one legend.
+endlegend
 
 
 ' the lenght of the arrows indicates the togetherness of the classes!
