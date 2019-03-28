@@ -88,6 +88,12 @@ printf "$_"  # prints "printf"
 
 
 # --------------------------------------------------------------------------------------------------
+## cd-ing in scripts:
+
+cd some/where || exit 1
+(cd  /home/jenkins/PROJECTS/ansible-playbooks/ && git pull) || exit 1
+
+# --------------------------------------------------------------------------------------------------
 # here-documents and here-strings
 
 # here-document - a multiline string input
