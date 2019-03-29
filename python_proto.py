@@ -58,6 +58,20 @@ for el in a:
 else:                           # optional for-else
     print("for's else gets triggered when no break statement is called")
 
+
+
+names = ['Anton', 'Beatrice', 'Carl']
+# instead of:
+i=0
+for name in names:
+    print(i, name)
+# rather do:
+for i, name in enumerate(name):
+    print(i, name)
+# or even:
+for i, name in enumerate(namem, start=1):
+    print(i, name)
+
 # --------------------------------------------------------------------------------------------------
 # Chained comparisons
 
