@@ -203,7 +203,18 @@ c.most_common(3)  # returns [('l', 3), ('o', 2), ('e', 1)]
 try:
     import pymongo  # nice idea :D
 except ImportError as err:
-    print err
+    print(err)
     sys.exit(1)
 except (IDontLikeYouException, YouAreBeingMeanException) as e:
-    prin "Catch multiple types of exceptions in one block"
+    print("Catch multiple types of exceptions in one block")
+
+
+# --------------------------------------------------------------------------------------------------
+# operator overloading
+
+class FunctionLike(object):
+    def __call__(self, a):  # overloads the () operator
+        print "I got called with %r!" % (a,)
+
+myfun = FunctionLike()
+myfun(10)
