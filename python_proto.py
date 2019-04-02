@@ -81,6 +81,21 @@ print( 7 < x < 13)  # True
 
 
 # --------------------------------------------------------------------------------------------------
+# if-elif-else
+
+if x:
+    print('A')
+elif y:
+    print('B')
+else:
+    print('C')
+
+
+# one line if
+a = b if b else 'mydefault'   # else case when b == '' or b == None
+
+
+# --------------------------------------------------------------------------------------------------
 # list comprehensions
 
 # Python's list comprehensions are awesome.
