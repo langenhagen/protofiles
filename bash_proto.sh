@@ -46,6 +46,9 @@ echo exclamation marks at the end without quotes DO work!  # works
 . "path/to/file/to/be/sourced.inc"
 . works/also/but/better/to/quote/when/whitespaces/can/occur
 
+source "path/to/file/to/be/sourced.inc"  # works too, but is not posix compatible
+
+
 # --------------------------------------------------------------------------------------------------
 # the no-op
 
