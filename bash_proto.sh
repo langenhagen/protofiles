@@ -191,6 +191,7 @@ done
 
 # --------------------------------------------------------------------------------------------------
 # for loops
+# you can use  continue  and  break
 
 for value in 0 1 3 ; do
     echo "$value"  # prints 0 1 and 3
@@ -211,8 +212,11 @@ done
 
 for i in $(seq "$(tput cols)"); do printf '*'; done;  # one-liner for loop; print a character repeatedly; that's the best I came up with after 1 hr googling
 
-# you can use  continue  and  break
 
+# also possible, but uncanny
+for ((i = 0; i < ${#my_array[@]}; i++)) do
+    echo "${my_array[$i]}"
+done
 
 # --------------------------------------------------------------------------------------------------
 # until loops
