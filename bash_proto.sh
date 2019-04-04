@@ -692,7 +692,8 @@ n='\e[m'
 printf "\e[1mSOMETHING IN BOLD\e[m\n"
 printf "\e[0;31mSOMETHING IN RED\e[m\n"
 printf "\e[1;32mSOMETHING IN BOLD GREEN\e[m\n"
-
+printf "\e[1;33mSOMETHING IN YELLOW\e[m\n"
+printf "\e[0;33mSOMETHING IN DARK yellow\e[m\n"
 
 function echo-error {
     printf "${red}${*}${nc}\n"
