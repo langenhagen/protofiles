@@ -742,6 +742,24 @@ done
 
 
 # --------------------------------------------------------------------------------------------------
+# read
+
+read -e -n10 -p "my prompt: " value  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
+read -t2 key  # read into key variable  with a 2 seconds timeout
+read -en1  # throw var away -e: makes read print a newline after character is read  -n1: read 1 char
+
+
+read -p "Please type your password: " -s  # -s: input not promted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
+
+read -n1 -p 'Press any key to exit' -s ; echo  # does not work with -e, therefore echo afterwards
+trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
+
+
+echo "Really?"
+read -r -p "<ctrl+c> to escape or enter to proceed"
+
+
+# --------------------------------------------------------------------------------------------------
 # read a variable line by line.
 while read -r line; do  # trims line
     echo "..." $line
@@ -780,19 +798,6 @@ if [ ! "$(command -v brew)" ] ; then
     echo "brew dows not exist"
 fi
 
-
-# --------------------------------------------------------------------------------------------------
-# read
-
-read -e -n10 -p "my prompt: " value  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
-read -t2 key  # read into key variable  with a 2 seconds timeout
-read -en1  # throw var away -e: makes read print a newline after character is read  -n1: read 1 char
-
-
-read -p "Please type your password: " -s  # -s: input not promted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
-
-read -n1 -p 'Press any key to exit' -s ; echo  # does not work with -e, therefore echo afterwards
-trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 
 # --------------------------------------------------------------------------------------------------
 # read yes no ? or yes or no :)
