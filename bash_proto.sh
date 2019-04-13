@@ -445,18 +445,16 @@ fi
 
 printf "The value of param #1 is $1\n"
 
-echo '$(pwd)': $(pwd) equals '${PWD}': ${PWD} but not '${pwd}: ' ${pwd} - the latter stays empty
+echo '$(pwd): '$(pwd)' equals ${PWD}: '${PWD}' but not ${pwd}: '${pwd}' - the latter stays empty'
 
 
 absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the current script
-relative_script_file_path="${BASH_SOURCE[0]}"  # path to the script from where you are, I believe
+relative_script_file_path="$(dirname ${BASH_SOURCE[0]})"  # path to the script from where you are, I believe
 
 
 # move the PWD to the script's directory
 absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${absolute_script_dir_path}" || exit 1
-
-
 
 
 # --------------------------------------------------------------------------------------------------
