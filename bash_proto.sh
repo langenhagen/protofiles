@@ -135,7 +135,7 @@ printf '%s\n' "${my_array[*]}"         # * returns all values as one string (her
 
 echo ${#my_array[@]}        # prints 3, i.e. the length of the array
 
-for i in "${my_array[@]}" ; do
+for i in "${my_array[@]}" ; do  # wrap arrays into quotation marks to retain items with spaces.
     echo "jo $i"
 done
 
@@ -146,12 +146,13 @@ printf '%s\n' "${my_array[@]}"    # print an array with newline delimiting each 
 my_folders_array=('.' '..' $(ls))  # puts ., .. and all the files/folders given by `ls` into an array
 
 
+# convert a multiline string to an array
 
 my_multiline_string="this
 is my
 multiline\nstring"
 
-mapfile -t my_array <<< "$my_multiline_string"
+mapfile -t my_array <<< "$my_multiline_string"  # its items may contain whitespaces and still are nicely iterable
 
 printf '%s\n' "${my_array[@]}"    # prints 'this' 'is my'  'multiline\nstring' in separate lines
 
