@@ -334,9 +334,21 @@ trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 # $0 refers to the called script's name, even when referenced in a file that is sourced by called script
 # ${BASH_SOURCE[0]} would refer to the sourced script name in such case
 # ${BASH_SOURCE[0]} is not sh compatible
+# both $0 and ${BASH_SOURCE[0]} dont follow to the roots of symlinks.
 
 # but there was an advantage for ${BASH_SOURCE[0]} which I don't recall currently
 echo "[$0] vs. [${BASH_SOURCE[0]}]"
+
+
+absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the current script
+absolute_script_dir_path_followed_through_symlinks="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+relative_script_file_path="$(dirname ${BASH_SOURCE[0]})"  # path to the script from where you are, I believe
+
+# move the PWD to the script's directory
+absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "${absolute_script_dir_path}" || exit 1
+
+
 
 if [ $# != 1 ] ; then
     printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"
@@ -347,6 +359,8 @@ fi
 function foo {
     echo "${FUNCNAME[0]}"  # prints foo
 }
+
+
 
 
 # --------------------------------------------------------------------------------------------------
@@ -446,15 +460,6 @@ fi
 printf "The value of param #1 is $1\n"
 
 echo '$(pwd): '$(pwd)' equals ${PWD}: '${PWD}' but not ${pwd}: '${pwd}' - the latter stays empty'
-
-
-absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the current script
-relative_script_file_path="$(dirname ${BASH_SOURCE[0]})"  # path to the script from where you are, I believe
-
-
-# move the PWD to the script's directory
-absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "${absolute_script_dir_path}" || exit 1
 
 
 # --------------------------------------------------------------------------------------------------
