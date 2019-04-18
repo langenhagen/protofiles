@@ -463,6 +463,9 @@ printf "The value of param #1 is $1\n"
 echo '$(pwd): '$(pwd)' equals ${PWD}: '${PWD}' but not ${pwd}: '${pwd}' - the latter stays empty'
 
 
+chmod +x "${script_dir}/hooks"/*  # this works
+chmod +x "${script_dir}/hooks/"*  # this does not
+
 # --------------------------------------------------------------------------------------------------
 # command line options
 
@@ -514,9 +517,15 @@ if [ "${1}" == '-h' ] || [ "${1}" == '--help' ] ; then
     show_usage
 fi
 
+# shorter but more cryptic
+if [[ "$1" =~ ^(-h|--help)$ ]] ; then
+    echo show_usage
+    exit 0
+fi
+
 
 # also:
-my_cmd_arg="${1}"
+my_cmd_arg="$1"
 if [ "$my_cmd_arg" == "" ] ; then
     echo "my cmd arg not provided"
 elif [ "$my_cmd_arg" == "Hello" ] ; then
@@ -814,17 +823,20 @@ fi
 # --------------------------------------------------------------------------------------------------
 # read yes no ? or yes or no :)
 
-# -e read line, i.e. go to next line after input is read
-read -e -n1 -p 'Continue? [yY/nN]: ' key
-if [ "$key" == 'y' ] || [ "$key" == 'Y' ] ; then
-    echo 'You pressed Yess'
+# -r: don't mangle backslashes -e read line, i.e. go to next line after input is read
+read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
+if [[ "$yes_no" = [yY] ]] ; then
+    echo 'You pressed Yes'
 fi
 
-read -e -n1 -p 'Continue? [yY/nN]: ' key
-if [ "$key" != 'y' ] && [ "$key" != 'Y' ] ; then
+read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
+if [[ "$yes_no" = [yY] ]] ; then
     echo 'Good Bye!'
     exit 1
 fi
+
+read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
+[[ "$yes_no" = [yY] ]] || (printf 'Cancel\n.'; exit 0 )
 
 
 # --------------------------------------------------------------------------------------------------
