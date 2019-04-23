@@ -42,6 +42,7 @@ echo exclamation marks at the end without quotes DO work!  # works
 
 # --------------------------------------------------------------------------------------------------
 # source files / sourcing files
+# calling 'exit' from within a sourced file makes the sourcing script exit
 
 . "path/to/file/to/be/sourced.inc"
 . works/also/but/better/to/quote/when/whitespaces/can/occur
@@ -49,6 +50,7 @@ echo exclamation marks at the end without quotes DO work!  # works
 source "path/to/file/to/be/sourced.inc"  # works too, but is not posix compatible
 
 source "path/to/file/to/be/sourced.inc" 'sourcing accepts' 'parameters' ':)'
+
 
 # --------------------------------------------------------------------------------------------------
 # the no-op
