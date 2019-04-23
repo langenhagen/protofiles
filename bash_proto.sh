@@ -48,6 +48,7 @@ echo exclamation marks at the end without quotes DO work!  # works
 
 source "path/to/file/to/be/sourced.inc"  # works too, but is not posix compatible
 
+source "path/to/file/to/be/sourced.inc" 'sourcing accepts' 'parameters' ':)'
 
 # --------------------------------------------------------------------------------------------------
 # the no-op
@@ -321,12 +322,23 @@ function die {
 # traps
 # code that will be executed on certain signals
 
-function finish {
+function on_exit {
   : # cleanup code goes here
 }
-trap finish EXIT  # calls finish on exit, whether on script's normal exit, ctrl+c or via kill <pid>, but not kill -9
+trap on_exit EXIT  # calls on_exit on exit, whether on script's normal exit, ctrl+c or via kill <pid>, but not kill -9
 
 trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
+
+
+# functions and traps can be defined inside e.g. if-clauses;
+if [ "$a" == 'yes' ] ; then
+   echo "Yesssss"
+   function on_exit {    # will be executed on program exit
+       echo "My clean"
+   }
+   trap on_exit EXIT
+fi
+
 
 
 # --------------------------------------------------------------------------------------------------
@@ -348,6 +360,9 @@ relative_script_file_path="$(dirname ${BASH_SOURCE[0]})"  # path to the script f
 # move the PWD to the script's directory
 absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${absolute_script_dir_path}" || exit 1
+
+# in the following some copy-pasteable snippets
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 
 
@@ -517,7 +532,7 @@ if [ "${1}" == '-h' ] || [ "${1}" == '--help' ] ; then
     show_usage
 fi
 
-# shorter but more cryptic
+# cryptic but short
 if [[ "$1" =~ ^(-h|--help)$ ]] ; then
     echo show_usage
     exit 0
