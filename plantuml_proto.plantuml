@@ -38,6 +38,9 @@ package myPackage {
         - i : int
         - j : double
     }
+
+    ' note "This is not possible in Plantuml 1.2017.15"
+    note "This is possible" as MyNote
 }
 
 note bottom
@@ -70,6 +73,11 @@ class BlueClass #blue {
 
 note "This is Me, a floatig note" as N1
 
+note "This is me\n\
+a multiline note.\n\
+true story.\n\
+Indentation is truncated to the indentation of the 'note' marker. " as MyMultilineNote
+
 note bottom of n1
     you can also have some explanation with
     ====
@@ -85,10 +93,10 @@ endlegend
 
 ' the lenght of the arrows indicates the togetherness of the classes!
 Together1 -[hidden]--- Together2
-TogetherRight -[hidden]left- TogetherLeft
-TogetherRight -[hidden]down- TogetherDown
-TogetherRight -up- TogetherDown
-TogetherRight -[hidden]- Together2
+TogetherLeft -[hidden]left- TogetherRight
+TogetherLeft -[hidden]down- TogetherDown
+TogetherLeft -up- TogetherUp
+TogetherLeft -[hidden]- Together2
 
 
 
