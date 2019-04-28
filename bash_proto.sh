@@ -128,6 +128,7 @@ my_array=(
     "c"
     )
 my_array+=('d')             # adds a new element
+my_array+=(${my_other_array[@]})  # appends another array.
 echo "${my_array}"            # prints a
 echo "${my_array[1]}"         # prints b
 echo "${my_array[2]}"         # prints c
@@ -142,7 +143,7 @@ for i in "${my_array[@]}" ; do  # wrap arrays into quotation marks to retain ite
     echo "jo $i"
 done
 
-printf '%s\n' "${my_array[@]}"    # print an array with newline delimiting each entry
+printf '> %s\n' "${my_array[@]}"    # print an array with preceeding > and newline delimiting each entry
 
 
 
@@ -201,7 +202,7 @@ for value in 0 1 3 ; do
     echo "$value"  # prints 0 1 and 3
 done
 
-for value in {1..5} ; do
+for value in {1..5} ; do                # doesn't work with variables
     echo "$value"  # prints 1 2 3 4 5
 done
 
@@ -351,7 +352,6 @@ fi
 # ${BASH_SOURCE[0]} is not sh compatible
 # both $0 and ${BASH_SOURCE[0]} dont follow to the roots of symlinks.
 
-# but there was an advantage for ${BASH_SOURCE[0]} which I don't recall currently
 echo "[$0] vs. [${BASH_SOURCE[0]}]"
 
 
@@ -536,7 +536,7 @@ fi
 
 # cryptic but short
 if [[ "$1" =~ ^(-h|--help)$ ]] ; then
-    echo show_usage
+    show_usage
     exit 0
 fi
 
@@ -553,13 +553,13 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# command line option parsing -- simple and complete, I guess -- I believe this is the best way
+# command line option parsing -- simple and complete. I believe this is the best way
 
 logfile="default.log"
 send_alive_pushover=false
-while [ $# -gt 0 ] ; do
+while [ "$#" -gt '0' ] ; do
     key="$1"
-    case ${key} in
+    case "${key}" in
     -a|--alive)
         send_alive_pushover=true
         ;;
@@ -625,7 +625,7 @@ done
 # command line parsing -- Getopts
 
 # CAUTION: getopts, unlike getopt, can just understand short names like -p but not long name, e.g. --page
-# CAUTION: IF you are using getopt, Mac OS X's getopt is not the gnu-getopt, but the bsd-getopt and behaves differently
+# CAUTION: Mac OS X uses bsd-getopt and behaves differently from Linux gnu-getopt
 
 while getopts ":s:p:" o; do
     case "${o}" in
