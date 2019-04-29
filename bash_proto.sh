@@ -558,8 +558,7 @@ fi
 logfile="default.log"
 send_alive_pushover=false
 while [ "$#" -gt '0' ] ; do
-    key="$1"
-    case "${key}" in
+    case "$1" in
     -a|--alive)
         send_alive_pushover=true
         ;;
@@ -1216,7 +1215,7 @@ function show_usage {
     output="${output}  If you want to use subshell related-variables, like e.g. \$PWD, wrap them"
     output="${output} into single quotation marks so that they will not be expanded ''"
     output="${output} immediately.\n"
-    printf "${output}"
+    printf "$output"
 }
 
 function show_usage {
@@ -1244,5 +1243,5 @@ function show_usage {
     output="${output}\n"
     output="${output}Example:\n"
     output="${output}  ${script_name} https://codereview.mycompany.com/15481\n"
-    printf "${output}"
+    printf "$output"
 }
