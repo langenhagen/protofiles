@@ -93,6 +93,11 @@ echo "$_"    # prints "echo" ; $_ is the invoking command
 printf "$_"  # prints "printf"
 
 
+# length of a string-variable
+mystring="hi there"
+echo "mystring has the length: ${#mystring}"
+
+
 # --------------------------------------------------------------------------------------------------
 ## cd-ing in scripts:
 
@@ -241,7 +246,7 @@ done
 
 # in if clauses, = and == are equivalent
 
-# = is for strings
+# = is for comparing strings
 if [ "$expressions" = 'should_be_evaluated_either_by_test_or_wrapped_into_square_brackets' ]; then
     : # ...
 fi
@@ -584,6 +589,41 @@ while [ "$#" -gt '0' ] ; do
     shift # past argument or value
 done
 
+
+# less elegant but allows for combined one-letter options in arbtrary order, like e.g. netstat tulpn
+logfile="default.log"
+send_alive_pushover=false
+while [ "$#" -gt '0' ] ; do
+    case "$1" in
+    --alive)
+        send_alive_pushover=true
+        ;;
+    -f|--file)
+        logfile="$2"
+        shift # past argument
+        ;;
+    --yesterday)
+        logfile="yesterday.log"
+        ;;
+    --)
+        shift # past argument
+        command="$*"
+        break
+        ;;
+    -h|--help)
+        show_usage
+        exit 0
+        ;;
+    -[[:alnum:]]*)
+        [[ "$1" =~ a ]] && send_alive_pushover=true
+        [[ "$1" =~ y ]] && logfile="yesterday.log"
+        ;;
+    *) # unknown option
+        ;;
+    esac
+    shift # past argument or value
+done
+
 # --------------------------------------------------------------------------------------------------
 # command line parsing -- Getopt
 
@@ -683,12 +723,14 @@ fi
 
 myvar=4
 printf '%0.s=' $(seq 1 $myvar);  printf '\n'  # prints $myvar number of '='
+printf '%-50s' 'gets trailing spaces until char 50'; printf 'another string starting after total 70 characters\n';
 
 printf "$PWD"; printf '%0.s.' $(seq ${#PWD} 50 );  printf '\n'
 
 printf "Pad the following number with up to 5 zeros %05d\n" 42;
 printf "Pad the following number with up to 5 spaces %5d\n" 42;
 printf "Pad some text%3s\n" Hi;
+
 
 # --------------------------------------------------------------------------------------------------
 # Coloring
@@ -726,6 +768,20 @@ b='\e[1m'
 rb='\e[1;31m'
 n='\e[m'
 
+# or define the color codes only when the output is a capable tty
+if [ -t 1 ] ; then
+    # if the current output is a terminal
+    ncolors="$(tput colors)"
+    if [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
+        # if the terminal supports colors
+        r='\e[31m'
+        g='\e[32m'
+        b='\e[1m'
+        rb='\e[1;31m'
+        n='\e[m'
+    fi
+fi
+
 printf "\e[1mSOMETHING IN BOLD\e[m\n"
 printf "\e[0;31mSOMETHING IN RED\e[m\n"
 printf "\e[1;32mSOMETHING IN BOLD GREEN\e[m\n"
@@ -751,9 +807,6 @@ function echo-warn {
 
 printf "%s${no_color}" "$line"  # prints a given string raw, i.e. with special characters like %
 
-printf '%-50s' 'Some filled string '; printf 'some string starting after 50 characters\n';
-
-
 # You can print bold, tinted, italic, underscored and even blinking text. Really fancy
 printf '\e[0mHallo\e[m\n'
 printf '\e[1mHallo\e[m\n'  # bold/bright
@@ -766,6 +819,20 @@ printf '\e[7mHallo\e[m\n'
 printf '\e[8mHallo\e[m\n'
 printf '\e[1;2mHallo\e[m\n'
 printf '\e[1;5mHallo\e[m\n'  # bold/bright & blinking
+
+# with tput:
+bold="$(tput bold)"
+underline="$(tput smul)"
+standout="$(tput smso)"
+normal="$(tput sgr0)"
+black="$(tput setaf 0)"
+red="$(tput setaf 1)"
+green="$(tput setaf 2)"
+yellow="$(tput setaf 3)"
+blue="$(tput setaf 4)"
+magenta="$(tput setaf 5)"
+cyan="$(tput setaf 6)"
+white="$(tput setaf 7)"
 
 # --------------------------------------------------------------------------------------------------
 # Print a color palette
@@ -840,6 +907,7 @@ fi
 # read yes no ? or yes or no :)
 
 # -r: don't mangle backslashes -e read line, i.e. go to next line after input is read
+# [yY] is bash pattern matching https://www.gnu.org/software/bash/manual/bashref.html#Pattern-Matching
 read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
 if [[ "$yes_no" = [yY] ]] ; then
     echo 'You pressed Yes'
@@ -921,6 +989,28 @@ echo "$myvar_with_default_value" # prints 'I am the default value'
 my_existing_var="Hello"
 myvar_with_default_value="${my_existing_var-I am the default value}"
 echo "$myvar_with_default_value" # prints 'Hello'
+
+
+# --------------------------------------------------------------------------------------------------
+# more variable manipulation - pattern deletion
+# found here: https://www.cyberciti.biz/faq/bash-get-basename-of-filename-or-directory-name/
+
+# ${VAR%regex-pattern} – Remove shortest file extension
+# ${VAR#regex-pattern} – Delete shortest prefix pattern
+# ${VAR%%regex-pattern} – Remove longest file extension
+# ${VAR##regex-pattern} – Delete longest prefix pattern
+
+file_path="path/to/looong/my/file.tar.gz"
+echo "${file_path#*/}"  # to/looong/my/file.tar.gz
+echo "${file_path##*/}"  # file.tar.gz,  builtin replacement for command "basename"
+
+echo "${file_path%.*}"  # path/to/looong/my/file.tar
+echo "${file_path%%.*}"  # path/to/looong/my/file
+
+
+script_name="${0##*/}"
+
+
 
 
 # --------------------------------------------------------------------------------------------------
@@ -1191,7 +1281,7 @@ function show_usage {
     # Usage:
     #   ${FUNCNAME[0]}
 
-    script_name="$(basename "$0")"
+    script_name="${0##*/}"
 
     output="${script_name}\n"
     output="${output}\n"
@@ -1229,7 +1319,7 @@ function show_usage {
     #   ${FUNCNAME[0]}
     #   ${FUNCNAME[0]} "Incorrect number of parameters"
 
-   script_name="$(basename "$0")"
+   script_name="${0##*/}"
 
     if ! [ -z "${2}" ] ; then
         printf "\e[0;31m${2}\e[0m\n\n"
