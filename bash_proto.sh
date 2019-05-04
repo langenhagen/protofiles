@@ -1283,29 +1283,28 @@ function show_usage {
 
     script_name="${0##*/}"
 
-    output="${script_name}\n"
-    output="${output}\n"
-    output='Usage:\n'
-    output="${output} ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
-    output="${output}\n"
-    output="${output}Examples:\n"
-    output="${output}  ${script_name}                      # lists the found git repositories\n"
-    output="${output}  ${script_name} -d 2 -- ls           # lists the found git repositories and"
-    output="${output} calls \`ls\` from all git repos in this file level and one level below\n"
-    output="${output}  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in"
-    output="${output} this file level and one level below but does not list the found gir repos\n"
-    output="${output}  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below"
-    output="${output} the given path\n"
-    output="${output}  ${script_name} -q -- realpath .     # prints the paths of all git repos"
-    output="${output} below the current path\n"
-    output="${output}  ${script_name} -h                   # prints the usage message\n"
-    output="${output}  ${script_name} --help               # prints the usage message\n"
-    output="${output}\n"
-    output="${output}Note:\n"
-    output="${output}  If you want to use subshell related-variables, like e.g. \$PWD, wrap them"
-    output="${output} into single quotation marks so that they will not be expanded ''"
-    output="${output} immediately.\n"
-    printf "$output"
+    msg="${script_name}\n"
+    msg="${msg}\n"
+    msg='Usage:\n'
+    msg="${msg} ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
+    msg="${msg}\n"
+    msg="${msg}Examples:\n"
+    msg="${msg}  ${script_name}                      # lists the found git repositories\n"
+    msg="${msg}  ${script_name} -d 2 -- ls           # lists the found git repositories and calls"
+    msg="${msg} \`ls\` from all git repos in this file level and one level below\n"
+    msg="${msg}  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in this file"
+    msg="${msg} level and one level below but does not list the found gir repos\n"
+    msg="${msg}  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the"
+    msg="${msg} given path\n"
+    msg="${msg}  ${script_name} -q -- realpath .     # prints the paths of all git repos below the"
+    msg="${msg} current path\n"
+    msg="${msg}  ${script_name} -h                   # prints the usage message\n"
+    msg="${msg}  ${script_name} --help               # prints the usage message\n"
+    msg="${msg}\n"
+    msg="${msg}Note:\n"
+    msg="${msg}  If you want to use subshell related-variables, like e.g. \$PWD, wrap them into"
+    msg="${msg} single quotation marks so that they will not be expanded '' immediately.\n"
+    printf "$msg"
 }
 
 function show_usage {
@@ -1319,19 +1318,20 @@ function show_usage {
     #   ${FUNCNAME[0]}
     #   ${FUNCNAME[0]} "Incorrect number of parameters"
 
-   script_name="${0##*/}"
-
     if ! [ -z "${2}" ] ; then
         printf "\e[0;31m${2}\e[0m\n\n"
     fi
-    output="${script_name}\n"
-    output="${output}\n"
-    output='Usage:\n'
-    output="${output}  ${script_name} <my_param>\n         # <does something>\n"
-    output="${output}  ${script_name} -h                   # prints the usage message\n"
-    output="${output}  ${script_name} --help               # prints the usage message\n"
-    output="${output}\n"
-    output="${output}Example:\n"
-    output="${output}  ${script_name} https://codereview.mycompany.com/15481\n"
-    printf "$output"
+
+    script_name="${0##*/}"
+
+    msg="${script_name}\n"
+    msg="${msg}\n"
+    msg='Usage:\n'
+    msg="${msg}  ${script_name} <my_param>\n         # <does something>\n"
+    msg="${msg}  ${script_name} -h                   # prints the usage message\n"
+    msg="${msg}  ${script_name} --help               # prints the usage message\n"
+    msg="${msg}\n"
+    msg="${msg}Example:\n"
+    msg="${msg}  ${script_name} https://codereview.mycompany.com/15481\n"
+    printf "$msg"
 }
