@@ -99,7 +99,7 @@ endlegend
 Together1 -[hidden]--- Together2
 TogetherLeft -[hidden]left- TogetherRight
 TogetherLeft -[hidden]down- TogetherDown
-TogetherLeft -up- TogetherUp
+TogetherLeft -[dashed]up- TogetherUp
 TogetherLeft -[hidden]- Together2
 
 
