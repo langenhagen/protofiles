@@ -1,4 +1,5 @@
 @startuml
+' creating several @startuml ... @enduml blocks creates several files
 
 scale 2400*1200
 
@@ -102,8 +103,6 @@ TogetherLeft -[hidden]down- TogetherDown
 TogetherLeft -[dashed]up- TogetherUp
 TogetherLeft -[hidden]- Together2
 
-
-
 ' Deployment Diagrams
 ' found here: http://plantuml.com/deployment-diagram
 
@@ -137,4 +136,30 @@ rectangle rectangle
 ' ]
 
 
+@enduml
+
+@startuml
+note left
+    Legacy Activity Diagrams
+    Activity Diagrams are apparently incompatible with other diagram types.
+    Also, note styles are apparently incompatible with note styles from Beta Activity Diagram Syntaxes.
+    read here: http://plantuml.com/activity-diagram-legacy
+end note
+
+(*) --> "My Activity"
+-->[You can put also labels] "Second Activity"
+--> (*)
+@enduml
+
+@startuml
+floating note
+    New (Beta) Activity diagram syntax
+    read here: http://plantuml.com/activity-diagram-beta
+end note
+
+start
+:Hello world;
+:This is defined on
+several **lines**;
+stop
 @enduml
