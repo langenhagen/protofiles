@@ -909,18 +909,18 @@ fi
 # -r: don't mangle backslashes -e read line, i.e. go to next line after input is read
 # [yY] is bash pattern matching https://www.gnu.org/software/bash/manual/bashref.html#Pattern-Matching
 read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
-if [[ "$yes_no" = [yY] ]] ; then
+if [[ "$yes_no" == [yY] ]] ; then
     echo 'You pressed Yes'
 fi
 
 read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
-if [[ "$yes_no" = [yY] ]] ; then
-    echo 'Good Bye!'
+if [[ "$yes_no" != [yY] ]] ; then
+    echo 'That is a No!'
     exit 1
 fi
 
 read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
-[[ "$yes_no" = [yY] ]] || (printf 'Cancel\n.'; exit 0 )
+[[ "$yes_no" == [yY] ]] || (printf 'Cancel\n.'; exit 0 )
 
 
 # --------------------------------------------------------------------------------------------------
