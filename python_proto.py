@@ -177,6 +177,14 @@ import pdb; pdb.set_trace();  # put it somewhere to set a breakpoint then press 
 import sys, pdb; pdb.Pdb(stdout=sys.__stdout__).set_trace()  # python debugger for robot framework
 
 # --------------------------------------------------------------------------------------------------
+# view the source code of some object
+
+import inspect
+lines = inspect.getsource(foo)
+print(lines)
+
+
+# --------------------------------------------------------------------------------------------------
 # timeit
 # The "timeit" module lets you measure the execution time of small bits of Python code
 
