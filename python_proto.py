@@ -241,3 +241,11 @@ class FunctionLike(object):
 
 myfun = FunctionLike()
 myfun(10)
+
+
+# --------------------------------------------------------------------------------------------------
+# temporary files
+
+import tempfile
+temp_dir = tempfile.mkdtemp()
+# you still have to delete manually
