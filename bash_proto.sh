@@ -98,6 +98,11 @@ mystring="hi there"
 echo "mystring has the length: ${#mystring}"
 
 
+my_var="Hello, Andi, Andi and Andi"
+echo "${my_var/Andi/Cat}"  # replace first occurence of Andi with Cat, does not overwrite the original var
+echo "${my_var//Andi/Cat}"  # replace all occurences of Andi with Cat, does not overwrite the original var
+
+
 # --------------------------------------------------------------------------------------------------
 ## cd-ing in scripts:
 
@@ -135,6 +140,8 @@ my_array=(
 my_array+=('d')             # adds a new element
 my_array+=(${my_other_array[@]})  # appends another array.
 echo "${my_array}"            # prints a
+printf '%s\n' "${my_array[@]:0:2}"  # sub-array from 0 with length 2
+printf '%s\n' "${my_array[@]:2}"  # sub-array from index 2 til end
 echo "${my_array[1]}"         # prints b
 echo "${my_array[2]}"         # prints c
 echo "${my_array[11000]}"     # prints nothing
@@ -142,14 +149,20 @@ echo -e "-e flag enables echo to process escape sequences, like \n, or \t. Works
 printf '%s\n' "${my_array[@]}"         # @ returns all values as sep string (here in a new line each)
 printf '%s\n' "${my_array[*]}"         # * returns all values as one string (here in the same line each)
 
+unset my_array[2]  # deletes the element from the array at the given index
+my_array=( "${my_array[@]//b/foo}" )  # replace all occurences of pattern in every string in every item with foo
+my_array=( "${my_array[@]/b/foo}" )  # replace first occurence of pattern in every string in every item with foo
+
 echo ${#my_array[@]}        # prints 3, i.e. the length of the array
 
-for i in "${my_array[@]}" ; do  # wrap arrays into quotation marks to retain items with spaces.
+# print an array with preceeding > and newline delimiting each entry
+
+printf '> %s\n' "${my_array[@]}"
+# iteration
+# wrap arrays into quotation marks to retain items with spaces.
+for i in "${my_array[@]}" ; do
     echo "jo $i"
 done
-
-printf '> %s\n' "${my_array[@]}"    # print an array with preceeding > and newline delimiting each entry
-
 
 
 my_folders_array=('.' '..' $(ls))  # puts ., .. and all the files/folders given by `ls` into an array
