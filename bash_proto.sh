@@ -139,7 +139,7 @@ my_array=(
     )
 my_array+=('d')             # adds a new element
 my_array+=(${my_other_array[@]})  # appends another array.
-echo "${my_array}"            # prints a
+echo "${my_array}"            # prints just a
 printf '%s\n' "${my_array[@]:0:2}"  # sub-array from 0 with length 2
 printf '%s\n' "${my_array[@]:2}"  # sub-array from index 2 til end
 echo "${my_array[1]}"         # prints b
@@ -680,7 +680,7 @@ done
 # CAUTION: Mac OS X uses bsd-getopt and behaves differently from Linux gnu-getopt
 
 while getopts ":s:p:" o; do
-    case "${o}" in
+    case "$o" in
         s)
             s=${OPTARG}
             ((s == 45 || s == 90)) || show_usage
@@ -720,11 +720,11 @@ fi
 # the return value into a variable:
 git pull --rebase origin master
 code="${?}"
-if [ "${code}" == 0 ] ; then
+if [ "$code" == 0 ] ; then
     echo 'all good'
-elif [ "${code}" == 1 ] ; then
+elif [ "$code" == 1 ] ; then
     echo 'branch does not exist'
-elif [ "${code}" == 128 ] ; then
+elif [ "$code" == 128 ] ; then
     echo 'merge conflicts'
 else
     echo 'unknown error'
@@ -1097,7 +1097,7 @@ text="$(eval "echo \"${text_template}\"")"  # eval echo evaluates the variables 
 
 echo "${text_template}"  # plain template text
 echo "-----------------------------------------------------------------"
-echo "${text}"  # text with templates substituted with the variables's values
+echo "$text"  # text with templates substituted with the variables's values
 
 
 # --------------------------------------------------------------------------------------------------
@@ -1156,7 +1156,7 @@ tail -f var/log/nginx/*.log | awk '
 
 # check if myfile is a binary
 myfile="05-2raumwohnung-ich_bin_der_regen.mp3"
-myfile_charset="$(file -i "${myfile}" | awk '{print $3}' | grep 'charset=binary')"
+myfile_charset="$(file -i "$myfile" | awk '{print $3}' | grep 'charset=binary')"
 if [[ $? -eq 0 ]] ; then
     echo "${myfile} is a binary file: ${myfile_charset}"
 else
@@ -1297,26 +1297,26 @@ function show_usage {
     script_name="${0##*/}"
 
     msg="${script_name}\n"
-    msg="${msg}\n"
-    msg='Usage:\n'
-    msg="${msg} ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
-    msg="${msg}\n"
-    msg="${msg}Examples:\n"
-    msg="${msg}  ${script_name}                      # lists the found git repositories\n"
-    msg="${msg}  ${script_name} -d 2 -- ls           # lists the found git repositories and calls"
-    msg="${msg} \`ls\` from all git repos in this file level and one level below\n"
-    msg="${msg}  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in this file"
-    msg="${msg} level and one level below but does not list the found gir repos\n"
-    msg="${msg}  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the"
-    msg="${msg} given path\n"
-    msg="${msg}  ${script_name} -q -- realpath .     # prints the paths of all git repos below the"
-    msg="${msg} current path\n"
-    msg="${msg}  ${script_name} -h                   # prints the usage message\n"
-    msg="${msg}  ${script_name} --help               # prints the usage message\n"
-    msg="${msg}\n"
-    msg="${msg}Note:\n"
-    msg="${msg}  If you want to use subshell related-variables, like e.g. \$PWD, wrap them into"
-    msg="${msg} single quotation marks so that they will not be expanded '' immediately.\n"
+    msg+="\n"
+    msg+="Usage:\n"
+    msg+=" ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
+    msg+="\n"
+    msg+="Examples:\n"
+    msg+="  ${script_name}                      # lists the found git repositories\n"
+    msg+="  ${script_name} -d 2 -- ls           # lists the found git repositories and calls \`ls\`"
+    msg+=" from all git repos in this file level and one level below\n"
+    msg+="  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in this file"
+    msg+=" level and one level below but does not list the found gir repos\n"
+    msg+="  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the given"
+    msg+=" path\n"
+    msg+="  ${script_name} -q -- realpath .     # prints the paths of all git repos below the"
+    msg+=" current path\n"
+    msg+="  ${script_name} -h                   # prints the usage message\n"
+    msg+="  ${script_name} --help               # prints the usage message\n"
+    msg+="\n"
+    msg+="Note:\n"
+    msg+="  If you want to use subshell related-variables, like e.g. \$PWD, wrap them into singele"
+    msg+=" quotation marks so that they will not be expanded '' immediately.\n"
     printf "$msg"
 }
 
@@ -1338,13 +1338,13 @@ function show_usage {
     script_name="${0##*/}"
 
     msg="${script_name}\n"
-    msg="${msg}\n"
-    msg='Usage:\n'
-    msg="${msg}  ${script_name} <my_param>\n         # <does something>\n"
-    msg="${msg}  ${script_name} -h                   # prints the usage message\n"
-    msg="${msg}  ${script_name} --help               # prints the usage message\n"
-    msg="${msg}\n"
-    msg="${msg}Example:\n"
-    msg="${msg}  ${script_name} https://codereview.mycompany.com/15481\n"
+    msg+="\n"
+    msg+="Usage:\n"
+    msg+="  ${script_name} <my_param>\n         # <does something>\n"
+    msg+="  ${script_name} -h                   # prints the usage message\n"
+    msg+="  ${script_name} --help               # prints the usage message\n"
+    msg+="\n"
+    msg+="Example:\n"
+    msg+="  ${script_name} https://codereview.mycompany.com/15481\n"
     printf "$msg"
 }
