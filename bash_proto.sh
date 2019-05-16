@@ -379,7 +379,7 @@ relative_script_file_path="$(dirname ${BASH_SOURCE[0]})"  # path to the script f
 
 # move the PWD to the script's directory
 absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "${absolute_script_dir_path}" || exit 1
+cd "$absolute_script_dir_path" || exit 1
 
 # in the following some copy-pasteable snippets
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -548,7 +548,7 @@ fi
 # command line option parsing -- very simple
 
 # just for help
-if [ "${1}" == '-h' ] || [ "${1}" == '--help' ] ; then
+if [ "$1" == '-h' ] || [ "$1" == '--help' ] ; then
     show_help
 fi
 
@@ -1077,12 +1077,12 @@ SECTION_EOF
 
 # for root secured files:
 hosts_file_path="/etc/hosts";
-sudo sed -i "/${begin_section_line}/,/${end_section_line}/d" "${hosts_file_path}";
-printf "${hosts_file_section}" | sudo tee -a "${hosts_file_path}";
+sudo sed -i "/${begin_section_line}/,/${end_section_line}/d" "$hosts_file_path";
+printf "$hosts_file_section" | sudo tee -a "$hosts_file_path";
 # OR for normal user files:
 hosts_file_path="/etc/hosts";
-sed -i "/${begin_section_line}/,/${end_section_line}/d" "${hosts_file_path}";
-printf "${hosts_file_section}" >> "${hosts_file_path}";
+sed -i "/${begin_section_line}/,/${end_section_line}/d" "$hosts_file_path";
+printf "$hosts_file_section" >> "$hosts_file_path";
 
 # --------------------------------------------------------------------------------------------------
 # templates text files and set the variables later
@@ -1095,7 +1095,7 @@ placeholder_2="Hundi"
 text_template="$(cat ${template_file})"
 text="$(eval "echo \"${text_template}\"")"  # eval echo evaluates the variables found in TEMPLATE_FILE
 
-echo "${text_template}"  # plain template text
+echo "$text_template"  # plain template text
 echo "-----------------------------------------------------------------"
 echo "$text"  # text with templates substituted with the variables's values
 
@@ -1116,14 +1116,14 @@ find . -maxdepth 3 -type d -iname "*.git" -execdir bash -c 'my_function_called_b
 # --------------------------------------------------------------------------------------------------
 # emulating ternary operator with boolean concatenation
 
-test "${1}" == '--moo' && is_moo='yes' || is_moo='no'
+test "$1" == '--moo' && is_moo='yes' || is_moo='no'
 
 
 # --------------------------------------------------------------------------------------------------
 # a nice and readable way to abstract variables to booleans
 
-is_moo="$(test "${1}" == '--moo'; echo ${?})"
-if [ "${is_moo}" -eq "0" ] ; then
+is_moo="$(test "$1" == '--moo'; echo ${?})"
+if [ "$is_moo" -eq "0" ] ; then
     echo 'Mooooo'
 fi
 
@@ -1134,9 +1134,9 @@ fi
 # possible workflow
 
 tmp_dir_path="$(mktemp -d)"
-cd "${tmp_dir_path}"
+cd "$tmp_dir_path"
 # ...
-rm -rf "${tmp_dir_path}"
+rm -rf "$tmp_dir_path"
 
 # --------------------------------------------------------------------------------------------------
 # functions / recipes
@@ -1165,11 +1165,11 @@ fi
 
 
 # grep to a variable and retain lines, e.g. for further grepping
-current_results=$(grep -i '#snippet' "${data_file}")
-printf '%s' "${current_results}"  | grep -i 'hello' # using '%s'  retains possible \n characters in
+current_results=$(grep -i '#snippet' "$data_file")
+printf '%s' "$current_results"  | grep -i 'hello' # using '%s'  retains possible \n characters in
                                                     # the content, i.e. they are given as \n as
                                                     # opposed to break lines like  printf
-                                                    # "${current_results}"  would do
+                                                    # "$current_results"  would do
 
 
 function increment_count {
@@ -1269,10 +1269,10 @@ function generate_random_pronounceable_word {
     # Example:
     #   ${FUNCNAME[0]} 7
 
-    local word_length="${1}"
+    local word_length="$1"
     local num_consonants_since_last_vovel=0
     local random_word
-    for v in $(seq 1 "${word_length}") ; do
+    for v in $(seq 1 "$word_length") ; do
         if [[ num_consonants_since_last_vovel -ge 2 ]] || [[ $(((RANDOM%3))) -eq 0 ]] ; then
             local random_letter
             random_letter=$(tr -dc 'aeiou' < '/dev/urandom' | head -c 1)
@@ -1285,7 +1285,7 @@ function generate_random_pronounceable_word {
         random_word="${random_word}${random_letter}"
     done
 
-    echo "${random_word}"
+    echo "$random_word"
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -1336,4 +1336,4 @@ HELP_EOF
 
 
 # [...]
-printf -- "${script_description}"
+printf -- "$script_description"
