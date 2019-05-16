@@ -549,12 +549,12 @@ fi
 
 # just for help
 if [ "${1}" == '-h' ] || [ "${1}" == '--help' ] ; then
-    show_usage
+    show_help
 fi
 
 # cryptic but short
 if [[ "$1" =~ ^(-h|--help)$ ]] ; then
-    show_usage
+    show_help
     exit 0
 fi
 
@@ -593,7 +593,7 @@ while [ "$#" -gt '0' ] ; do
         break
         ;;
     -h|--help)
-        show_usage
+        show_help
         exit 0
         ;;
     *) # unknown option
@@ -1288,63 +1288,52 @@ function generate_random_pronounceable_word {
     echo "${random_word}"
 }
 
+# --------------------------------------------------------------------------------------------------
+# show usage
+
+script_name="${0##*/}"
+IFS= read -r -d '' script_usage << USAGE_EOF
+Usage:
+ ${script_name} <gerrit-root-directory>
+
+Examples:
+  ${script_name} '/var/gerrit'    # Install the gerrit hooks into the given directory.
+USAGE_EOF
 function show_usage {
-    # Given the name of the script, prints the usage string.
-    #
-    # Usage:
-    #   ${FUNCNAME[0]}
-
-    script_name="${0##*/}"
-
     msg="${script_name}\n"
     msg+="\n"
-    msg+="Usage:\n"
-    msg+=" ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
-    msg+="\n"
-    msg+="Examples:\n"
-    msg+="  ${script_name}                      # lists the found git repositories\n"
-    msg+="  ${script_name} -d 2 -- ls           # lists the found git repositories and calls \`ls\`"
-    msg+=" from all git repos in this file level and one level below\n"
-    msg+="  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in this file"
-    msg+=" level and one level below but does not list the found gir repos\n"
-    msg+="  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the given"
-    msg+=" path\n"
-    msg+="  ${script_name} -q -- realpath .     # prints the paths of all git repos below the"
-    msg+=" current path\n"
-    msg+="  ${script_name} -h                   # prints the usage message\n"
-    msg+="  ${script_name} --help               # prints the usage message\n"
-    msg+="\n"
-    msg+="Note:\n"
-    msg+="  If you want to use subshell related-variables, like e.g. \$PWD, wrap them into singele"
-    msg+=" quotation marks so that they will not be expanded '' immediately.\n"
-    printf "$msg"
+    msg+="$script_usage"
+    printf -- "$msg"
 }
 
 function show_usage {
-    # Given the name of the script and an optional error message, prints this error message in color
-    # and prints the usage string.
-    #
-    # Usage:
-    #   ${FUNCNAME[0]} <error_message>
-    #
-    # Examples:
-    #   ${FUNCNAME[0]}
-    #   ${FUNCNAME[0]} "Incorrect number of parameters"
-
-    if ! [ -z "${2}" ] ; then
+    if [ -n "$1" ] ; then
         printf "\e[0;31m${2}\e[0m\n\n"
     fi
 
-    script_name="${0##*/}"
-
     msg="${script_name}\n"
     msg+="\n"
-    msg+="Usage:\n"
-    msg+="  ${script_name} <my_param>\n         # <does something>\n"
-    msg+="  ${script_name} -h                   # prints the usage message\n"
-    msg+="  ${script_name} --help               # prints the usage message\n"
-    msg+="\n"
-    msg+="Example:\n"
-    msg+="  ${script_name} https://codereview.mycompany.com/15481\n"
-    printf "$msg"
+    msg+="$script_usage"
+    printf -- "$msg"
 }
+
+
+# --------------------------------------------------------------------------------------------------
+## show_help
+
+script_name="${0##*/}"
+IFS= read -r -d '' script_description << HELP_EOF
+${script_name}
+Aids the installation of the gerrit hooks onto your gerrit instance.
+Overwrites potentially existing hooks.
+
+Usage:
+ ${script_name} <gerrit-root-directory>
+
+Examples:
+  ${script_name} '/var/gerrit'    # Install the gerrit hooks into the given directory.
+HELP_EOF
+
+
+# [...]
+printf -- "${script_description}"
