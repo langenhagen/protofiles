@@ -8,7 +8,6 @@
 # author: andreasl
 
 
-
 # --------------------------------------------------------------------------------------------------
 # set -e and +e
 # see https://www.quora.com/What-is-the-difference-between-set-+e-and-set-e-in-a-bash-script
@@ -402,12 +401,21 @@ function foo {
 # --------------------------------------------------------------------------------------------------
 # Use cat or better read or echo to create a file or a long text inside a variable
 
-cat > "path/to/my-file.txt" << MYFILE_EOF
-This is the input of the file
-It can span
-several lines.
+cat > "my-file.txt" << MYFILE_EOF
+   This is the input of the file
+  It can span
+ several lines
+   and retains
+  indentations.
 MYFILE_EOF
 
+cat > "my-file.txt" <<- MYFILE_EOF  # using <<- is also possible. I miss to see the difference to <<
+   This is the input of the file
+  It can span
+ several lines
+   and retains
+  indentations.
+MYFILE_EOF
 
 printf 'Some Trext\n' >> 'path/to/my/file'  # does not work in write-protected directories
 
