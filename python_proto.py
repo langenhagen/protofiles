@@ -183,6 +183,13 @@ import inspect
 lines = inspect.getsource(foo)
 print(lines)
 
+# --------------------------------------------------------------------------------------------------
+# view the signature of some classes
+
+from inspect import signature
+signature(Parent)  # <Signature (name: str, age: int, ugly: bool = False) -> None>
+signature(Child)
+
 
 # --------------------------------------------------------------------------------------------------
 # timeit
