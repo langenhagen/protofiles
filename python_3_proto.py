@@ -1,7 +1,6 @@
 # author: langenhagen
-# version: 18-10-22
 
-#!/usr/bin/env python3                 # the correct shebang for a Python 3 script
+#!/usr/bin/env python3              # the correct shebang for a Python 3 script
 
 # --------------------------------------------------------------------------------------------------
 #comments ^ docstrings
