@@ -135,7 +135,7 @@ my_array=(
     "a"
     "b"
     "c"
-    )
+)
 my_array+=('d')             # adds a new element
 my_array+=(${my_other_array[@]})  # appends another array.
 echo "${my_array}"            # prints just a
@@ -335,7 +335,7 @@ function die {
     exit 1
 }
 
-[ -n "$version" ] || die "Version string must not be empty"    # use like this, for example
+[ -z "$version" ] && die "Version string must not be empty"    # use like this, for example
 
 
 # --------------------------------------------------------------------------------------------------
@@ -581,7 +581,7 @@ fi
 # --------------------------------------------------------------------------------------------------
 # command line option parsing -- simple and complete. I believe this is the best way
 
-logfile="default.log"
+logfile="my.log"
 send_alive_pushover=false
 while [ "$#" -gt '0' ] ; do
     case "$1" in
@@ -612,7 +612,7 @@ done
 
 
 # less elegant but allows for combined one-letter options in arbtrary order, like e.g. netstat tulpn
-logfile="default.log"
+logfile="my.log"
 send_alive_pushover=false
 while [ "$#" -gt '0' ] ; do
     case "$1" in
@@ -1111,7 +1111,7 @@ echo "$text"  # text with templates substituted with the variables's values
 # --------------------------------------------------------------------------------------------------
 # idioms and caveats
 
-# using user defined functions with `find`'s `-exec` `-execdir` and so on
+# When using user defined functions with `find`'s `-exec` `-execdir` and so on
 # you have to call the function using `bash -c`
 function my_function_called_by_find {
     printf "Hi \e[1m${PWD}\e[0m\n"
