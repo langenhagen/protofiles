@@ -256,3 +256,17 @@ myfun(10)
 import tempfile
 temp_dir = tempfile.mkdtemp()
 # you still have to delete manually
+
+
+# --------------------------------------------------------------------------------------------------
+# Usage message
+
+import sys
+def show_usage():
+    print(
+        "Usage:\n"
+        "{} <file>\n"
+        "\n"
+        "Example:\n"
+        "{} ~/dev/script.py".format(sys.argv[0], sys.argv[0])
+    )
