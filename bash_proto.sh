@@ -97,9 +97,65 @@ mystring="hi there"
 echo "mystring has the length: ${#mystring}"
 
 
+# --------------------------------------------------------------------------------------------------
+# Default values
+# found here: https://unix.stackexchange.com/questions/122845/using-a-b-for-variable-assignment-in-scripts/122878
+# There are more variants to this, look in the link or for terms like "Parameter Expansion" and
+# "Parameter Substitution"
+
+
+# the following substitutes non-existent and empty vars:
+echo "$my_nonexisting_or_null_var"  # empty / non-existent
+my_substituted_var="${my_nonexisting_or_null_var:-default value}"
+echo "$my_substituted_var"  # prints 'default value'
+# vs.
+my_var="has value"
+echo "$my_var" # prints 'has value'
+my_substituted_var="${my_var:-default value}"
+echo "$my_substituted_var" # prints 'has value'
+
+# the following substitutes non-existing vars:
+myvar_with_default_value="${my_nonexisting_var-I am the default value}"
+echo "$myvar_with_default_value" # prints 'I am the default value'
+
+my_existing_var="Hello"
+myvar_with_default_value="${my_existing_var-I am the default value}"
+echo "$myvar_with_default_value" # prints 'Hello'
+
+
+# --------------------------------------------------------------------------------------------------
+# string substitution
+
+firstString="I am a Cat"
+secondString="Dog"
+echo "${firstString/Cat/$secondString}"    # prints "I am a Dog"
+
+
 my_var="Hello, Andi, Andi and Andi"
+echo "${my_var/Andi/}"  # remove first occurence of Andi, does not overwrite the original var
+echo "${my_var//Andi/}"  # remove all occurences of Andi, does not overwrite the original var
 echo "${my_var/Andi/Cat}"  # replace first occurence of Andi with Cat, does not overwrite the original var
 echo "${my_var//Andi/Cat}"  # replace all occurences of Andi with Cat, does not overwrite the original var
+
+
+# --------------------------------------------------------------------------------------------------
+# more variable manipulation - pattern deletion
+# found here: https://www.cyberciti.biz/faq/bash-get-basename-of-filename-or-directory-name/
+
+# ${VAR%regex-pattern} – Remove shortest file extension
+# ${VAR#regex-pattern} – Delete shortest prefix pattern
+# ${VAR%%regex-pattern} – Remove longest file extension
+# ${VAR##regex-pattern} – Delete longest prefix pattern
+
+file_path="path/to/looong/my/file.tar.gz"
+echo "${file_path#*/}"  # to/looong/my/file.tar.gz
+echo "${file_path##*/}"  # file.tar.gz,  builtin replacement for command "basename"
+
+echo "${file_path%.*}"  # path/to/looong/my/file.tar
+echo "${file_path%%.*}"  # path/to/looong/my/file
+
+
+script_name="${0##*/}"
 
 
 # --------------------------------------------------------------------------------------------------
@@ -984,62 +1040,6 @@ res3=a-b
 # absolute value of a number:
 my_negative_number=-10  # could also be 10
 my_absolute_number=${my_negative_number#-}
-
-
-# --------------------------------------------------------------------------------------------------
-# Default values in Bash
-# found here: https://unix.stackexchange.com/questions/122845/using-a-b-for-variable-assignment-in-scripts/122878
-# There are more variants to this, look in the link or for terms like "Parameter Expansion" and
-# "Parameter Substitution"
-
-
-# the following substitutes non-existent and empty vars:
-echo "$my_nonexisting_or_null_var"  # empty / non-existent
-my_substituted_var="${my_nonexisting_or_null_var:-default value}"
-echo "$my_substituted_var"  # prints 'default value'
-# vs.
-my_var="has value"
-echo "$my_var" # prints 'has value'
-my_substituted_var="${my_var:-default value}"
-echo "$my_substituted_var" # prints 'has value'
-
-# the following substitutes non-existing vars:
-myvar_with_default_value="${my_nonexisting_var-I am the default value}"
-echo "$myvar_with_default_value" # prints 'I am the default value'
-
-my_existing_var="Hello"
-myvar_with_default_value="${my_existing_var-I am the default value}"
-echo "$myvar_with_default_value" # prints 'Hello'
-
-
-# --------------------------------------------------------------------------------------------------
-# more variable manipulation - pattern deletion
-# found here: https://www.cyberciti.biz/faq/bash-get-basename-of-filename-or-directory-name/
-
-# ${VAR%regex-pattern} – Remove shortest file extension
-# ${VAR#regex-pattern} – Delete shortest prefix pattern
-# ${VAR%%regex-pattern} – Remove longest file extension
-# ${VAR##regex-pattern} – Delete longest prefix pattern
-
-file_path="path/to/looong/my/file.tar.gz"
-echo "${file_path#*/}"  # to/looong/my/file.tar.gz
-echo "${file_path##*/}"  # file.tar.gz,  builtin replacement for command "basename"
-
-echo "${file_path%.*}"  # path/to/looong/my/file.tar
-echo "${file_path%%.*}"  # path/to/looong/my/file
-
-
-script_name="${0##*/}"
-
-
-
-
-# --------------------------------------------------------------------------------------------------
-# string substitution
-
-firstString="I am a Cat"
-secondString="Dog"
-echo "${firstString/Cat/$secondString}"    # prints "I am a Dog"
 
 
 # --------------------------------------------------------------------------------------------------
