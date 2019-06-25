@@ -7,7 +7,6 @@
 #
 # author: andreasl
 
-
 # --------------------------------------------------------------------------------------------------
 # set -e and +e
 # see https://www.quora.com/What-is-the-difference-between-set-+e-and-set-e-in-a-bash-script
