@@ -6,6 +6,10 @@ scale 2400*1200
 ' change the font size for rectangle objects
 skinparam rectangleFontSize 28
 
+' works, too
+' skinparam rectangle {
+'     roundCorner 25
+' }
 
 ' specifying "allow_mixing" is necessary if you want to mix classes and UML stuff with deployment
 ' diagram stuff
@@ -76,7 +80,7 @@ class BlueClass #blue {
     + foo()
 }
 
-note "This is Me, a floatig note" as N1
+note "This is Me, a floatig note" as Note1
 
 note "This is me\n\
 a multiline note.\n\
@@ -98,7 +102,7 @@ endlegend
 
 ' the lenght of the arrows indicates the togetherness of the classes!
 Together1 -[hidden]--- Together2
-TogetherLeft -[hidden]left- TogetherRight
+TogetherLeft -[hidden]right- TogetherRight
 TogetherLeft -[hidden]down- TogetherDown
 TogetherLeft -[dashed]up- TogetherUp
 TogetherLeft -[hidden]- Together2
