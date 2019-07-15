@@ -4,6 +4,13 @@
 # This file contains general python and python2 related prototypical information
 
 # --------------------------------------------------------------------------------------------------
+# general help
+
+# You can call help() around a module, class, function, even on objects
+# in order to get more information
+
+
+# --------------------------------------------------------------------------------------------------
 # printing
 
 'foo {} and {!s}'.format('bar','baz')  # {} and {!s} print the __str__ result of the given object
