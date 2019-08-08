@@ -277,3 +277,44 @@ def show_usage():
         "Example:\n"
         "{} ~/dev/script.py".format(sys.argv[0], sys.argv[0])
     )
+
+
+# --------------------------------------------------------------------------------------------------
+# Pytest can test function return values against their docstrings:
+# pytest can ensure the results are correct:
+
+# According to, https://vincent.bernat.ch/en/blog/2019-sustainable-python-script
+# this works:
+
+def fizzbuzz(n, fizz, buzz):
+    """Compute fizzbuzz nth item given modulo values for fizz and buzz.
+
+    >>> fizzbuzz(5, fizz=3, buzz=5)
+    'buzz'
+    >>> fizzbuzz(3, fizz=3, buzz=5)
+    'fizz'
+    >>> fizzbuzz(15, fizz=3, buzz=5)
+    'fizzbuzz'
+    >>> fizzbuzz(4, fizz=3, buzz=5)
+    4
+    >>> fizzbuzz(4, fizz=4, buzz=6)
+    'fizz'
+
+    """
+    if n % fizz == 0 and n % buzz == 0:
+        return "fizzbuzz"
+    if n % fizz == 0:
+        return "fizz"
+    if n % buzz == 0:
+        return "buzz"
+    return n
+
+
+# Call pytest then like the following:
+# python3 -m pytest -v --doctest-modules ./<FILENAME>.py
+#
+# This requires the script name to end with .py. I dislike appending an extension
+# to a script name: the language is a technical detail that shouldn’t be exposed
+# to the user. However, it seems to be the easiest way to let test runners, like
+# pytest, discover the enclosed tests.
+
