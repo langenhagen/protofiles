@@ -593,7 +593,7 @@ done
 
 
 # --------------------------------------------------------------------------------------------------
-# command line option parsing -- stupenduously simple -- it's so simple, don't do it
+# command line option parsing -- naive -- it's so simple, don't do it
 
 
 if [ "$1" == "" ] ; then
@@ -605,6 +605,11 @@ else
     echo "my cmd arg is something else"
 fi
 
+# --------------------------------------------------------------------------------------------------
+# command line option parsing -- very simple with defaults
+
+myval="${1:-mydefault}"
+myotherval="${2:-myotherdefault}"
 
 # --------------------------------------------------------------------------------------------------
 # command line option parsing -- very simple
