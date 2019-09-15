@@ -606,7 +606,7 @@ else
 fi
 
 # --------------------------------------------------------------------------------------------------
-# command line option parsing -- very simple with defaults
+# command line option parsing -- very simple with defaults -- very concice
 
 myval="${1:-mydefault}"
 myotherval="${2:-myotherdefault}"
