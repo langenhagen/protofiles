@@ -824,7 +824,7 @@ printf "Pad some text%3s\n" Hi;
 for i in {0..15} ; do
     for j in {0..15} ; do
         ((c= j * 16 + i ));
-        printf "\x1b[38;5;${c}m%9s" "colour${c}";
+        printf "\x1b[38;5;${c}m%3s" "$c";
     done
     printf "\n";
 done
