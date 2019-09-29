@@ -136,6 +136,8 @@ echo "${my_var//Andi/}"  # remove all occurences of Andi, does not overwrite the
 echo "${my_var/Andi/Cat}"  # replace first occurence of Andi with Cat, does not overwrite the original var
 echo "${my_var//Andi/Cat}"  # replace all occurences of Andi with Cat, does not overwrite the original var
 
+echo ${PWD//\//\\\/}  # escape all occurences of '/' to '\/'
+
 
 # --------------------------------------------------------------------------------------------------
 # more variable manipulation - pattern deletion
