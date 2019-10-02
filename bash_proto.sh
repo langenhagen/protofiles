@@ -19,7 +19,7 @@ set +x      # disable print every command to the output
 
 set -o pipefail     # bail out when a command at one pipe returns with a non-zero status
     # example:
-    notexistingcommand || echo "a" # dies after echo "a". Otherwise, it would not die
+    notexistingcommand || printf 'a\n' # dies after echo "a". Otherwise, it would not die
 
 set -u      # treat unset variables as an error and exit immediately upon their usage
 
@@ -27,25 +27,25 @@ set -u      # treat unset variables as an error and exit immediately upon their 
 # --------------------------------------------------------------------------------------------------
 # output into stream
 
-echo "Output into nothing / silence the output" >/dev/null
-echo "Append output stream to file and error stream to same as output stream" >myfile.txt 2>&1
+printf 'Output into nothing / silence the output\n' >/dev/null
+printf 'Append output stream to file and error stream to same as output stream\n' >myfile.txt 2>&1
 
 echo "exclamation marks at the end with double quotes do NOT work!"  # doesn't work
 echo 'exclamation marks at the end with single quotes DO work!'  # works
 echo exclamation marks at the end without quotes DO work!  # works
 
->&2 echo "This outputs to the stderr error stream."
-(>&2 echo "error")  # To avoid interaction with other redirections use subshell
+>&2 echo 'This outputs to the stderr error stream.'
+(>&2 echo 'error')  # To avoid interaction with other redirections use subshell
 
 
 # --------------------------------------------------------------------------------------------------
 # source files / sourcing files
 # calling 'exit' from within a sourced file makes the sourcing script exit
 
-. "path/to/file/to/be/sourced.inc"
+. 'path/to/file/to/be/sourced.inc'
 . works/also/but/better/to/quote/when/whitespaces/can/occur
 
-source "path/to/file/to/be/sourced.inc"  # works too, but is not posix compatible
+source 'path/to/file/to/be/sourced.inc'  # works too, but is not posix compatible
 
 source "path/to/file/to/be/sourced.inc" 'sourcing accepts' 'parameters' ':)'
 
@@ -61,7 +61,7 @@ done
 
 
 while : ; do
-  echo "Infinite loop"
+  echo 'Infinite loop'
   sleep 1
 done
 
@@ -125,9 +125,9 @@ echo "$myvar_with_default_value" # prints 'Hello'
 # --------------------------------------------------------------------------------------------------
 # string substitution
 
-firstString="I am a Cat"
-secondString="Dog"
-echo "${firstString/Cat/$secondString}"    # prints "I am a Dog"
+firstString='I am a Cat'
+secondString='Dog'
+echo "${firstString/Cat/$secondString}"    # print "I am a Dog"
 
 
 my_var="Hello, Andi, Andi and Andi"
@@ -148,7 +148,7 @@ echo ${PWD//\//\\\/}  # escape all occurences of '/' to '\/'
 # ${VAR%%regex-pattern} – Remove longest file extension
 # ${VAR##regex-pattern} – Delete longest prefix pattern
 
-file_path="path/to/looong/my/file.tar.gz"
+file_path='path/to/looong/my/file.tar.gz'
 echo "${file_path#*/}"  # to/looong/my/file.tar.gz
 echo "${file_path##*/}"  # file.tar.gz,  builtin replacement for command "basename"
 
@@ -186,12 +186,12 @@ wc -w <<< $myvar
 # --------------------------------------------------------------------------------------------------
 # arrays
 
-my_array=("a" "b" "c")
-my_array=("a", "b", "c")  # linter warning: better use spaces, not commas
+my_array=('a' 'b' 'c')
+my_array=('a', 'b', 'c')  # linter warning: better use spaces, not commas
 my_array=(
-    "a"
-    "b"
-    "c"
+    'a'
+    'b'
+    'c'
 )
 my_array+=('d')             # adds a new element
 my_array+=(${my_other_array[@]})  # appends another array.
@@ -226,9 +226,9 @@ my_folders_array=('.' '..' $(ls))  # puts ., .. and all the files/folders given 
 
 # convert a multiline string to an array
 
-my_multiline_string="this
+my_multiline_string='this
 is my
-multiline\nstring"
+multiline\nstring'
 
 mapfile -t my_array <<< "$my_multiline_string"  # its items may contain whitespaces and still are nicely iterable
 
@@ -575,7 +575,7 @@ my_function some input "some more input"
 
 
 $* # refers to the input as a string - good in most cases
-for a in "$*"; do
+for a in $*; do
     echo $a; # prints five lines: some input some more input
 done
 
@@ -977,11 +977,11 @@ command -v xcrun >/dev/null && echo "Program exists, do something"
 
 
 if command -v apt >/dev/null ; then
-    echo "apt exists"
+    printf 'apt exists\n'
 fi
 
 if ! command -v brew >/dev/null ; then
-    echo "brew does not exist"
+    printf 'brew does not exist\n'
 fi
 
 
@@ -1238,9 +1238,9 @@ function check_if_this_computer_is_a_mac_2 {
     # There are other ways, but this is one.
     # .
     if [ "$(uname)" != "Darwin" ] ; then
-        echo "we're not on mac"
+        printf "we're not on mac\n"
     else
-        echo "We're on Mac"
+        printf "We're on Mac\n"
     fi
 }
 
@@ -1249,9 +1249,9 @@ function is_folder_empty {
     # Beware of whitespaces, maybe.
     # .
     if [ -z "$(ls -A "$1")" ]; then
-        echo 'given folder is empty'
+        printf 'given folder is empty\n'
     else
-        echo 'given folder is NOT empty'
+        printf 'given folder is NOT empty\n'
     fi
 }
 
@@ -1298,7 +1298,7 @@ function generate_random_pronounceable_word {
         random_word="${random_word}${random_letter}"
     done
 
-    echo "$random_word"
+    printf '%s\n' "$random_word"
 }
 
 # --------------------------------------------------------------------------------------------------
