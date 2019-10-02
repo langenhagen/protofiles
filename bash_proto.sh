@@ -11,7 +11,7 @@
 # set -e and +e
 # see https://www.quora.com/What-is-the-difference-between-set-+e-and-set-e-in-a-bash-script
 
-set -e      # the script immediately exits on error
+set -e      # the script immediately exits on error; errors in if-conditions still pass, though
 set +e      # any errors that occur down the line will NOT cause the script to exit, the script will keep running
 
 set -x      # print every command to the output -- you can use it as bash's debug mode; comments are not printed
