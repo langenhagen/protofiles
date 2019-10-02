@@ -976,11 +976,11 @@ command -v xcrun >/dev/null || die "Xcode command line tools are mandatory"
 command -v xcrun >/dev/null && echo "Program exists, do something"
 
 
-if command -v apt >/dev/null ; then
+if command -v apt >/dev/null; then
     printf 'apt exists\n'
 fi
 
-if ! command -v brew >/dev/null ; then
+if ! command -v brew >/dev/null; then
     printf 'brew does not exist\n'
 fi
 
