@@ -604,7 +604,6 @@ done
 # --------------------------------------------------------------------------------------------------
 # command line option parsing -- naive -- it's so simple, don't do it
 
-
 if [ "$1" == "" ] ; then
     echo "my cmd arg not provided"
     exit 1
@@ -647,7 +646,7 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# command line option parsing -- simple and complete. I believe this is the best way
+# command line option parsing -- simple and complete. I believe this is the best general way
 
 logfile="my.log"
 send_alive_pushover=false
