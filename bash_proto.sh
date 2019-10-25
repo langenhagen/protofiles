@@ -650,7 +650,7 @@ fi
 
 logfile="my.log"
 send_alive_pushover=false
-while [ "$#" -gt '0' ] ; do
+while [ "$#" -gt 0 ] ; do
     case "$1" in
     -a|--alive)
         send_alive_pushover=true
@@ -681,7 +681,7 @@ done
 # less elegant but allows for combined one-letter options in arbtrary order, like e.g. netstat tulpn
 logfile="my.log"
 send_alive_pushover=false
-while [ "$#" -gt '0' ] ; do
+while [ "$#" -gt 0 ] ; do
     case "$1" in
     --alive)
         send_alive_pushover=true
