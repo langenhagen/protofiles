@@ -824,30 +824,19 @@ printf "Pad some text%3s\n" Hi;
 # Coloring
 
 # color codes; overwrite with empty string '' if you want to disable them dynamically
-# The sheme appear to be combined values, with the first column definining form related things
-# (bold/italic, etc) and the second column defining colors. One can, however, apparently, omit
+# The sheme appear to be combined values, with the 1st column definining form related things
+# (bold/italic, etc) and the 2nd column defining colors. One can, however, apparently, omit
 # columns.
-
-# Print the 256 colors :)
-for i in {0..15} ; do
-    for j in {0..15} ; do
-        ((c= j * 16 + i ));
-        printf "\x1b[38;5;${c}m%3s" "$c";
-    done
-    printf "\n";
-done
-
 
 # color codes
 cyan='\e[1;36m'
 red='\e[31m'
 red='\e[0;31m'
 green='\e[1;32m'
+orange='\e[0;33m'
 yellow='\e[1;33m'
 nc='\e[m' # No Color
 bold='\e[1m'
-
-# \e can also appear as \033, but \e is shorter
 
 # or in short form
 r='\e[31m'
@@ -856,7 +845,25 @@ b='\e[1m'
 rb='\e[1;31m'
 n='\e[m'
 
-# or define the color codes only when the output is a capable tty
+# examples:
+printf "\e[1mSOMETHING IN BOLD\e[m\n"
+printf "\e[0;31mSOMETHING IN RED\e[m\n"
+printf "\e[1;32mSOMETHING IN BOLD GREEN\e[m\n"
+printf "\e[1;33mSOMETHING IN YELLOW\e[m\n"
+printf "\e[0;33mSOMETHING IN DARK YELLOW\e[m\n"
+
+# \e can also appear as \033, and apparently \x1b,but \e is shorter
+
+# Print the 256 colors :)
+for i in {0..15} ; do
+    for j in {0..15} ; do
+        ((c= j * 16 + i ));
+        printf "\e[38;5;${c}m%3s" "$c";  # 38 apparently means foreground, 48 apparently means background
+    done
+    printf "\n";
+done
+
+# define the color codes only when the output is a capable tty
 if [ -t 1 ] ; then
     # if the current output is a terminal
     ncolors="$(tput colors)"
@@ -870,28 +877,18 @@ if [ -t 1 ] ; then
     fi
 fi
 
-printf "\e[1mSOMETHING IN BOLD\e[m\n"
-printf "\e[0;31mSOMETHING IN RED\e[m\n"
-printf "\e[1;32mSOMETHING IN BOLD GREEN\e[m\n"
-printf "\e[1;33mSOMETHING IN YELLOW\e[m\n"
-printf "\e[0;33mSOMETHING IN DARK YELLOW\e[m\n"
-
 function echo-error {
     printf "${red}${*}${nc}\n"
 }
-
 function echo-head {
     printf "${cyan}${*}${nc}\n"
 }
-
 function echo-ok {
     printf "${green}${*}${nc}\n"
 }
-
 function echo-warn {
     printf "${yellow}${*}${nc}\n"
 }
-
 
 printf "%s${no_color}" "$line"  # prints a given string raw, i.e. with special characters like %
 
@@ -922,12 +919,17 @@ magenta="$(tput setaf 5)"
 cyan="$(tput setaf 6)"
 white="$(tput setaf 7)"
 
+# You can't colorize text from printf given via %s, but via %s:
+printf '%s\n' "\e[1mSOMETHING IN BOLD\e[m"  # doesn't work
+printf '%b\n' "\e[1mSOMETHING IN BOLD\e[m"  # work
+
+
 # --------------------------------------------------------------------------------------------------
 # Print a color palette
 # found here: https://askubuntu.com/questions/558280/changing-colour-of-text-and-background-of-terminal
 
 for((i=16; i<256; i++)); do
-    printf "\e[48;5;${i}m%03d" $i;
+    printf "\e[48;5;${i}m%03d" $i;  # apparently, 48 is for background colors, 38 would affect background colors
     printf '\e[0m';
     [ ! $(((i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
 done
