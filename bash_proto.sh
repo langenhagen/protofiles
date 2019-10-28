@@ -25,7 +25,7 @@ set -u      # treat unset variables as an error and exit immediately upon their 
 
 
 # --------------------------------------------------------------------------------------------------
-# output into stream
+# output and streams
 
 printf 'Output into nothing / silence the output\n' >/dev/null
 printf 'Append output stream to file and error stream to same as output stream\n' >myfile.txt 2>&1
@@ -36,6 +36,13 @@ echo exclamation marks at the end without quotes DO work!  # works
 
 >&2 echo 'This outputs to the stderr error stream.'
 (>&2 echo 'error')  # To avoid interaction with other redirections use subshell
+
+
+# print every character repeatedly for a fixed number
+printf '=%.0s' {1..100}  # doesn't work with variables
+
+# print every character repeatedly for a variable number
+printf '=%.0s' $(seq "$(tput cols)") # print a character repeatedly
 
 
 # --------------------------------------------------------------------------------------------------
@@ -296,13 +303,6 @@ for value in "${my_array[@]}" ; do
     echo "$value"
 done
 
-for i in $(seq "$(tput cols)"); do printf '*'; done;  # one-liner for loop; print a character repeatedly; that's the best I came up with after 1 hr googling
-
-
-# also possible, but uncanny
-for ((i = 0; i < ${#my_array[@]}; i++)) do
-    echo "${my_array[$i]}"
-done
 
 # --------------------------------------------------------------------------------------------------
 # until loops
