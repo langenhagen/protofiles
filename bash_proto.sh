@@ -395,7 +395,7 @@ echo "`pwd`"  # `..` is legacy, cannot be nested, like $(..)
 # have a die function
 
 function die {
-    echo -e "$*"
+    printf '%s\n' "$*"
     exit 1
 }
 
