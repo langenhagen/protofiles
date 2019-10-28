@@ -980,8 +980,8 @@ sleep 5d # Waits 5 days.
 
 command -v  MYPRGRAM  # similar to `which`, but builtin, and thus generally preferred
 
-command -v xcrun >/dev/null || die "Xcode command line tools are mandatory"
-command -v xcrun >/dev/null && echo "Program exists, do something"
+command -v xcrun >/dev/null || die 'Xcode command line tools are mandatory'
+command -v xcrun >/dev/null && echo 'Program exists, do something'
 
 
 if command -v apt >/dev/null; then
