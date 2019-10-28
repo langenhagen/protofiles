@@ -1327,6 +1327,7 @@ function show_usage {
     printf -- "$msg"
 }
 
+script_name="${0##*/}"
 function show_usage {
     if [ -n "$1" ] ; then
         printf "\e[0;31m${2}\e[0m\n\n"
