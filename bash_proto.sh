@@ -103,12 +103,11 @@ mystring="hi there"
 echo "mystring has the length: ${#mystring}"
 
 
-# --------------------------------------------------------------------------------------------------
-# Default values
-# found here: https://unix.stackexchange.com/questions/122845/using-a-b-for-variable-assignment-in-scripts/122878
-# There are more variants to this, look in the link or for terms like "Parameter Expansion" and
-# "Parameter Substitution"
+"Parameter Expansion" and "Parameter Substitution"
 
+
+# --------------------------------------------------------------------------------------------------
+# defaults - parameter substitution / parameter expansion
 
 # the following substitutes non-existent and empty vars:
 echo "$my_nonexisting_or_null_var"  # empty / non-existent
@@ -128,20 +127,29 @@ my_existing_var="Hello"
 myvar_with_default_value="${my_existing_var-I am the default value}"
 echo "$myvar_with_default_value" # prints 'Hello'
 
-
 # --------------------------------------------------------------------------------------------------
-# string substitution
+# string subsutution / parameter substitution / parameter expansion
 
 firstString='I am a Cat'
 secondString='Dog'
 echo "${firstString/Cat/$secondString}"    # print "I am a Dog"
 
-
 my_var="Hello, Andi, Andi and Andi"
+
+echo "${my_var#Hello, }"  #remove any prefix from the expanded value that matches the pattern
+echo "${my_var%, Andi and Andi}"  #remove any suffx from the expanded value that matches the pattern
+
 echo "${my_var/Andi/}"  # remove first occurence of Andi, does not overwrite the original var
 echo "${my_var//Andi/}"  # remove all occurences of Andi, does not overwrite the original var
 echo "${my_var/Andi/Cat}"  # replace first occurence of Andi with Cat, does not overwrite the original var
 echo "${my_var//Andi/Cat}"  # replace all occurences of Andi with Cat, does not overwrite the original var
+
+echo ${my_var:18:3} # retieve a substring by offset and length
+echo ${my_var:((-4)):4} # retieve a substring by negative offset and length
+
+offest=-4
+echo ${my_var:$offset:4} # works, too
+
 
 echo ${PWD//\//\\\/}  # escape all occurences of '/' to '\/'
 
