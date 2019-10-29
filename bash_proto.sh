@@ -103,9 +103,6 @@ mystring="hi there"
 echo "mystring has the length: ${#mystring}"
 
 
-"Parameter Expansion" and "Parameter Substitution"
-
-
 # --------------------------------------------------------------------------------------------------
 # defaults - parameter substitution / parameter expansion
 
@@ -155,18 +152,20 @@ echo ${PWD//\//\\\/}  # escape all occurences of '/' to '\/'
 
 
 # --------------------------------------------------------------------------------------------------
-# more variable manipulation - pattern deletion
-# found here: https://www.cyberciti.biz/faq/bash-get-basename-of-filename-or-directory-name/
+# pattern deletion / parameter expansion
 
 # ${VAR%regex-pattern} – Remove shortest file extension
 # ${VAR#regex-pattern} – Delete shortest prefix pattern
 # ${VAR%%regex-pattern} – Remove longest file extension
 # ${VAR##regex-pattern} – Delete longest prefix pattern
 
+my_var="Hello, Andi, Andi and Andi"
 file_path='path/to/looong/my/file.tar.gz'
+echo "${my_var#Hello, }"  #remove any prefix from the expanded value that matches the pattern
 echo "${file_path#*/}"  # to/looong/my/file.tar.gz
 echo "${file_path##*/}"  # file.tar.gz,  builtin replacement for command "basename"
 
+echo "${my_var%, Andi and Andi}"  #remove any suffx from the expanded value that matches the pattern
 echo "${file_path%.*}"  # path/to/looong/my/file.tar
 echo "${file_path%%.*}"  # path/to/looong/my/file
 
