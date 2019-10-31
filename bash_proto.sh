@@ -1366,3 +1366,12 @@ HELP_EOF
 
 # [...]
 printf -- "$script_description"
+
+
+# --------------------------------------------------------------------------------------------------
+# CURL
+
+curl \
+  --request POST \
+  --data '{"service_id": "ovs_shz","store": "SHZ"}' \
+  https://api-proxy.shz.de/celeraone/user/register
