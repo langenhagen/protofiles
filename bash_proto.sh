@@ -430,6 +430,8 @@ if [ "$a" == 'yes' ] ; then
    trap on_exit EXIT
 fi
 
+trap - EXIT  # disable a trap
+
 
 # --------------------------------------------------------------------------------------------------
 # use $0 or better ${BASH_SOURCE[0]} to refer to the script's name
