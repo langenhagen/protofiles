@@ -335,11 +335,11 @@ if [ "$expressions" = 'should_be_evaluated_either_by_test_or_wrapped_into_square
 fi
 
 # -eq should be used for numbers, also  -ne, -gt -ge, -lt, -le
-if [ 1 -eq 1 ] ; then
+if [ 1 -eq 1 ]; then
     echo "WELT";
 fi
 
-if commands_should_not_go_into_square_brackets ; then
+if commands_should_not_go_into_square_brackets; then
     : # ...
 fi
 
@@ -354,14 +354,14 @@ fi
 
 
 
-if [[ "Does this string contain a substring?" == *"contain a"* ]] ; then
+if [[ "Does this string contain a substring?" == *"contain a"* ]]; then
     # note the [[ ... ]], if it is [ ... ], it's the other way round.
     # Works also with "Does" and "ubstring?", i.e. at the edges.
     # is case specific.
     echo 'Substring found!'
 fi
 
-if [[ "Also check for regular expressions is possible with equalstilde" =~ r.*r ]] ; then
+if [[ "Also check for regular expressions is possible with equalstilde" =~ r.*r ]]; then
     echo "Regex found!"
 fi
 
@@ -370,7 +370,7 @@ if [[ 'Is any of the given substrings contained?' =~ ('any'|'mooooh') ]]; then
 fi
 
 
-if [ ! -f 'myfile' ] || [ -x 'myexecutable' ] && [ -f 'mythirdfile' ] ; then
+if [ ! -f 'myfile' ] || [ -x 'myexecutable' ] && [ -f 'mythirdfile' ]; then
     echo 'Complex if-statement with files and and / or concatenators'
 fi
 
@@ -422,7 +422,7 @@ trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 
 
 # functions and traps can be defined inside e.g. if-clauses;
-if [ "$a" == 'yes' ] ; then
+if [ "$a" == 'yes' ]; then
    echo "Yesssss"
    function on_exit {    # will be executed on program exit
        echo "My clean"
@@ -457,7 +457,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 
 
-if [ $# != 1 ] ; then
+if [ $# != 1 ]; then
     printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"
     exit 1
 fi
@@ -543,13 +543,13 @@ myFunction2 "The first param given to the function"
 # --------------------------------------------------------------------------------------------------
 # Check if current computer is a Mac
 
-if [ "$(uname)" == "Darwin" ] ; then
+if [ "$(uname)" == "Darwin" ]; then
     echo "we're on Mac"
-elif [ "$(uname)" == "Linux" ] ; then
+elif [ "$(uname)" == "Linux" ]; then
     echo "we're on a Linux"
 fi
 
-# if echo $HOME | grep -q "/Users/" ; then  # it's most probably a mac
+# if echo $HOME | grep -q "/Users/"; then  # it's most probably a mac
 
 
 # --------------------------------------------------------------------------------------------------
@@ -613,10 +613,10 @@ done
 # --------------------------------------------------------------------------------------------------
 # command line option parsing -- naive -- it's so simple, don't do it
 
-if [ "$1" == "" ] ; then
+if [ "$1" == "" ]; then
     echo "my cmd arg not provided"
     exit 1
-elif [ "$1" == "Hello" ] ; then
+elif [ "$1" == "Hello" ]; then
     echo "my cmd arg is Hello"
 else
     echo "my cmd arg is something else"
@@ -632,12 +632,12 @@ myotherval="${2:-myotherdefault}"
 # command line option parsing -- very simple
 
 # just for help
-if [ "$1" == '-h' ] || [ "$1" == '--help' ] ; then
+if [ "$1" == '-h' ] || [ "$1" == '--help' ]; then
     show_help
 fi
 
 # cryptic but short
-if [[ "$1" =~ ^(-h|--help)$ ]] ; then
+if [[ "$1" =~ ^(-h|--help)$ ]]; then
     show_help
     exit 0
 fi
@@ -645,9 +645,9 @@ fi
 
 # also:
 my_cmd_arg="$1"
-if [ "$my_cmd_arg" == "" ] ; then
+if [ "$my_cmd_arg" == "" ]; then
     echo "my cmd arg not provided"
-elif [ "$my_cmd_arg" == "Hello" ] ; then
+elif [ "$my_cmd_arg" == "Hello" ]; then
     echo "my cmd arg is Hello"
 else
     echo "my cmd arg is something else"
@@ -791,12 +791,12 @@ echo "p = ${p}"
 
 
 cd ~
-if [ $? != 0 ] ; then
+if [ $? != 0 ]; then
     echo 'Error!'  # does not go in here
 fi
 
 cd does/not/exist
-if [ $? != 0 ] ; then
+if [ $? != 0 ]; then
     echo 'Error!'  # goes in here. I recommend this way to test $?. It works
 fi
 
@@ -804,11 +804,11 @@ fi
 # the return value into a variable:
 git pull --rebase origin master
 code="${?}"
-if [ "$code" == 0 ] ; then
+if [ "$code" == 0 ]; then
     echo 'all good'
-elif [ "$code" == 1 ] ; then
+elif [ "$code" == 1 ]; then
     echo 'branch does not exist'
-elif [ "$code" == 128 ] ; then
+elif [ "$code" == 128 ]; then
     echo 'merge conflicts'
 else
     echo 'unknown error'
@@ -873,7 +873,7 @@ for i in {0..15} ; do
 done
 
 # define the color codes only when the output is a capable tty
-if [ -t 1 ] ; then
+if [ -t 1 ]; then
     # if the current output is a terminal
     ncolors="$(tput colors)"
     if [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
@@ -1008,12 +1008,12 @@ fi
 # -r: don't mangle backslashes -e read line, i.e. go to next line after input is read
 # [yY] is bash pattern matching https://www.gnu.org/software/bash/manual/bashref.html#Pattern-Matching
 read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
-if [[ "$yes_no" == [yY] ]] ; then
+if [[ "$yes_no" == [yY] ]]; then
     echo 'You pressed Yes'
 fi
 
 read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
-if [[ "$yes_no" != [yY] ]] ; then
+if [[ "$yes_no" != [yY] ]]; then
     echo 'That is a No!'
     exit 1
 fi
@@ -1025,7 +1025,7 @@ read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
 # --------------------------------------------------------------------------------------------------
 # date
 
-if [ $(date +%w) -eq 0 ] ; then
+if [ $(date +%w) -eq 0 ]; then
     echo "date +%w  prints weekday with 0 being Sunday"
 fi
 
@@ -1153,7 +1153,7 @@ test "$1" == '--moo' && is_moo='yes' || is_moo='no'
 # a nice and readable way to abstract variables to booleans
 
 is_moo="$(test "$1" == '--moo'; echo ${?})"
-if [ "$is_moo" -eq "0" ] ; then
+if [ "$is_moo" -eq "0" ]; then
     echo 'Mooooo'
 fi
 
@@ -1187,7 +1187,7 @@ tail -f var/log/nginx/*.log | awk '
 # check if myfile is a binary
 myfile="05-2raumwohnung-ich_bin_der_regen.mp3"
 myfile_charset="$(file -i "$myfile" | awk '{print $3}' | grep 'charset=binary')"
-if [[ $? -eq 0 ]] ; then
+if [[ $? -eq 0 ]]; then
     echo "${myfile} is a binary file: ${myfile_charset}"
 else
     echo "${myfile} is not a binary file: ${myfile_charset}"
@@ -1243,7 +1243,7 @@ function check_if_this_computer_is_a_mac {
     # Checks if the given unix system is a mac by checking the home directory
     # There are other ways, but this is one.
     # .
-    if echo $HOME | grep -v -q "/Users/" ; then  # grep -q: quiet
+    if echo $HOME | grep -v -q "/Users/"; then  # grep -q: quiet
         echo "we're not on mac"
     else
         echo "we're on mac"
@@ -1254,7 +1254,7 @@ function check_if_this_computer_is_a_mac_2 {
     # Checks if the given unix system is a mac by checking the home directory
     # There are other ways, but this is one.
     # .
-    if [ "$(uname)" != "Darwin" ] ; then
+    if [ "$(uname)" != "Darwin" ]; then
         printf "we're not on mac\n"
     else
         printf "We're on Mac\n"
@@ -1303,7 +1303,7 @@ function generate_random_pronounceable_word {
     local num_consonants_since_last_vovel=0
     local random_word
     for v in $(seq 1 "$word_length") ; do
-        if [[ num_consonants_since_last_vovel -ge 2 ]] || [[ $(((RANDOM%3))) -eq 0 ]] ; then
+        if [[ num_consonants_since_last_vovel -ge 2 ]] || [[ $(((RANDOM%3))) -eq 0 ]]; then
             local random_letter
             random_letter=$(tr -dc 'aeiou' < '/dev/urandom' | head -c 1)
             ((num_consonants_since_last_vovel = 0))
@@ -1338,7 +1338,7 @@ function show_usage {
 
 script_name="${0##*/}"
 function show_usage {
-    if [ -n "$1" ] ; then
+    if [ -n "$1" ]; then
         printf "\e[0;31m${2}\e[0m\n\n"
     fi
 
