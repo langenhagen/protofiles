@@ -154,20 +154,15 @@ echo ${PWD//\//\\\/}  # escape all occurences of '/' to '\/'
 # --------------------------------------------------------------------------------------------------
 # pattern deletion / parameter expansion
 
-# ${VAR%regex-pattern} – Remove shortest file extension
-# ${VAR#regex-pattern} – Delete shortest prefix pattern
-# ${VAR%%regex-pattern} – Remove longest file extension
-# ${VAR##regex-pattern} – Delete longest prefix pattern
-
 my_var="Hello, Andi, Andi and Andi"
 file_path='path/to/looong/my/file.tar.gz'
 echo "${my_var#Hello, }"  #remove any prefix from the expanded value that matches the pattern
-echo "${file_path#*/}"  # to/looong/my/file.tar.gz
-echo "${file_path##*/}"  # file.tar.gz,  builtin replacement for command "basename"
+echo "${file_path#*/}"  # to/looong/my/file.tar.gz; delete shortest prefix pattern
+echo "${file_path##*/}"  # file.tar.gz,  builtin replacement for command "basename"; delete longest prefix pattern
 
 echo "${my_var%, Andi and Andi}"  #remove any suffx from the expanded value that matches the pattern
-echo "${file_path%.*}"  # path/to/looong/my/file.tar
-echo "${file_path%%.*}"  # path/to/looong/my/file
+echo "${file_path%.*}"  # path/to/looong/my/file.tar; remove shortest file extension
+echo "${file_path%%.*}"  # path/to/looong/my/file; remove longest file extension
 
 
 script_name="${0##*/}"
