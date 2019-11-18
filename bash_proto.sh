@@ -1121,7 +1121,6 @@ text_template="$(cat ${template_file})"
 text="$(eval "echo \"${text_template}\"")"  # eval echo evaluates the variables found in TEMPLATE_FILE
 
 echo "$text_template"  # plain template text
-echo "-----------------------------------------------------------------"
 echo "$text"  # text with templates substituted with the variables's values
 
 
