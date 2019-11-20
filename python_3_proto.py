@@ -3,11 +3,9 @@
 #!/usr/bin/env python3              # the correct shebang for a Python 3 script
 
 # --------------------------------------------------------------------------------------------------
-#comments ^ docstrings
-
+#comments & docstrings
 
 # -*- coding: utf-8 -*-  # this line you often see at the 1st or 2nd line in a script
-
 
 '''
 This is a
@@ -64,16 +62,20 @@ def random_number_generator(arg1, arg2):
 # Use Sphinx to compile ReStructuredText (.rst files) Docstrings for python
 # The Sphinx-Extension  sphinx.ext.napoleon  can handly Numpy-Syle Docstrings
 
-
 # see: https://www.python.org/dev/peps/pep-0257/
 
 # --------------------------------------------------------------------------------------------------
-#input
+# output
+
+print("This goes to stdout")
+print("This goes to stderrr", file=sys.stderr)
+
+# --------------------------------------------------------------------------------------------------
+# input
 
 my_input = input('please enter a number: ');  # type(my_input) will be 'str'
 
 # --------------------------------------------------------------------------------------------------
-
 # variables are dynamically typed
 x = 'string'
 x = 12
@@ -82,11 +84,8 @@ x = 12.3
 
 del x  # everything in python is an object and you can delete objects
 
-
 if foo is None:
     pass
-
-
 
 # --------------------------------------------------------------------------------------------------
 # functions
@@ -128,7 +127,6 @@ def my_vararg_function(*args):  # *arg means non-keyworded, variable-length argu
 my_vararg_function(1,'Hello',3)
 
 
-
 def my_keyworded_vararg_function(a, **kwargs):  # **kwargs means keyworded, variable-length argument list
     print (type(kwargs))  # type: class 'dict'
     for k,v in kwargs.items():
@@ -143,7 +141,6 @@ my_keyworded_vararg_function('AAAAA', **my_params)
 #my_params = {'a': 'BBBBB'}
 #my_keyworded_vararg_function('AAAAA', **my_params)
 
-
 # --------------------------------------------------------------------------------------------------
 # string types
 
@@ -154,7 +151,6 @@ type(bytearray(b'a bytearray'))  # <class 'bytearray'>
 f'Formatted string'
 
 # 'we cannot add a string' + b'and bytes'  # does not work
-
 
 # f-strings make string-formatting easy
 # f-strings are faster than both %-formatting and str.format()
@@ -167,7 +163,6 @@ def to_lowercase(input):
 
 name = "Eric Idle"
 f"{to_lowercase(name)} is funny."  # f-Strings are evaluated at runtime: 'eric idle is funny.'
-
 
 # --------------------------------------------------------------------------------------------------
 # lambdas
@@ -196,7 +191,6 @@ list(range(3))  # [0,1,2]
 my_list=[1,4,5]
 print(*my_list, sep=' : ')  # prints  1 : 4 : 5
 
-
 for i, elem in enumerate(['foo', 'bar', 'baz']):  # enumerate adds indices to lists/ranges
     print(f'{i}: {elem}')  # prints 0: foo \n 1: bar \n 2: baz
 
@@ -208,7 +202,7 @@ for i, elem in enumerate(range(3)):
     print(f'{i}: {elem}')    # prints 0: 0 \n 1: 1 \n 2: 2
 
 # --------------------------------------------------------------------------------------------------
-# es
+# Classes
 
 class MyClass:
     pass
@@ -263,7 +257,6 @@ my_object.my_member = 'Jowas'
 print(my_object.my_member)
 
 
-
 # Abstract classes
 from abc import ABC, abstractmethod
 
@@ -283,7 +276,6 @@ class MyConcreteClass(MyAbstractBaseClass):
 #a = MyAbstractBaseClass()  # throws an error
 b = MyConcreteClass()  # works
 
-
 # --------------------------------------------------------------------------------------------------
 # decorators
 
@@ -298,7 +290,6 @@ def do_twice(func):
 def foo()
     print('This function is decorated')
     pass
-
 
 
 def outer_decorator(func):
@@ -334,8 +325,6 @@ def get_text(name):
     return "Hello " + name
 
 print get_text("John") # Outputs <p>Hello John</p>
-
-
 
 # --------------------------------------------------------------------------------------------------
 # context managers
@@ -386,7 +375,6 @@ try:
 except NameError as err:
     print(err, 'My error message')
 
-
 # --------------------------------------------------------------------------------------------------
 # generators
 
@@ -396,14 +384,12 @@ next(my_generator)  # a
 next(my_generator)  # b
 next(my_generator)  # c ...
 
-
 # --------------------------------------------------------------------------------------------------
 # list comprehensions  aka  ... for ... in (...)
 
 i = 1
 print('my list comprehension:', [i for i in range(5)])  # prints: ... [0,1,2,3,4]
 print(f'i: {i}')  # i: 1
-
 
 # --------------------------------------------------------------------------------------------------
 # static methods
@@ -429,10 +415,8 @@ def function_that_returns_none(a: int, b: int = None) -> None:
 
 print([i for i in zip('ABCD', 'xy')])  # prints [('A', 'x'), ('B', 'y')]
 
-
 # list() converts an iterable into a list
 list(filter(lambda x: x % 2 == 0, [i for i in range(100)]))  # 0, 2, 4, ...
-
 
 my_tuple = (1, 2, 3, 4)
 my_list = [1, 2, 3, 4]
@@ -441,11 +425,9 @@ my_dict = {'Andreas': 'echt cool', 'Salome': 'auch cool', 3: 'auch cool ;)' }
 
 list(map(lambda x: 2**x, [1,2,3,4]))  # =[2, 4, 8, 16]
 
-
 x, y, z = 0, 1, 0
 if any((x, y, z)):
     print('passed')  # works
-
 
 # --------------------------------------------------------------------------------------------------
 # Tricks
