@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Prototypical bash snippets.
 # Use as reference.
 # If there are several ways of solving a specific task, the snippets here exhibit the, to our
