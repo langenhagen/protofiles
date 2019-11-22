@@ -249,9 +249,19 @@ done
 
 # create an array from a string with custom delimeter
 my_array_string='Hello;From;Bash!\nHulk\nSmash!'
-IFS=';' read -ra my_array <<< "$my_array_string"
+IFS=';' read -ra my_array <<< "$my_array_string"  # IFS stands for "internal field separator"
 printf '%s\n' "${my_array[@]}"    # prints 'Hello' 'From'  'Bash!\nHulk\nSmash!' in separate lines
 
+# create a string from array with custom nice delimeters
+function join_items_by {
+    # Join given strings by a given delimeter
+    # Based on:
+    # https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
+    local IFS="$1"
+    shift
+    printf '%s' "$*"
+}
+join_items_by '/' "${my_array[@]}"  # Hello/From/Bash!\nHulk\nSmash!
 
 declare -a my_explicit_array=()             # explicitly declare an array variable
 typeset -a my_other_explicit_array=()       # declare and typeset are exact synonyms
@@ -356,6 +366,7 @@ if [[ "Does this string contain a substring?" == *"contain a"* ]]; then
 fi
 
 if [[ "Also check for regular expressions is possible with equalstilde" =~ r.*r ]]; then
+    # it's important not to put the regex in quotes in bash. However, zsh wants quots.
     echo "Regex found!"
 fi
 
