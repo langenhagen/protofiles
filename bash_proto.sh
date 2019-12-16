@@ -253,7 +253,7 @@ IFS=';' read -ra my_array <<< "$my_array_string"  # IFS stands for "internal fie
 printf '%s\n' "${my_array[@]}"    # prints 'Hello' 'From'  'Bash!\nHulk\nSmash!' in separate lines
 
 # create a string from array with custom nice delimeters
-function join_items_by {
+join_items_by() {
     # Join given strings by a given delimeter
     # Based on:
     # https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
@@ -406,7 +406,7 @@ echo "`pwd`"  # `..` is legacy, cannot be nested, like $(..)
 # --------------------------------------------------------------------------------------------------
 # have a die function
 
-function die {
+die() {
     printf '%s\n' "$*"
     exit 1
 }
@@ -418,7 +418,7 @@ function die {
 # traps
 # code that will be executed on certain signals
 
-function on_exit {
+on_exit() {
   : # cleanup code goes here
 }
 trap on_exit EXIT  # calls on_exit on exit, whether on script's normal exit, ctrl+c or via kill <pid>, but not kill -9
@@ -429,7 +429,7 @@ trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
 # functions and traps can be defined inside e.g. if-clauses;
 if [ "$a" == 'yes' ]; then
    echo "Yesssss"
-   function on_exit {    # will be executed on program exit
+   on_exit() {    # will be executed on program exit
        echo "My clean"
    }
    trap on_exit EXIT
@@ -468,7 +468,7 @@ if [ $# != 1 ]; then
 fi
 
 # use ${FUNCNAME[0]} to refer to the current function's name
-function foo {
+foo() {
     echo "${FUNCNAME[0]}"  # prints foo
 }
 
@@ -528,7 +528,7 @@ printf "Copy me to clipboard" | xclip -i -f -selection primary | xclip -i -selec
 # Use local variables within functions
 # functions seem to work with /bin/bash but not with /bin/sh
 
-function myFunction {
+myFunction() {
     local my_var=42  # local var does not leak outside function scope
     return "$my_var"
 }
@@ -537,7 +537,7 @@ function myFunction {
 echo "Script file name: " "$0"
 echo "Script's first parameter: " "$1"
 
-function myFunction2 {
+myFunction2() {
     echo "USAGE"
     echo "Script's file name: " "$0"
     echo "myFunction2's first param" "$1"  # != $1 of the script
@@ -891,16 +891,16 @@ if [ -t 1 ]; then
     fi
 fi
 
-function echo-error {
+echo-error() {
     printf "${red}${*}${nc}\n"
 }
-function echo-head {
+echo-head() {
     printf "${cyan}${*}${nc}\n"
 }
-function echo-ok {
+echo-ok() {
     printf "${green}${*}${nc}\n"
 }
-function echo-warn {
+echo-warn() {
     printf "${yellow}${*}${nc}\n"
 }
 
@@ -1139,7 +1139,7 @@ echo "$text"  # text with templates substituted with the variables's values
 
 # When using user defined functions with `find`'s `-exec` `-execdir` and so on
 # you have to call the function using `bash -c`
-function my_function_called_by_find {
+my_function_called_by_find() {
     printf "Hi \e[1m${PWD}\e[0m\n"
 }
 export -f my_function_called_by_find  # since the subshell should you open below in find
@@ -1206,7 +1206,7 @@ printf '%s' "$current_results"  | grep -i 'hello' # using '%s'  retains possible
                                                     # "$current_results"  would do
 
 
-function increment_count {
+increment_count() {
     # Given a file path and a grep pattern,
     # finds corresponding line in the given file and applies an +1 increment
     # to the last column in the line.
@@ -1243,7 +1243,7 @@ function increment_count {
     sed -i "s/$line/$new_line/" "$2"
 }
 
-function check_if_this_computer_is_a_mac {
+check_if_this_computer_is_a_mac() {
     # Checks if the given unix system is a mac by checking the home directory
     # There are other ways, but this is one.
     # .
@@ -1254,7 +1254,7 @@ function check_if_this_computer_is_a_mac {
     fi
 }
 
-function check_if_this_computer_is_a_mac_2 {
+check_if_this_computer_is_a_mac_2() {
     # Checks if the given unix system is a mac by checking the home directory
     # There are other ways, but this is one.
     # .
@@ -1265,7 +1265,7 @@ function check_if_this_computer_is_a_mac_2 {
     fi
 }
 
-function is_folder_empty {
+is_folder_empty() {
     # Checks if the given folder is empty.
     # Beware of whitespaces, maybe.
     # .
@@ -1276,7 +1276,7 @@ function is_folder_empty {
     fi
 }
 
-function write_find_output_into_array {
+write_find_output_into_array() {
     # taken from: https://stackoverflow.com/questions/23356779/how-can-i-store-find-command-result-as-arrays-in-bash
     array=()
     while IFS=  read -r -d $'\0'; do
@@ -1284,14 +1284,14 @@ function write_find_output_into_array {
     done < <(find . -type d -print0)
 }
 
-function count_occurences_of_substring_in_string {
+count_occurences_of_substring_in_string() {
     # Prints the number of occurences of a given substring $1 in a given string $2.
     # Found on:  https://stackoverflow.com/questions/26212889/bash-counting-substrings-in-a-string
     local recuced_string=${2//"$1"}
     echo "$(((${#2} - ${#recuced_string}) / ${#1}))"
 }
 
-function generate_random_pronounceable_word {
+generate_random_pronounceable_word() {
     # Given a word length, generates a random pronounceable word in lower case and returns it.
     # The word is created letter by letter, i.e. each character is added sequentially. A vovel is
     # created with the chance of 1/3 and an a consonant with the chance of 2/3, but no more than 2
@@ -1333,7 +1333,7 @@ Usage:
 Examples:
   ${script_name} '/var/gerrit'    # Install the gerrit hooks into the given directory.
 USAGE_EOF
-function show_usage {
+show_usage() {
     msg="${script_name}\n"
     msg+="\n"
     msg+="$script_usage"
@@ -1341,7 +1341,7 @@ function show_usage {
 }
 
 script_name="${0##*/}"
-function show_usage {
+show_usage() {
     if [ -n "$1" ]; then
         printf "\e[0;31m${2}\e[0m\n\n"
     fi
