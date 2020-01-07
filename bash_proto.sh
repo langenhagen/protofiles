@@ -159,7 +159,7 @@ echo "${my_var#Hello, }"  #remove any prefix from the expanded value that matche
 echo "${file_path#*/}"  # to/looong/my/file.tar.gz; delete shortest prefix pattern
 echo "${file_path##*/}"  # file.tar.gz,  builtin replacement for command "basename"; delete longest prefix pattern
 
-echo "${my_var%, Andi and Andi}"  #remove any suffx from the expanded value that matches the pattern
+echo "${my_var%, Andi and Andi}"  #remove any suffx from the expanded value that matches the pattern, e.g. trailing characters
 echo "${file_path%.*}"  # path/to/looong/my/file.tar; remove shortest file extension
 echo "${file_path%%.*}"  # path/to/looong/my/file; remove longest file extension
 
