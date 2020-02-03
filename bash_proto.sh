@@ -201,23 +201,24 @@ my_array=(
     'b'
     'c'
 )
-my_array+=('d')             # adds a new element
-my_array+=(${my_other_array[@]})  # appends another array.
-echo "${my_array}"            # prints just a
+my_array+=('d')             # add a new element
+my_other_array=(${my_array[@]})  # copy an array
+my_array+=(${my_other_array[@]})  # append another array
+echo "${my_array}"            # print just a
 printf '%s\n' "${my_array[@]:0:2}"  # sub-array from 0 with length 2
 printf '%s\n' "${my_array[@]:2}"  # sub-array from index 2 til end
-echo "${my_array[1]}"         # prints b
-echo "${my_array[2]}"         # prints c
-echo "${my_array[11000]}"     # prints nothing
+echo "${my_array[1]}"         # print b
+echo "${my_array[2]}"         # print c
+echo "${my_array[11000]}"     # print nothing
 echo -e "-e flag enables echo to process escape sequences, like \n, or \t. Works with single and double quotes"
-printf '%s\n' "${my_array[@]}"         # @ returns all values as sep string (here in a new line each)
-printf '%s\n' "${my_array[*]}"         # * returns all values as one string (here in the same line each)
+printf '%s\n' "${my_array[@]}"         # @ return all values as sep string (here in a new line each)
+printf '%s\n' "${my_array[*]}"         # * return all values as one string (here in the same line each)
 
-unset my_array[2]  # deletes the element from the array at the given index
+unset my_array[2]  # delete the element from the array at the given index
 my_array=( "${my_array[@]//b/foo}" )  # replace all occurences of pattern in every string in every item with foo
 my_array=( "${my_array[@]/b/foo}" )  # replace first occurence of pattern in every string in every item with foo
 
-echo ${#my_array[@]}        # prints 3, i.e. the length of the array
+echo ${#my_array[@]}        # print 3, i.e. the length of the array
 
 # print an array with preceeding > and newline delimiting each entry
 
