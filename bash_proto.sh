@@ -174,7 +174,7 @@ cd some/where || exit 1
 (cd  /home/jenkins/PROJECTS/ansible-playbooks/ && git pull) || exit 1
 
 # --------------------------------------------------------------------------------------------------
-# here-documents and here-strings
+# here documents and here strings aka heredoc and herestrings
 
 # here-document - a multiline string input
 wc -w << EOF
@@ -1324,56 +1324,47 @@ generate_random_pronounceable_word() {
 }
 
 # --------------------------------------------------------------------------------------------------
-# show usage
+# show usage  - show usage, but no help
 
-script_name="${0##*/}"
-IFS= read -r -d '' script_usage << USAGE_EOF
-Usage:
- ${script_name} <gerrit-root-directory>
+function show_usage {
+    script_name="${0##*/}"
 
-Examples:
-  ${script_name} '/var/gerrit'    # Install the gerrit hooks into the given directory.
-USAGE_EOF
-show_usage() {
-    msg="${script_name}\n"
+    msg="Usage:\n"
+    msg+="  ${script_name} <search-pattern> <file-pattern>...\n"
     msg+="\n"
-    msg+="$script_usage"
-    printf -- "$msg"
-}
-
-script_name="${0##*/}"
-show_usage() {
-    if [ -n "$1" ]; then
-        printf "\e[0;31m${2}\e[0m\n\n"
-    fi
-
-    msg="${script_name}\n"
-    msg+="\n"
-    msg+="$script_usage"
-    printf -- "$msg"
+    msg+="Examples:\n"
+    msg+="  ${script_name} 'foo' *.sh            # explain a bit in plain text here\n"
+    printf "$msg"
 }
 
 
 # --------------------------------------------------------------------------------------------------
-## show_help
+# show_help  - show help string and usage
 
-script_name="${0##*/}"
-IFS= read -r -d '' script_description << HELP_EOF
-${script_name}
-Aids the installation of the gerrit hooks onto your gerrit instance.
-Overwrites potentially existing hooks.
+function show_help {
+    script_name="${0##*/}"
 
-Usage:
- ${script_name} <gerrit-root-directory>
+    msg="${script_name}\n"
+    msg+="Replace strings in files in a directory tree.\n"
+    msg+="\n"
+    msg+="Usage:\n"
+    msg+="  ${script_name} <search-pattern> <file-pattern>...\n"
+    msg+="\n"
+    msg+="Examples:\n"
+    msg+="  ${script_name} 'foo' *.sh            # explain a bit in plain text here\n"
+    printf "$msg"
+}
 
-Examples:
-  ${script_name} '/var/gerrit'    # Install the gerrit hooks into the given directory.
-HELP_EOF
 
+function show_help {
+    script_name="${0##*/}"
 
-# [...]
-printf -- "$script_description"
-
+    msg="${script_name}\n"
+    msg+="Replace strings in files in a directory tree.\n"
+    msg+="\n"
+    printf "$msg"
+    show_usage
+}
 
 # --------------------------------------------------------------------------------------------------
 # CURL
