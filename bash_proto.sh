@@ -61,7 +61,7 @@ source "path/to/file/to/be/sourced.inc" 'sourcing accepts' 'parameters' ':)'
 
 : # noOp as in the following loop:
 
-for i in A B C ; do
+for i in A B C; do
     :                   # empty loop is not possible without noOp, syntax error
 done
 
@@ -93,7 +93,7 @@ echo ${my_short_var}
 readonly var=32
 #var=128  # does not work
 
-echo "$_"    # prints "echo" ; $_ is the invoking command
+echo "$_"    # prints "echo"; $_ is the invoking command
 printf "$_"  # prints "printf"
 
 
@@ -225,7 +225,7 @@ echo ${#my_array[@]}        # print 3, i.e. the length of the array
 printf '> %s\n' "${my_array[@]}"
 # iteration
 # wrap arrays into quotation marks to retain items with spaces.
-for i in "${my_array[@]}" ; do
+for i in "${my_array[@]}"; do
     echo "jo $i"
 done
 
@@ -243,7 +243,7 @@ mapfile -t my_array <<< "$my_multiline_string"  # its items may contain whitespa
 
 printf '%s\n' "${my_array[@]}"    # prints 'this' 'is my'  'multiline\nstring' in separate lines
 
-for file in "${my_array[@]}" ; do  # iterates safely over an array and retain whitespaces
+for file in "${my_array[@]}"; do  # iterates safely over an array and retain whitespaces
     echo "$file"
 done
 
@@ -298,20 +298,20 @@ done
 # for loops
 # you can use  continue  and  break
 
-for value in 0 1 3 ; do
+for value in 0 1 3; do
     echo "$value"  # prints 0 1 and 3
 done
 
-for value in {1..5} ; do                # doesn't work with variables
+for value in {1..5}; do                # doesn't work with variables
     echo "$value"  # prints 1 2 3 4 5
 done
 
-for value in $(seq 1 5) ; do
+for value in $(seq 1 5); do
     echo "$value" # prints 1 2 3 4 5
 done
 
 my_array=("one" "two" "three")
-for value in "${my_array[@]}" ; do
+for value in "${my_array[@]}"; do
     echo "$value"
 done
 
@@ -424,7 +424,7 @@ on_exit() {
 }
 trap on_exit EXIT  # calls on_exit on exit, whether on script's normal exit, ctrl+c or via kill <pid>, but not kill -9
 
-trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
+trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
 
 
 # functions and traps can be defined inside e.g. if-clauses;
@@ -665,7 +665,7 @@ fi
 
 logfile="my.log"
 send_alive_pushover=false
-while [ "$#" -gt 0 ] ; do
+while [ "$#" -gt 0 ]; do
     case "$1" in
     -a|--alive)
         send_alive_pushover=true
@@ -696,7 +696,7 @@ done
 # less elegant but allows for combined one-letter options in arbtrary order, like e.g. netstat tulpn
 logfile="my.log"
 send_alive_pushover=false
-while [ "$#" -gt 0 ] ; do
+while [ "$#" -gt 0 ]; do
     case "$1" in
     --alive)
         send_alive_pushover=true
@@ -793,7 +793,7 @@ echo "p = ${p}"
 
 [ "hallo" ]; echo $?        # prints 0
 [ "" ]; echo $?             # prints 1
-[[ $# -gt 0 ]] ; echo $#    # "new test" or "extended test" - less portable, but but more versatile, e.g. it can test whether a string matches a regular expression
+[[ $# -gt 0 ]]; echo $#    # "new test" or "extended test" - less portable, but but more versatile, e.g. it can test whether a string matches a regular expression
 
 
 cd ~
@@ -870,8 +870,8 @@ printf "\e[0;33mSOMETHING IN DARK YELLOW\e[m\n"
 # \e can also appear as \033, and apparently \x1b,but \e is shorter
 
 # Print the 256 colors :)
-for i in {0..15} ; do
-    for j in {0..15} ; do
+for i in {0..15}; do
+    for j in {0..15}; do
         ((c= j * 16 + i ));
         printf "\e[38;5;${c}m%3s" "$c";  # 38 apparently means foreground, 48 apparently means background
     done
@@ -960,8 +960,8 @@ read -ern1  # throw var away -e: makes read print a newline after character is r
 
 read -p "Please type your password: " -s  # -s: input not prompted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
 
-read -n1 -p 'Press any key to exit' -s ; echo  # does not work with -e, therefore echo afterwards
-trap "read -n1 -p 'Press any key to exit' -s ; echo" EXIT
+read -n1 -p 'Press any key to exit' -s; echo  # does not work with -e, therefore echo afterwards
+trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
 
 
 echo "Really?"
@@ -1307,7 +1307,7 @@ generate_random_pronounceable_word() {
     local word_length="$1"
     local num_consonants_since_last_vovel=0
     local random_word
-    for v in $(seq 1 "$word_length") ; do
+    for v in $(seq 1 "$word_length"); do
         if [[ num_consonants_since_last_vovel -ge 2 ]] || [[ $(((RANDOM%3))) -eq 0 ]]; then
             local random_letter
             random_letter=$(tr -dc 'aeiou' < '/dev/urandom' | head -c 1)
