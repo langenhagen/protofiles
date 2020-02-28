@@ -970,15 +970,28 @@ read -r -p "<ctrl+c> to escape or enter to proceed"
 
 # --------------------------------------------------------------------------------------------------
 # read a variable line by line.
-while read -r line; do  # trims line
+while read -r line; do  # trims lines and but stil trims trailing newlines
     echo "..." $line
 done <<< "$some_multiline_string"
 
 # OR
 
-while IFS= read -r line; do  # declaring IFS variable configures read not to trim
+while IFS= read -r line; do  # declaring variable IFS empty configures read not to trim lines, but stil trims trailing newlines
     echo "..." $line
 done <<< "$some_multiline_string"
+
+
+# reading character-wise retains trailing newlines.
+while IFS= read -rN1 character; do
+    input_to_prepend+="$character"
+done
+
+
+# --------------------------------------------------------------------------------------------------
+# Builtin aka faster way to read from stdin
+
+myvar="$(</dev/stdin)"  # tructates trailing newlines
+
 
 # --------------------------------------------------------------------------------------------------
 # sleeping / waiting
@@ -1128,7 +1141,8 @@ template_file="my-template.txt"  # contains arbitrary content with ${placeholder
 placeholder_1="Katze"  # will be replaced accordingly
 placeholder_2="Hundi"
 
-text_template="$(cat ${template_file})"
+text_template="$(<"${template_file}")"
+# text_template="$(cat ${template_file})"  # same but slower
 text="$(eval "echo \"${text_template}\"")"  # eval echo evaluates the variables found in TEMPLATE_FILE
 
 echo "$text_template"  # plain template text
