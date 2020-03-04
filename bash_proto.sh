@@ -438,6 +438,11 @@ fi
 
 trap - EXIT  # disable a trap
 
+# Other Signals:
+SIGHUP
+SIGINT
+SIGTERM
+
 
 # --------------------------------------------------------------------------------------------------
 # use $0 or better ${BASH_SOURCE[0]} to refer to the script's name
