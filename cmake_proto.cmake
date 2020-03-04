@@ -32,7 +32,6 @@ foo(ARG_A "hallo"
     MULTI_VAL_ARG seven eight)
 
 
-
 # --------------------------------------------------------------------------------------------------
 # Imagine Targets as Objects:
     Ctors:
@@ -632,20 +631,19 @@ set( MyOption OFF )
 # --------------------------------------------------------------------------------------------------
 # Typcial CMAKE Variables
 
-CMAKE_CURRENT_SOURCE_DIR      will hold full path to currently processed node.
-CMAKE_SOURCE_DIR              always carries root of the tree (see -H)
+${CMAKE_CURRENT_SOURCE_DIR}      # will hold full path to currently processed node.
+${CMAKE_SOURCE_DIR}              # always carries root of the tree (see -H)
+${CMAKE_BINARY_DIR}
 
-CMAKE_SOURCE_DIR
-CMAKE_BINARY_DIR
 ${PROJECT_SOURCE_DIR}  # file where the CMakeLists.txt lies in, the project's root
-PROJECT_BINARY_DIR
-CMAKE_CURRENT_SOURCE_DIR
+${PROJECT_BINARY_DIR}
+${CMAKE_CURRENT_SOURCE_DIR}
 ${CMAKE_CURRENT_BINARY_DIR}
 
-CMAKE_CURRENT_LIST_FILE
-CMAKE_CURRENT_LIST_LINE
-CMAKE_CURRENT_LIST_DIR  #  always points to the directory path of the CMakeLists file / or the .cmake file (the latter is a guess with one indication)
-CMAKE_PARENT_LIST_FILE
+${CMAKE_CURRENT_LIST_FILE}
+${CMAKE_CURRENT_LIST_LINE}
+${CMAKE_CURRENT_LIST_DIR}  #  always points to the directory path of the CMakeLists file / or the .cmake file (the latter is a guess with one indication)
+${CMAKE_PARENT_LIST_FILE}
 
 # recommendatiom from CGold: just remember the following variables:
 # (https://cgold.readthedocs.io/en/latest/tutorials/cmake-sources/includes.html#id3)
