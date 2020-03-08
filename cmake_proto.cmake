@@ -587,7 +587,7 @@ TRUE FALSE      YES NO      ON OFF
 check for features - not platforms
 
 # Avoid:
-# link_libraries()
+# link_libraries()           # use target_link_libraries() instead
 # link_directories()
 # add_dependencies()
 # include_directories()
