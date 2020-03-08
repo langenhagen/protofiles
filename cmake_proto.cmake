@@ -4,6 +4,9 @@
 Look into the build/CMakeCache.txt file in order to learn which variables are available in your
 current setup.
 
+cmake -L -N build/    # view the cached variables
+
+
 # --------------------------------------------------------------------------------------------------
 # Directories, Scripts and Modules
 
@@ -70,7 +73,8 @@ INTERFACE Only used for targets that link against this library.
 
 cmake [<options>] <path>
     If the specified path contains a CMakeCache.txt, it is treated as a build directory where the
-    build system is reconfigured and regenerated. If the specified path does not contain a
+    build system is reconfigured and regenerated.
+    If the specified path does not contain a
     CMakeCache.txt, the path is treated as the source diretory and the cwd is the build directory.
 
 # --------------------------------------------------------------------------------------------------
@@ -141,9 +145,8 @@ add_custom_target()
 set( SOURCE_FILES scr/main.cpp
 
 add_executable(tool
-    main.cpp
-    another_file.cpp
-    )
+    "main.cpp"
+    "another_file.cpp")
 add_executable(my::tool ALIAS tool)             # create a read-only alias my::tool
 
 # --------------------------------------------------------------------------------------------------
@@ -159,10 +162,9 @@ unset(X CACHE)
 # get and set properties for targets
 
 get_property()
-set_property()
-
 get_property(MYAPP_SOURCES TARGET MyApp PROPERTY SOURCES)    # Get the target's SOURCES property and assign it to MYAPP_SOURCES
 
+set_property()
 
 # Target Properties include
     # LINK_LIBRARIES
@@ -281,7 +283,7 @@ add_custom_command(TARGET "deploy" POST_BUILD <some command>)   # will be invoke
 # --------------------------------------------------------------------------------------------------
 # Cache Variables
 
-set(a "789" CACHE STRING "")  # sets cache variable a to 789 but deletes original var a
+set(a "789" CACHE STRING "")  # set cache variable a to 789 but delete original var a
 set(A "123" CACHE STRING "" FORCE)  # set cache var although it is already in the cache
 
 CMake cache vars have no scope and are set globally
