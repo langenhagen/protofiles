@@ -1,4 +1,10 @@
 # --------------------------------------------------------------------------------------------------
+# Look into the build/CMakeCache.txt
+
+Look into the build/CMakeCache.txt file in order to learn which variables are available in your
+current setup.
+
+# --------------------------------------------------------------------------------------------------
 # Directories, Scripts and Modules
 
 Directories that contain CMakeLists.txt files are entry points for the build system generator.
