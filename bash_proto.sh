@@ -306,8 +306,12 @@ for value in {1..5}; do                # doesn't work with variables
     echo "$value"  # prints 1 2 3 4 5
 done
 
-for value in $(seq 1 5); do
+for value in $(seq 5); do
     echo "$value" # prints 1 2 3 4 5
+done
+
+for value in $(seq 3 5); do
+    echo "$value" # prints 3 4 5
 done
 
 my_array=("one" "two" "three")
