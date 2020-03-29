@@ -142,7 +142,7 @@ add_custom_target()
 # add executable targets and alias them with a namespace
 
 
-set( SOURCE_FILES scr/main.cpp
+set(SOURCE_FILES scr/main.cpp)
 
 add_executable(tool
     "main.cpp"
@@ -210,6 +210,7 @@ add_library(MySharedLib SHARED ${SHAREDLIB_SOURCES})
 
 # Build Executable
 add_executable(MyApp ${SOURCES})
+target_link_libraries(MyApp libSomeExternalLib)
 target_link_libraries(MyApp libMyStaticLib)
 target_link_libraries(MyApp libMySharedLib)
 
