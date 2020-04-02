@@ -448,6 +448,14 @@ SIGINT
 SIGTERM
 
 
+# Have only 1 exit trap
+foo() { echo "Hello" }
+trap foo EXIT
+bar() { echo "World!" }
+trap bar EXIT
+# ... would only print 'World!'
+
+
 # --------------------------------------------------------------------------------------------------
 # use $0 or better ${BASH_SOURCE[0]} to refer to the script's name
 
@@ -1187,14 +1195,16 @@ fi
 
 
 # --------------------------------------------------------------------------------------------------
-# Temporary dirs
-
-# possible workflow
+# Temporary dirs - possible workflow
 
 tmp_dir_path="$(mktemp -d)"
+cleanup() {
+    rm -rf "$tmp_dir_path"
+}
+trap cleanup EXIT
+
 cd "$tmp_dir_path"
 # ...
-rm -rf "$tmp_dir_path"
 
 # --------------------------------------------------------------------------------------------------
 # functions / recipes
