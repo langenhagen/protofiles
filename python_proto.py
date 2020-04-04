@@ -178,7 +178,12 @@ server_thread = threading.Thread(target=server.serve_forever, daemon=True)
 server_thread.start()
 
 # --------------------------------------------------------------------------------------------------
-# debugging, python debugger, pdb
+# debugging with pdb - the way to go
+
+breakpoint()     # simply add breakpoint() to your application
+
+# --------------------------------------------------------------------------------------------------
+# debugging with pdb - the more cumbersome way
 
 import pdb; pdb.set_trace();  # put it somewhere to set a breakpoint then press ? when you reached it
 import sys, pdb; pdb.Pdb(stdout=sys.__stdout__).set_trace()  # python debugger for robot framework

@@ -70,6 +70,10 @@ def random_number_generator(arg1, arg2):
 print("This goes to stdout")
 print("This goes to stderrr", file=sys.stderr)
 
+pi = 3.14
+print(f"PI is {pi}")
+
+
 # --------------------------------------------------------------------------------------------------
 # input
 
