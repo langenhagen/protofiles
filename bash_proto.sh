@@ -526,7 +526,7 @@ It can span
  printf will.
 EOF
 
-
+# less preferred
 myvar=$(cat << MYVAR_EOF
   This is the input of a variable
 It can span
