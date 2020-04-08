@@ -367,11 +367,10 @@ else
 fi
 
 
-
 if [[ "Does this string contain a substring?" == *"contain a"* ]]; then
-    # note the [[ ... ]], if it is [ ... ], it's the other way round.
-    # Works also with "Does" and "ubstring?", i.e. at the edges.
-    # is case specific.
+    # note the [[ ... ]]. If it is [ ... ], it's the other way round.
+    # Works also at the edges, i.e. with "Does" and "ubstring?".
+    # Is case specific.
     echo 'Substring found!'
 fi
 
