@@ -379,10 +379,13 @@ if [[ "Also check for regular expressions is possible with equalstilde" =~ r.*r 
     echo "Regex found!"
 fi
 
-if [[ 'Is any of the given substrings contained?' =~ ('any'|'mooooh') ]]; then
+if [[ 'Is any of the given substrings contained?' =~ 'any'|mooooh ]]; then
     echo 'should work'
 fi
 
+if [[ 'Should everywhere work ?' =~ ^fromstart|everywhere|end$ ]]; then
+    echo 'should work';
+fi
 
 if [ ! -f 'myfile' ] || [ -x 'myexecutable' ] && [ -f 'mythirdfile' ]; then
     echo 'Complex if-statement with files and and / or concatenators'
