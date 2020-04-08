@@ -194,6 +194,7 @@ wc -w <<< $myvar
 # --------------------------------------------------------------------------------------------------
 # arrays
 
+my_array=()
 my_array=('a' 'b' 'c')
 my_array=('a', 'b', 'c')  # linter warning: better use spaces, not commas
 my_array=(
@@ -220,9 +221,9 @@ my_array=( "${my_array[@]/b/foo}" )  # replace first occurence of pattern in eve
 
 echo ${#my_array[@]}        # print 3, i.e. the length of the array
 
-# print an array with preceeding > and newline delimiting each entry
-
+# print array - print an array with preceeding > and newline delimiting each entry
 printf '> %s\n' "${my_array[@]}"
+
 # iteration
 # wrap arrays into quotation marks to retain items with spaces.
 for i in "${my_array[@]}"; do
@@ -317,6 +318,10 @@ done
 my_array=("one" "two" "three")
 for value in "${my_array[@]}"; do
     echo "$value"
+done
+
+for f in *; do
+    echo " file: $f";
 done
 
 
@@ -625,11 +630,11 @@ done
 
 $@ # refers to the input as an array - good when you want to iterate over it
 for a in "$@"; do
-    echo $a;  # prints three lines: some input "some more input"
+    echo $a;  # prints three lines: 'some' 'input' 'some more input'
 done
 
 for a in $@; do
-    echo $a;  # prints five lines: some input some more input
+    echo $a;  # prints five lines: 'some' 'input' 'some' 'more' 'input'
 done
 
 
