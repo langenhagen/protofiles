@@ -90,7 +90,7 @@ cmake -DNAME=Andi -P hello.cmake
 cmake <source directory> -p                 # runs the script but don’t generate a pipeline.
 cmake <source directory> -j<n>              # runs the build process on n threads in parallel, if possible.
 cmake -DNumber 42                           # defines a variable from command line
-cmake -G "Xcode"                            # Specify the desired Generator, e.g. Xcode or ninja
+cmake -G "Xcode"                            # Specify the desired Generator, e.g. Xcode or Ninja
 cmake -L -N .                               # View the cached variables
 cmake -DCMAKE_BUILD_TYPE=Debug              # Debug, MinSizeRel, RelWithDebInfo and Release
 cmake --build . --target CMakeDemo --config Debug
@@ -263,16 +263,16 @@ include(Boost.cmake)
 
 # it seems, you have to specify the file ending, e.g. cmake. I think, HERE macros somehow avoid that
 
-add_subdirectory ( <source subdirectory> )  # creates a new scope and executes the CMakeLists.txt from the subdirectory.
-include_directories ( <directoryName> )
-link_directories ( <directoryName> )
-target_link_libraries( <target> PRIVATE "lib1.a lib2.a")
+add_subdirectory(<source subdirectory>)  # creates a new scope and executes the CMakeLists.txt from the subdirectory.
+include_directories(<directoryName>)
+link_directories (<directoryName>)
+target_link_libraries(<target> PRIVATE "lib1.a lib2.a")
 
 target_link_libraries(lib boost MyOtherLibrary)  # Depend on a library that we defined in the top-level file
 
-add_executable (MyBinary, MyBinary.cpp)                 # Creates binary named MyBinary
-add_library (MySharedLib, SHARED, SharedLibCode.cpp)    # Creates Shared library named MySharedLib.so
-add_library (MyStaticLib, STATIC, SharedLibCode.cpp)    # Creates Shared library named MyStaticLib.a
+add_executable(MyBinary, MyBinary.cpp)                 # Create binary named MyBinary
+add_library(MySharedLib, SHARED, SharedLibCode.cpp)    # Create shared library named MySharedLib.so
+add_library(MyStaticLib, STATIC, SharedLibCode.cpp)    # Create shared library named MyStaticLib.a
 
 # --------------------------------------------------------------------------------------------------
 # CUSTOM TARGETS
@@ -561,8 +561,8 @@ doubleEach(5 6 7 8)                     # Prints 10, 12, 14, 16 on separate line
 # and invoke this, instead calling sed directly. this improves documentability and testability
 
 # project(<name> VERSION <version> LANGUAGES CXX)
-#     call to project() must be direct, not through a function/macro/include. CMake will automatically
-#     add a call to project() if not found on the top level.
+#     call to project() must be direct, not through a function/macro/include.
+#     CMake will automatically add a call to project() if not found on the top level.
 
 
 All projects should be build both as standalone and as subprojects of another project.
