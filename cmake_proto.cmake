@@ -11,8 +11,8 @@ cmake -L -N build/    # view the cached variables
 # Directories, Scripts and Modules
 
 Directories that contain CMakeLists.txt files are entry points for the build system generator.
-            Subprojects s may be added with an add_subdirectory() and they must also contain
-            CMakeLists.txt. Subprojects do not have to reside insid subfolders :)
+            Subprojects may be added with an add_subdirectory() and they must also contain
+            CMakeLists.txt. Subprojects do not have to reside inside subfolders.
 
 Scripts are <script>.cmake files that can be executed with cmake -P <script>.cmake.
         Does not support all commands.
@@ -90,7 +90,7 @@ cmake -DNAME=Andi -P hello.cmake
 cmake <source directory> -p                 # runs the script but don’t generate a pipeline.
 cmake <source directory> -j<n>              # runs the build process on n threads in parallel, if possible.
 cmake -DNumber 42                           # defines a variable from command line
-cmake -G "Xcode"                            # Specify the desired Generator, i.e. Xcode :)
+cmake -G "Xcode"                            # Specify the desired Generator, e.g. Xcode or ninja
 cmake -L -N .                               # View the cached variables
 cmake -DCMAKE_BUILD_TYPE=Debug              # Debug, MinSizeRel, RelWithDebInfo and Release
 cmake --build . --target CMakeDemo --config Debug
