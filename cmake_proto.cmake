@@ -1,8 +1,9 @@
 # --------------------------------------------------------------------------------------------------
 # Look into the build/CMakeCache.txt
 
-Look into the build/CMakeCache.txt file in order to learn which variables are available in your
-current setup.
+# Tip:
+# Look into the build/CMakeCache.txt file in order to learn which variables are available in your
+# current setup.
 
 cmake -L -N build/    # view the cached variables
 
@@ -10,18 +11,31 @@ cmake -L -N build/    # view the cached variables
 # --------------------------------------------------------------------------------------------------
 # Directories, Scripts and Modules
 
-Directories that contain CMakeLists.txt files are entry points for the build system generator.
-            Subprojects may be added with an add_subdirectory() and they must also contain
-            CMakeLists.txt. Subprojects do not have to reside inside subfolders.
+# Directories
+# that contain CMakeLists.txt files are entry points for the build system generator.
+# Subprojects may be added with an add_subdirectory() and they must also contain
+# CMakeLists.txt. Subprojects do not have to reside inside subfolders.
 
-Scripts are <script>.cmake files that can be executed with cmake -P <script>.cmake.
-        Does not support all commands.
+# Scripts
+# are <script>.cmake files that can be executed with cmake -P <script>.cmake.
+# Does not support all commands.
 
-Modules are <script>.cmake files located in the CMAKE_MODULE_PATH. Modules can be loaded with the
-        include() command.
+# Modules
+# are <script>.cmake files located in the CMAKE_MODULE_PATH. Modules can be loaded with the
+#  include() command.
 
-CTest scripts are the right place for CI specific settings.
-              Keep these out of the project.
+# CTest
+# scripts are the right place for CI specific settings.
+# Keep these out of the project.
+
+# --------------------------------------------------------------------------------------------------
+# create directiries
+
+file(MAKE_DIRECTORY "${directory}")  # create directory in generation pass
+
+execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory "${directory}")  # create directory in build pass
+
+install(DIRECTORY DESTINATION "${directory}")  # create directory at installation pass
 
 # --------------------------------------------------------------------------------------------------
 # True and false values in CMake
@@ -31,7 +45,6 @@ FALSE    false   0          ""                      "blah-NOTFOUND"     OFF
 # --------------------------------------------------------------------------------------------------
 # comments
 
-# comments
 foo(ARG_A "hallo"
     ARG_B "welt"
     MULTI_VAL_ARG "one"
@@ -43,6 +56,7 @@ foo(ARG_A "hallo"
 
 # --------------------------------------------------------------------------------------------------
 # Imagine Targets as Objects:
+
     Ctors:
         add_executable()
         add_library()
@@ -287,12 +301,12 @@ add_custom_command(TARGET "deploy" POST_BUILD <some command>)   # will be invoke
 set(a "789" CACHE STRING "")  # set cache variable a to 789 but delete original var a
 set(A "123" CACHE STRING "" FORCE)  # set cache var although it is already in the cache
 
-CMake cache vars have no scope and are set globally
-If variable is not found in the current scope, it will be taken from the cache
-Cache Variables will only be set when they are not already in the cache
-Do not give same names for cache and regular variables
-FORCE usually is an indicator of badly designed CMake code.
-Because of the global nature of cache variables  you should prefix them with the project name
+# CMake cache vars have no scope and are set globally
+# If variable is not found in the current scope, it will be taken from the cache
+# Cache Variables will only be set when they are not already in the cache
+# Do not give same names for cache and regular variables
+# FORCE usually is an indicator of badly designed CMake code.
+# Because of the global nature of cache variables  you should prefix them with the project name
 
 
 # --------------------------------------------------------------------------------------------------
@@ -565,35 +579,35 @@ doubleEach(5 6 7 8)                     # Prints 10, 12, 14, 16 on separate line
 #     CMake will automatically add a call to project() if not found on the top level.
 
 
-All projects should be build both as standalone and as subprojects of another project.
-Don't modify globile compile/link flags.
-Don't make any global changes!
-Always add namespaced aliases for libraries.
-Don't make libraries STATIC/SHARED unless they cannot be built otherwise.
-Leave control of BUILD_SHARED_LIBS to your clients.
-Prefer to link against namespaced targets.
-Avoid adding options/definitions to CMAKE_CXX_FLAGS
-Don't add -std=c++11 CMAKE_CXX_FLAGS, don't pass -std=c++11 to target_compile_options()
--DCMAKE_CXX_FLAGS="-I/path/to/an/additional/include/dir/"
-Goal: no custom variables
-Goal: no custom functions
-Explicit is better than implicit
-Create macros to wrap commands that have output parameters. Otherwise, create a function
-Variables are so CMake 2.8.12. Modern CMake is about Targets and Properties.
-INTERFACE_ properties define the usage requirements of a target.
-non INTERFACE_ properties define the build specification of a target
-System packages work out of the box.
-Prebuilt libraries need to be put into CMAKE_PREFIX_PATH.
-Toolchain.cmake is a thing for ... TODO Oo
-Don't put logic into toolchain files.
-CMAKE_USE_RELATIVE_PATHS  removed since CMake 3.4
-Policies can be used to control CMake behavior
-Policies can be used to suppress warnings/errors
-Nested dereferencing of variables ${...} is possible
-Use short laconic lower-case names (a, i, mylist, ...) for local vars used only by current scope.
-Use long detailed upper-case names (FOO_FEATURE, BOO_ENABLE_SOMETHING, etc.) for vars used by several scopes.
-TRUE FALSE      YES NO      ON OFF
-check for features - not platforms
+# All projects should be build both as standalone and as subprojects of another project.
+# Don't modify globile compile/link flags.
+# Don't make any global changes!
+# Always add namespaced aliases for libraries.
+# Don't make libraries STATIC/SHARED unless they cannot be built otherwise.
+# Leave control of BUILD_SHARED_LIBS to your clients.
+# Prefer to link against namespaced targets.
+# Avoid adding options/definitions to CMAKE_CXX_FLAGS
+# Don't add -std=c++11 CMAKE_CXX_FLAGS, don't pass -std=c++11 to target_compile_options()
+# -DCMAKE_CXX_FLAGS="-I/path/to/an/additional/include/dir/"
+# Goal: no custom variables
+# Goal: no custom functions
+# Explicit is better than implicit
+# Create macros to wrap commands that have output parameters. Otherwise, create a function
+# Variables are so CMake 2.8.12. Modern CMake is about Targets and Properties.
+# INTERFACE_ properties define the usage requirements of a target.
+# non INTERFACE_ properties define the build specification of a target
+# System packages work out of the box.
+# Prebuilt libraries need to be put into CMAKE_PREFIX_PATH.
+# Toolchain.cmake is a thing for ... TODO Oo
+# Don't put logic into toolchain files.
+# CMAKE_USE_RELATIVE_PATHS  removed since CMake 3.4
+# Policies can be used to control CMake behavior
+# Policies can be used to suppress warnings/errors
+# Nested dereferencing of variables ${...} is possible
+# Use short laconic lower-case names (a, i, mylist, ...) for local vars used only by current scope.
+# Use long detailed upper-case names (FOO_FEATURE, BOO_ENABLE_SOMETHING, etc.) for vars used by several scopes.
+# TRUE FALSE      YES NO      ON OFF
+# check for features - not platforms
 
 # Avoid:
 # link_libraries()           # use target_link_libraries() instead
@@ -651,24 +665,22 @@ ${CMAKE_CURRENT_BINARY_DIR}
 
 ${CMAKE_CURRENT_LIST_FILE}
 ${CMAKE_CURRENT_LIST_LINE}
-${CMAKE_CURRENT_LIST_DIR}  #  always points to the directory path of the CMakeLists file / or the .cmake file (the latter is a guess with one indication)
+${CMAKE_CURRENT_LIST_DIR}  # points to the directory path of the current CMakeLists file or the current .cmake file
 ${CMAKE_PARENT_LIST_FILE}
 
-# recommendatiom from CGold: just remember the following variables:
-# (https://cgold.readthedocs.io/en/latest/tutorials/cmake-sources/includes.html#id3)
-CMAKE_CURRENT_LIST_DIR
-CMAKE_CURRENT_BINARY_DIR
+# Recommendatiom
+# from CGold  https://cgold.readthedocs.io/en/latest/tutorials/cmake-sources/includes.html#id3
+# just remember the following variables:
+${CMAKE_CURRENT_LIST_DIR}
+${CMAKE_CURRENT_BINARY_DIR}
 
 ${CMAKE_COMMAND}
 
 ${Java_JAVAC_EXECUTABLE}                # maybe this one comes by using the     find_package(Java COMPONENTS Development REQUIRED)
 ${Java_JAR_EXECUTABLE}
-
 ${CMAKE_ANDROID_ARCH_ABI}  # comes with the Android Toolchain, I believe
 
-
 $<TARGET_FILE_NAME:${target}>
-
 
 # --------------------------------------------------------------------------------------------------
 # Deprecate CMake commands
