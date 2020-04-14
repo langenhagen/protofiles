@@ -206,8 +206,6 @@ my_array+=('d')             # add a new element
 my_other_array=(${my_array[@]})  # copy an array
 my_array+=(${my_other_array[@]})  # append another array
 echo "${my_array}"            # print just a
-printf '%s\n' "${my_array[@]:0:2}"  # sub-array from 0 with length 2
-printf '%s\n' "${my_array[@]:2}"  # sub-array from index 2 til end
 echo "${my_array[1]}"         # print b
 echo "${my_array[2]}"         # print c
 echo "${my_array[11000]}"     # print nothing
@@ -223,6 +221,8 @@ echo ${#my_array[@]}        # print 3, i.e. the length of the array
 
 # print array - print an array with preceeding > and newline delimiting each entry
 printf '> %s\n' "${my_array[@]}"
+printf '> %s\n' "${my_array[@]:0:2}"  # sub-array from 0 with length 2
+printf '> %s\n' "${my_array[@]:2}"  # sub-array from index 2 til end
 
 # iteration
 # wrap arrays into quotation marks to retain items with spaces.
