@@ -130,10 +130,14 @@ firstString='I am a Cat'
 secondString='Dog'
 echo "${firstString/Cat/$secondString}"    # print "I am a Dog"
 
-my_var="Hello, Andi, Andi and Andi"
+my_var='Hello, Andi, Andi and Andi'
 
 echo "${my_var#Hello, }"  #remove any prefix from the expanded value that matches the pattern
 echo "${my_var%, Andi and Andi}"  #remove any suffx from the expanded value that matches the pattern
+
+my_var='  Something untrimmed   '
+echo "${my_var##*( )}"      # trim all leading spaces; apparently only works on the repl
+echo "${my_var%%*( )}!"     # trim all trailing spaces; may only work on the repl
 
 echo "${my_var/Andi/}"  # remove first occurence of Andi, does not overwrite the original var
 echo "${my_var//Andi/}"  # remove all occurences of Andi, does not overwrite the original var
