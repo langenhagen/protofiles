@@ -29,9 +29,10 @@ cmake -L -N build/    # view the cached variables
 # Keep these out of the project.
 
 # --------------------------------------------------------------------------------------------------
-# create directiries
+# directories and files
 
 file(MAKE_DIRECTORY "${directory}")  # create directory in generation pass
+file(COPY "${file}" DESTINATION "${destination}")
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory "${directory}")  # create directory in build pass
 
