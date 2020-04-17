@@ -14,6 +14,7 @@
     endif()
 
 # --------------------------------------------------------------------------------------------------
+# name functions with lowercase
 
 #NO
     function(QI_MY_WONDERFUL_FUNCTION)

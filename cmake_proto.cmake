@@ -529,10 +529,18 @@ execute_process(
 math(EXPR MY_SUM "1 + 1")
 
 # --------------------------------------------------------------------------------------------------
-# output return function values to parent scope with PARENT_SCOPE
+# Macros
 
-## CAUTION: argument variable names must differ from parameter names.
+macro(myMacro PARAM1 PARAM2)
+    // ...
+endmacro()
 
+# --------------------------------------------------------------------------------------------------
+# functions
+
+# CAUTION: argument names must differ from parameter names.
+
+# return function values to parent scope with PARENT_SCOPE
 function(doubleIt VARNAME VALUE)  # the parameter name must not match the argument's name Oo
     math(EXPR RESULT "${VALUE} * 2")
     set(${VARNAME} "${RESULT}" PARENT_SCOPE)    # Set the named variable in caller's scope
@@ -541,16 +549,8 @@ endfunction()
 doubleIt(RESULT "4")                    # Tell the function to set the variable named RESULT
 message("${RESULT}")                    # Prints: 8
 
-# --------------------------------------------------------------------------------------------------
-# Macros
 
-macro(myMacro PARAM1 PARAM2)
-    // ...
-endmacro()
-
-# --------------------------------------------------------------------------------------------------
 # The special ARGN variable for a list of unnamed fuction arguments
-
 function(doubleEach)
     foreach(ARG ${ARGN})                # Iterate over each argument
         math(EXPR N "${ARG} * 2")       # Double ARG's numeric value; store result in N
