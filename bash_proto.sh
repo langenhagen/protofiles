@@ -29,10 +29,6 @@ set -u      # treat unset variables as an error and exit immediately upon their 
 printf 'Output into nothing / silence the output\n' >/dev/null
 printf 'Append output stream to file and error stream to same as output stream\n' >myfile.txt 2>&1
 
-echo "exclamation marks at the end with double quotes do NOT work!"  # doesn't work
-echo 'exclamation marks at the end with single quotes DO work!'  # works
-echo exclamation marks at the end without quotes DO work!  # works
-
 >&2 echo 'This outputs to the stderr error stream.'
 (>&2 echo 'error')  # To avoid interaction with other redirections use subshell
 
