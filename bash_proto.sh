@@ -752,7 +752,7 @@ while [ "$#" -gt 0 ]; do
 done
 
 # --------------------------------------------------------------------------------------------------
-# command line parsing -- Getopt
+# command line option parsing -- Getopt
 
 short=p:b:a:
 long=product:,build_type:,arch:
@@ -788,7 +788,7 @@ done
 
 
 # --------------------------------------------------------------------------------------------------
-# command line parsing -- Getopts
+# command line option parsing -- Getopts
 
 # CAUTION: getopts, unlike getopt, can just understand short names like -p but not long name, e.g. --page
 # CAUTION: Mac OS X uses bsd-getopt and behaves differently from Linux gnu-getopt
