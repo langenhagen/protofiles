@@ -40,6 +40,9 @@ printf '=%.0s' {1..100}  # doesn't work with variables
 printf '=%.0s' $(seq "$(tput cols)") # print a character repeatedly
 
 
+echo -e "-e flag enables echo to process escape sequences, like \n, or \t. Works with single and double quotes"
+
+
 # --------------------------------------------------------------------------------------------------
 # source files / sourcing files
 # calling 'exit' from within a sourced file makes the sourcing script exit
@@ -120,7 +123,7 @@ myvar_with_default_value="${my_existing_var-I am the default value}"
 echo "$myvar_with_default_value" # prints 'Hello'
 
 # --------------------------------------------------------------------------------------------------
-# string subsutution / parameter substitution / parameter expansion
+# string substitution / parameter substitution / parameter expansion
 
 firstString='I am a Cat'
 secondString='Dog'
@@ -209,7 +212,6 @@ echo "${my_array}"            # print just a
 echo "${my_array[1]}"         # print b
 echo "${my_array[2]}"         # print c
 echo "${my_array[11000]}"     # print nothing
-echo -e "-e flag enables echo to process escape sequences, like \n, or \t. Works with single and double quotes"
 printf '%s\n' "${my_array[@]}"         # @ return all values as sep string (here in a new line each)
 printf '%s\n' "${my_array[*]}"         # * return all values as one string (here in the same line each)
 
@@ -223,6 +225,11 @@ echo ${#my_array[@]}        # print 3, i.e. the length of the array
 printf '> %s\n' "${my_array[@]}"
 printf '> %s\n' "${my_array[@]:0:2}"  # sub-array from 0 with length 2
 printf '> %s\n' "${my_array[@]:2}"  # sub-array from index 2 til end
+
+# transform an array inoto a regex
+tmp="${my_array[@]}"
+regex="(${tmp// /|})"
+echo "$regex"
 
 # iteration
 # wrap arrays into quotation marks to retain items with spaces.
