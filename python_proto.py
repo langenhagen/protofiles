@@ -1,7 +1,5 @@
 # author: andreasl
-# version: 18-11-14
-
-# This file contains general python and python2 related prototypical information
+# Contains eneral python3 and python2 related prototypical information.
 
 # --------------------------------------------------------------------------------------------------
 # general help
@@ -148,6 +146,11 @@ print(json.dumps(my_mapping, indent=4, sort_keys=True))
 #     "b": 42,
 #     "c": 12648430
 # }
+
+# --------------------------------------------------------------------------------------------------
+# get current file's directory
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
 
 # --------------------------------------------------------------------------------------------------
