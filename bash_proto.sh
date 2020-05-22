@@ -1114,6 +1114,10 @@ my_negative_number=-10  # could also be 10
 my_absolute_number=${my_negative_number#-}
 
 
+n=0
+let "n++"  # n == 1
+
+
 # --------------------------------------------------------------------------------------------------
 # handing over variables to awk
 
