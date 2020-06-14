@@ -65,7 +65,7 @@ for i in A B C; do
 done
 
 
-while : ; do
+while :; do
   echo 'Infinite loop'
   sleep 1
 done
