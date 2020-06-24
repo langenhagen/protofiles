@@ -125,9 +125,12 @@ echo "$myvar_with_default_value" # prints 'Hello'
 # --------------------------------------------------------------------------------------------------
 # string substitution / parameter substitution / parameter expansion
 
-firstString='I am a Cat'
-secondString='Dog'
-echo "${firstString/Cat/$secondString}"    # print "I am a Dog"
+first_string='I am a Cat'
+second_string='Cat'
+third_string='Dog'
+echo "${first_string/Cat/$third_string}"    # print "I am a Dog"
+echo "${first_string/$second_string/Dog}"    # print "I am a Dog"
+echo "${first_string/Cat/}"  # print "I am a"
 
 my_var='Hello, Andi, Andi and Andi'
 
