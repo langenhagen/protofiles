@@ -130,21 +130,27 @@ second_string='Cat'
 third_string='Dog'
 echo "${first_string/Cat/$third_string}"    # print "I am a Dog"
 echo "${first_string/$second_string/Dog}"    # print "I am a Dog"
-echo "${first_string/Cat/}"  # print "I am a"
+echo "${first_string/Cat/}"  # print "I am a" - remove first occurence, do not overwrite original var
 
 my_var='Hello, Andi, Andi and Andi'
-
-echo "${my_var#Hello, }"  #remove any prefix from the expanded value that matches the pattern
-echo "${my_var%, Andi and Andi}"  #remove any suffx from the expanded value that matches the pattern
-
-my_var='  Something untrimmed   '
-echo "${my_var##*( )}"      # trim all leading spaces; apparently only works on the repl
-echo "${my_var%%*( )}!"     # trim all trailing spaces; may only work on the repl
 
 echo "${my_var/Andi/}"  # remove first occurence of Andi, does not overwrite the original var
 echo "${my_var//Andi/}"  # remove all occurences of Andi, does not overwrite the original var
 echo "${my_var/Andi/Cat}"  # replace first occurence of Andi with Cat, does not overwrite the original var
 echo "${my_var//Andi/Cat}"  # replace all occurences of Andi with Cat, does not overwrite the original var
+
+echo "${my_var#Hello, }"  # nongreedy remove any prefix from the expanded value that matches the pattern
+echo "${my_var%, Andi and Andi}"  # nongreedy remove any suffx from the expanded value that matches the pattern
+
+echo "${my_var#*,}"  # get the substring after the first comma , - nongreedy
+echo "${my_var##*,}"  # get the substring after the last comma , - greedy
+echo "${my_var%,*}"  # get the substring before the last comma , - nongreedy
+echo "${my_var%%,*}"  # get the substring before the first comma , - greedy
+
+my_var='  Something untrimmed   '
+echo "${my_var##*( )}"      # greedy trim all leading spaces; apparently only works on the repl
+echo "${my_var%%*( )}!"     # greedy trim all trailing spaces; may only work on the repl
+
 
 echo ${my_var:18:3} # retieve a substring by offset and length
 echo ${my_var:((-4)):4} # retieve a substring by negative offset and length
