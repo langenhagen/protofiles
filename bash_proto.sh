@@ -1386,7 +1386,7 @@ generate_random_pronounceable_word() {
 # --------------------------------------------------------------------------------------------------
 # show usage  - show usage, but no help
 
-function show_usage {
+show_usage() {
     script_name="${0##*/}"
 
     msg="Usage:\n"
@@ -1401,7 +1401,7 @@ function show_usage {
 # --------------------------------------------------------------------------------------------------
 # show_help  - show help string and usage
 
-function show_help {
+show_help() {
     script_name="${0##*/}"
 
     msg="${script_name}\n"
@@ -1416,7 +1416,7 @@ function show_help {
 }
 
 
-function show_help {
+show_help() {
     script_name="${0##*/}"
 
     msg="${script_name}\n"
