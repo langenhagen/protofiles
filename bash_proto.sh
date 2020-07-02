@@ -336,6 +336,10 @@ for value in "${my_array[@]}"; do
     echo "$value"
 done
 
+for i in $(seq ${#my_array[@]}); do  # that's what works with arrays
+    echo "index $i"
+done
+
 for f in *; do
     echo " file: $f";
 done
