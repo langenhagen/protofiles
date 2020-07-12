@@ -180,10 +180,17 @@ script_name="${0##*/}"
 
 
 # --------------------------------------------------------------------------------------------------
-## cd-ing in scripts:
+# cd-ing in scripts:
 
 cd some/where || exit 1
 (cd  /home/jenkins/PROJECTS/ansible-playbooks/ && git pull) || exit 1
+
+
+# --------------------------------------------------------------------------------------------------
+# cp behaves differently when copying folders and the destination folder is different
+
+cp -r "mysourcefolder" "mydestfolder"  # copy contents of mysourcefolder into mydestfolder if mydestfolder is absent, else copy mysourcefolder into mydestoflder
+cp -Tr "mysourcefolder" "mydestoflder"  # always copy ontents of mysourcefolder into mydestfolder
 
 # --------------------------------------------------------------------------------------------------
 # here documents and here strings aka heredoc and herestrings
@@ -504,7 +511,6 @@ cd "$absolute_script_dir_path" || exit 1
 
 # in the following some copy-pasteable snippets
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 
 
 if [ $# != 1 ]; then
@@ -1400,7 +1406,6 @@ show_usage() {
     msg+="  ${script_name} 'foo' *.sh            # explain a bit in plain text here\n"
     printf "$msg"
 }
-
 
 # --------------------------------------------------------------------------------------------------
 # show_help  - show help string and usage
