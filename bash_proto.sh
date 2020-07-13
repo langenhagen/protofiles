@@ -443,17 +443,6 @@ echo "`pwd`"  # `..` is legacy, cannot be nested, like $(..)
 
 
 # --------------------------------------------------------------------------------------------------
-# have a die function
-
-die() {
-    printf '%s\n' "$*"
-    exit 1
-}
-
-[ -z "$version" ] && die "Version string must not be empty"    # use like this, for example
-
-
-# --------------------------------------------------------------------------------------------------
 # traps
 # code that will be executed on certain signals
 
@@ -697,6 +686,8 @@ if [[ "$1" =~ ^(-h|--help)$ ]]; then
     show_help
     exit 0
 fi
+
+[[ "$1" =~ ^(-h|--help)$ ]] && die "$(show_help)" 0
 
 
 # also:
@@ -1434,6 +1425,24 @@ show_help() {
     printf "$msg"
     show_usage
 }
+
+# --------------------------------------------------------------------------------------------------
+# have a die function
+
+# simple
+die() {
+    printf '%s\n' "$*"
+    exit 1
+}
+
+# elaborate, flexible
+die() {
+    printf '%s\n' "$1"
+    exit "${2:-1}"
+}
+
+[ -z "$version" ] && die "Version string must not be empty"    # use like this, for example
+
 
 # --------------------------------------------------------------------------------------------------
 # CURL
