@@ -29,6 +29,7 @@ allow_mixing
 /' several lines
 comment '/
 
+title This is the Headline
 
 package myPackage {
 
