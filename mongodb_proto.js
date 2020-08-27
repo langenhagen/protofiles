@@ -58,6 +58,11 @@ db.mycollection.updateMany({'my_field':'my_value'},{$set:{'some_field':'some_new
 db.mycollection.drop()  // delete the collection mycollection and its contents
 
 // -------------------------------------------------------------------------------------------------
+// distinct - get an array of values that are distinct for the given field
+
+db.getCollection('event_store').distinct("topic")  // show all values that there are for `topic`
+
+// -------------------------------------------------------------------------------------------------
 // find
 
 db.mycollection.find({})  // find all
