@@ -1,6 +1,8 @@
 @startuml
 ' creating several @startuml ... @enduml blocks creates several files
 
+' run `plantuml -language | less` to see all language words
+
 scale 2400*1200
 
 ' change the font size for rectangle objects
@@ -17,8 +19,11 @@ allow_mixing
 
 ' care first about the data and then about the layout. It likely changes.
 
-' this one can make lines straight
+' this one maes lines orthogonally straight
 ' skinparam linetype ortho
+
+' this on makes lines straight with knicks
+' skinparam linetype polyline
 
 ' set tab width
 ' skinparam tabSize 2
