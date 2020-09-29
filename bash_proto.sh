@@ -100,6 +100,23 @@ printf "$_"  # prints "printf"
 mystring="hi there"
 echo "mystring has the length: ${#mystring}"
 
+# --------------------------------------------------------------------------------------------------
+# Source a .env file
+
+set -o allexport
+source .env
+set +o allexport
+
+
+source_env() {
+    if [ -f "$1" ]; then
+        set -o allexport
+        source "$1"
+        set +o allexport
+    fi
+}
+
+source_env .env
 
 # --------------------------------------------------------------------------------------------------
 # defaults - parameter substitution / parameter expansion
