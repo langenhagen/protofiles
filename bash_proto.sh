@@ -507,9 +507,9 @@ trap bar EXIT
 echo "[$0] vs. [${BASH_SOURCE[0]}]"
 
 
-absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the current script
+absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the current script, i.e. script or sourced script
 absolute_script_dir_path_followed_through_symlinks="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
-relative_script_file_path="$(dirname ${BASH_SOURCE[0]})"  # path to the script from where you are, I believe
+relative_script_file_path="$(dirname ${BASH_SOURCE[0]})"  # path to the script from where you are
 
 # move the PWD to the script's directory
 absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
