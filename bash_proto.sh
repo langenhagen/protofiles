@@ -752,7 +752,7 @@ done
 
 
 # less elegant but allows for combined one-letter options in arbtrary order, like e.g. netstat tulpn
-logfile="my.log"
+logfile='my.log'
 send_alive_pushover=false
 while [ "$#" -gt 0 ]; do
     case "$1" in
@@ -764,7 +764,7 @@ while [ "$#" -gt 0 ]; do
         shift # past argument
         ;;
     --yesterday)
-        logfile="yesterday.log"
+        logfile='yesterday.log'
         ;;
     --)
         shift # past argument
@@ -777,7 +777,7 @@ while [ "$#" -gt 0 ]; do
         ;;
     -[[:alnum:]]*)
         [[ "$1" =~ a ]] && send_alive_pushover=true
-        [[ "$1" =~ y ]] && logfile="yesterday.log"
+        [[ "$1" =~ y ]] && logfile='yesterday.log'
         ;;
     *) # unknown option
         ;;
@@ -1028,7 +1028,7 @@ read -r -p "<ctrl+c> to escape or press enter to proceed"
 
 # --------------------------------------------------------------------------------------------------
 # read a variable line by line.
-while read -r line; do  # trims lines and but stil trims trailing newlines
+while read -r line; do  # trims lines and trims trailing newlines
     echo "..." $line
 done <<< "$some_multiline_string"
 
