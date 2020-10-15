@@ -9,3 +9,5 @@ cat 'myfile.json' | jq -r '.[] | select(.state == "some_state") | "\(.loc), \(.s
 cat myfile.json | jq -r 'map(.myfield) | unique'  # jq-ish way
 cat myfile.json | jq -r '.[] | .state' | sort -u  # bash-y way
 
+# count array lenghts
+cat myarrayfile.json | jq -r 'map(.myfield) | unique | length'
