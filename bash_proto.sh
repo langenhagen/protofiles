@@ -368,6 +368,11 @@ for f in *; do
     echo " file: $f";
 done
 
+# modern bash, c-style-ish for-loops
+for ((i = 0; i < 10; i++)) {
+    echo "${i} is a number"
+}
+
 
 # --------------------------------------------------------------------------------------------------
 # until loops
@@ -385,6 +390,16 @@ done
 # --------------------------------------------------------------------------------------------------
 # if-then-else
 
+# often, you can avoid if-statements
+[ "Hello" == "World" ] && echo "never happens"
+[ "Hello" == "World" ] || echo "will happen"
+[ "Hello" == "World" ] && { echo "multiple"; echo "statements possible"; exit1; }
+
+((42 != 36)) && {
+    echo 'Modern way to use double parentheses (( )) for testing numbers'
+    exit 1
+}
+
 # in if clauses, = and == are equivalent
 
 # = is for comparing strings
@@ -396,6 +411,7 @@ fi
 if [ 1 -eq 1 ]; then
     echo "WELT";
 fi
+
 
 if commands_should_not_go_into_square_brackets; then
     : # ...
@@ -707,6 +723,12 @@ fi
 [[ "$1" =~ ^(-h|--help)$ ]] && die "$(show_help)" 0
 
 
+# flexible & short but unstable, eg. when you call `./myscript please-helpme`
+if [[ "$*" =~ (-h|--help) ]]; then
+    show_help
+    exit 0
+fi
+
 # also:
 my_cmd_arg="$1"
 if [ "$my_cmd_arg" == "" ]; then
@@ -736,7 +758,7 @@ while [ "$#" -gt 0 ]; do
         logfile="yesterday.log"
         ;;
     --)
-        shift # past argument
+        shift
         command="$*"
         break
         ;;
@@ -747,7 +769,7 @@ while [ "$#" -gt 0 ]; do
     *) # unknown option
         ;;
     esac
-    shift # past argument or value
+    shift
 done
 
 
