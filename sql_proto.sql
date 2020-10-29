@@ -20,13 +20,18 @@ DESC mytable  -- short form of DESCRIBE mytable
 
 SELECT * FROM mytable
 SELECT mycol1, mycol3 FROM mytable
+SELECT mytable.mycol1, mytable.mycol3 FROM mytable
 SELECT mt.mycol1, mt.mycol3 FROM mytable mt
 
 SELECT mycol1, mycol3 FROM mytable WHERE mycol2 = "some value"
 
 SELECT * FROM mytable WHERE mycol2 = "some value" AND myothercol != 42
 
+
+
 SELECT * FROM mytable WHERE mycol LIKE "%jack%jones%"   -- case insensitive
+
+SELECT name, lastname from students WHERE name BETWEEN "A" AND "N"
 
 
 -------------------------------------------------------------------------------
