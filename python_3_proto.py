@@ -434,6 +434,15 @@ if any((x, y, z)):
     print('passed')  # works
 
 # --------------------------------------------------------------------------------------------------
+# advanced importing
+
+# add the parent directory to the sys.path to import modules and packages from there.
+import pathlib
+import sys
+sys.path.insert(0, pathlib.Path(__file__).absolute().parents[1].as_posix())
+import my_neighboring_package
+
+# --------------------------------------------------------------------------------------------------
 # Tricks
 
 # merge two dictionaries

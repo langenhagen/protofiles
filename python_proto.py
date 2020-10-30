@@ -17,7 +17,7 @@
 # --------------------------------------------------------------------------------------------------
 # set -x equivalent
 
-python3 -m trace --ignore-dir /home/barn/miniconda3/ -t myscript
+# python3 -m trace --ignore-dir /home/barn/miniconda3/ -t myscript
 
 # --------------------------------------------------------------------------------------------------
 # Concatenate strings in a List
@@ -325,4 +325,3 @@ def fizzbuzz(n, fizz, buzz):
 # to a script name: the language is a technical detail that shouldn’t be exposed
 # to the user. However, it seems to be the easiest way to let test runners, like
 # pytest, discover the enclosed tests.
-
