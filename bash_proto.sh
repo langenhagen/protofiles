@@ -170,6 +170,7 @@ echo "${my_var%%*( )}!"     # greedy trim all trailing spaces; may only work on 
 
 
 echo ${my_var:18:3} # retieve a substring by offset and length
+echo ${my_var::5} # retieve a substring with no offset and and length 5
 echo ${my_var:((-4)):4} # retieve a substring by negative offset and length
 
 offest=-4
