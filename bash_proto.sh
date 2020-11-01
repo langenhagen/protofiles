@@ -156,6 +156,9 @@ echo "${my_var//Andi/}"  # remove all occurences of Andi, does not overwrite the
 echo "${my_var/Andi/Cat}"  # replace first occurence of Andi with Cat, does not overwrite the original var
 echo "${my_var//Andi/Cat}"  # replace all occurences of Andi with Cat, does not overwrite the original var
 
+echo "${$my_multiline_string//$'\n'/,}"  # replace all newlines with commas ,
+
+
 echo "${my_var#Hello, }"  # nongreedy remove any prefix from the expanded value that matches the pattern
 echo "${my_var%, Andi and Andi}"  # nongreedy remove any suffx from the expanded value that matches the pattern
 
