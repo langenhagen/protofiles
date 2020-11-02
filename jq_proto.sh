@@ -5,17 +5,27 @@
 ###############################################################################
 # command line args
 
-# jq -r   # don't parse input as json, instead, each line is passed to the filter as a string.
+# jq -r   # remove quotation marks from output; don't parse input as json, instead, each line is passed to the filter as a string.
+
+###############################################################################
+# treat an array of jsons as several individual jsons
+
+cat myarrayfile.json | jq '.[]'  # many json objects, without comma between them
+
 
 ###############################################################################
 # select stuff and filter
 
-cat myfile.json | jq '.[] | select(.state == "some_state") | "\(.loc), \(.sku)"'
+cat myarrayfile.json | jq -r '.[] | .location'   # get the location fields without quotation marks
+
+cat myarrayfile.json | jq '.[] | select(.state == "some_state") | "\(.loc), \(.sku)"'
+
 
 ###############################################################################
 # get distinct values
 cat myfile.json | jq 'map(.myfield) | unique'  # jq-ish way
-cat myfile.json | jq '.[] | .state' | sort -u  # bash-y way
+cat myarrayfile.json | jq '.[] | .state' | sort -u  # bash-y way
+
 
 ###############################################################################
 # count
