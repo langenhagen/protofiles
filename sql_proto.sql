@@ -1,9 +1,9 @@
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 -- comments :)
 
 -- that's a single line comment
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 -- the interactive fundamentals
 
 show databases
@@ -15,7 +15,7 @@ show tables
 DESCRIBE mytable  -- show meta information about the table
 DESC mytable  -- short form of DESCRIBE mytable
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 -- query data
 
 SELECT * FROM mytable
@@ -34,13 +34,20 @@ SELECT * FROM mytable WHERE mycol LIKE "%jack%jones%"   -- case insensitive
 SELECT name, lastname from students WHERE name BETWEEN "A" AND "N"
 
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+-- count rows
+
+SELECT COUNT(*) FROM mytable
+SELECT COUNT(DISTINCT weekday) FROM birthdays   -- likely yields 7
+
+
+----------------------------------------------------------------------------------------------------
 -- get all distinct values in a column
 
 SELECT DISTINCT mt.mycol FROM mytable mt WHERE mt.myothercol = "miau"
 
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 -- variables
 
 SET @my_variable = "%jack%jones%";
@@ -48,12 +55,12 @@ SET @my_variable = "%jack%jones%";
 SELECT * FROM my_brands abb WHERE brand LIKE @my_variable;
 
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 -- instertion of rows
 
 INSERT INTO mytable (brand, pic_url) VALUES ('Wildling','Wildling.png')
 
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 -- deletion
 
 DELETE FROM mytable                -- delete everything from mytable
