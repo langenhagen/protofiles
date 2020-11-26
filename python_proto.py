@@ -74,6 +74,18 @@ def random_number_generator(arg1, arg2):
 # see: https://www.python.org/dev/peps/pep-0257/
 
 # --------------------------------------------------------------------------------------------------
+# variables are dynamically typed
+x = 'string'
+x = 12
+x = None
+x = 12.3
+
+del x  # everything in python is an object and you can delete objects
+
+if foo is None:
+    pass
+
+# --------------------------------------------------------------------------------------------------
 # output
 
 print("This goes to stdout")
@@ -107,18 +119,6 @@ pp.pprint(myobj, depth:12)
 import json
 print(json.dumps(myobj, indent=2))
 
-
-# --------------------------------------------------------------------------------------------------
-# variables are dynamically typed
-x = 'string'
-x = 12
-x = None
-x = 12.3
-
-del x  # everything in python is an object and you can delete objects
-
-if foo is None:
-    pass
 
 # --------------------------------------------------------------------------------------------------
 # Loops
@@ -596,6 +596,31 @@ print(json.dumps(my_mapping, indent=4, sort_keys=True))
 #     "b": 42,
 #     "c": 12648430
 # }
+
+# --------------------------------------------------------------------------------------------------
+# pathlib - deal with paths and files and do some file operations
+
+import pathlib
+
+p = pathlib.Path("path/to/my/file.tar.gz")
+
+p.parent  # path/to/my
+
+p.name  # file.tar.gz
+p.stem  # file.tar
+
+p.suffix  # ".gz"
+p.suffixes  # [".tar", ".gz"]
+
+p.unlink(missing_ok=False)  # delete the file
+
+
+# --------------------------------------------------------------------------------------------------
+# pandas - 3rd party library
+
+import pandas as pd
+
+df = pd.read_csv("path/to/my.csv")
 
 # --------------------------------------------------------------------------------------------------
 # time and sleeping
