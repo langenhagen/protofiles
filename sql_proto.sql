@@ -58,7 +58,13 @@ SELECT * FROM my_brands abb WHERE brand LIKE @my_variable;
 ----------------------------------------------------------------------------------------------------
 -- instertion of rows
 
-INSERT INTO mytable (brand, pic_url) VALUES ('Wildling','Wildling.png')
+INSERT INTO mytable (brand, pic_url) VALUES ("Wildling","Wildling.png")
+
+----------------------------------------------------------------------------------------------------
+-- update rows
+
+UPDATE mytable SET name = "Damian", city = "Berlin" WHERE customer_id = 666;
+
 
 ----------------------------------------------------------------------------------------------------
 -- deletion
