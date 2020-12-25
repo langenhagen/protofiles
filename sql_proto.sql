@@ -6,7 +6,9 @@
 ----------------------------------------------------------------------------------------------------
 -- the interactive fundamentals
 
-show databases
+show databases  # mysql
+\l              # in postgres, show databases
+\l+             # in postgres, show databases with extra info
 
 use mydatabase  -- also important in sql scripts
 
