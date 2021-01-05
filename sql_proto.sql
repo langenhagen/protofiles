@@ -33,6 +33,7 @@ show databases  -- mysql
 \l+             -- in postgres, show databases with extra info
 
 use mydatabase  -- also important in sql scripts
+\c              -- use database in postgres
 
 show tables
 \dt            -- in postgres show tables
@@ -87,7 +88,11 @@ SELECT * FROM mytable WHERE mycol LIKE "%jack%jones%"   -- match strings case in
 
 SELECT name, lastname from students WHERE name BETWEEN "A" AND "N"  -- check ranges with BETWEEN
 
-SELECT mycol -> 'my_jsonkey' -> 'my_nested_json_key' -> 69 FROM mytable  -- postgres select a nested JSON array at index 69
+----------------------------------------------------------------------------------------------------
+-- postgres query JSON
+-- https://www.postgresql.org/docs/9.5/functions-json.html
+
+SELECT mycol -> 'my_jsonkey' -> 'my_nested_json_key' ->> 69 FROM mytable  -- postgres select a nested JSON array at index 69
 
 
 ----------------------------------------------------------------------------------------------------
