@@ -1487,6 +1487,27 @@ die() {
 
 
 # --------------------------------------------------------------------------------------------------
+# Compare semantic versions
+
+version_lte() {
+    # Check whether the second given semantic version is at least as big as the
+    # first given semantic version.
+    #
+    # Usage:
+    # version_lte 3.8 3.9   # returns true
+    # version_lte 3.8 3.8   # returns true
+    # version_lte 3.8.1 3.8   # returns false
+    # version_lte 4 3.1.2   # returns false
+    [ "$1" = "$(printf "${1}\n${2}" | sort -V | head -n1)" ]
+}
+
+# use it for python version checking
+min_python_version='3.8'
+python_version="$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")"
+
+version_lte "$min_python_version" "$python_version" && echo compatible || echo incompatible
+
+# --------------------------------------------------------------------------------------------------
 # CURL
 
 curl \
