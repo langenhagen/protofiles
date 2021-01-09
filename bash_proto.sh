@@ -1498,7 +1498,7 @@ version_lte() {
     # version_lte 3.8 3.8   # returns true
     # version_lte 3.8.1 3.8   # returns false
     # version_lte 4 3.1.2   # returns false
-    [ "$1" = "$(printf "${1}\n${2}" | sort -V | head -n1)" ]
+    [ "$1" = "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" ]
 }
 
 # use it for python version checking
