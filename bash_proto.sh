@@ -18,7 +18,7 @@ set +x      # disable print every command to the output
 
 set -o pipefail     # bail out when a command at one pipe returns with a non-zero status
     # example:
-    notexistingcommand || printf 'a\n' # dies after echo "a". Otherwise, it would not die
+    notexistingcommand || printf 'a\n' # dies after printf 'a\n'. Otherwise, it would not die
 
 set -u      # treat unset variables as an error and exit immediately upon their usage
 
