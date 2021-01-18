@@ -688,6 +688,14 @@ sys.path.insert(0, pathlib.Path(__file__).absolute().parents[1].as_posix())
 import my_neighboring_package
 
 # --------------------------------------------------------------------------------------------------
+# regexes
+import re
+
+# named capture groups "(?P<my_identifier>.*)"
+match = re.search("(?P<name>.*) (?P<phone>.*)", "John 123456")
+match.group("name")  # returns "John"
+
+# --------------------------------------------------------------------------------------------------
 # Usage message
 
 import sys
