@@ -441,8 +441,11 @@ print get_text("John") # Outputs <p>Hello John</p>
 # --------------------------------------------------------------------------------------------------
 # context managers
 
-with open('file.txt') as f:
+with open("file.txt") as f:
     contents = f.read()
+
+with open("file.txt", "w+") as f:
+    f.write("Yeah\n")
 
 # implement a context manager via a class:
 # use this approach when the Context Management is complex
