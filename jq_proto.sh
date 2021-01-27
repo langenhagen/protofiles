@@ -14,11 +14,22 @@ cat myarrayfile.json | jq '.[]'  # many json objects, without comma between them
 
 
 ###############################################################################
+# output json items in 1 row each
+
+cat myndjsonfile.json | jq -c  # output every document on 1 line
+
+
+
+###############################################################################
 # select stuff and filter
 
 cat myarrayfile.json | jq -r '.[] | .location'   # get the location fields without quotation marks
 
 cat myarrayfile.json | jq '.[] | select(.state == "some_state") | "\(.loc), \(.sku)"'
+cat myndjsonfile.json | jq 'select(.state == "some_state") | "\(.loc), \(.sku)"'      # for newline-delimited json
+
+# more complicated query
+cat myndjsonfile.json | jq 'select((.main_image | length > 0) and .location_code != null)'
 
 
 ###############################################################################
