@@ -1437,7 +1437,8 @@ show_usage() {
     msg+="\n"
     msg+="Examples:\n"
     msg+="  ${script_name} 'foo' *.sh            # explain a bit in plain text here\n"
-    printf '%s' "$msg"
+    # shellcheck disable=SC2059
+    printf "$msg"
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -1454,7 +1455,8 @@ show_help() {
     msg+="\n"
     msg+="Examples:\n"
     msg+="  ${script_name} 'foo' *.sh            # explain a bit in plain text here\n"
-    printf '%s' "$msg"
+    # shellcheck disable=SC2059
+    printf "$msg"
 }
 
 
@@ -1464,7 +1466,8 @@ show_help() {
     msg="${script_name}\n"
     msg+="Replace strings in files in a directory tree.\n"
     msg+="\n"
-    printf '%s' "$msg"
+    # shellcheck disable=SC2059
+    printf "$msg"
     show_usage
 }
 
