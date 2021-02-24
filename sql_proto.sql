@@ -127,10 +127,13 @@ INSERT INTO events (
     body
 )
 VALUES (
-    '83f7fd3a-51fe-4ec0-80ca-ad4d3f2c0dcd',             -- apparently posgre wanta single quotes ' '
+    '83f7fd3a-51fe-4ec0-80ca-ad4d3f2c0dcd',             -- apparently posgre wants single quotes ' '
     '2019-09-22T23:07:01',
     '{"this":"is", "my":2, "friend":{"jason":[1,2,3,5]}}'
 )
+
+
+INSERT INTO my_table SELECT * FROM other_table;  -- insert results from a select query
 
 
 ----------------------------------------------------------------------------------------------------
