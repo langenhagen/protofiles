@@ -7,7 +7,7 @@
 # author: andreasl
 
 # --------------------------------------------------------------------------------------------------
-# set -e and +e
+# set and shopt
 # see https://www.quora.com/What-is-the-difference-between-set-+e-and-set-e-in-a-bash-script
 
 set -e      # the script immediately exits on error; errors in if-conditions still pass, though
@@ -22,6 +22,8 @@ set -o pipefail     # bail out when a command at one pipe returns with a non-zer
 
 set -u      # treat unset variables as an error and exit immediately upon their usage
 
+
+shopt -s extglob  # activate extendend globbing capabilities in a script, like, I guesss: `ls "foo/"*bar*`
 
 # --------------------------------------------------------------------------------------------------
 # output and streams
