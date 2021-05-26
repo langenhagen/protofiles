@@ -618,6 +618,10 @@ p.suffixes  # [".tar", ".gz"]
 p.unlink(missing_ok=False)  # delete the file
 
 
+# get the current script directory
+script_dir = pathlib.Path(__file__).parent.absolute()
+
+
 # --------------------------------------------------------------------------------------------------
 # pandas - 3rd party library
 
