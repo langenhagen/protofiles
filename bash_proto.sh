@@ -1020,8 +1020,8 @@ cyan="$(tput setaf 6)"
 white="$(tput setaf 7)"
 
 # You can't colorize text from printf given via %s, but via %s:
-printf '%s\n' "\e[1mSOMETHING IN BOLD\e[m"  # doesn't work
-printf '%b\n' "\e[1mSOMETHING IN BOLD\e[m"  # work
+printf '%s\n' '\e[1mSOMETHING IN BOLD\e[m'  # doesn't work
+printf '%b\n' '\e[1mSOMETHING IN BOLD\e[m'  # works
 
 
 # --------------------------------------------------------------------------------------------------
@@ -1038,25 +1038,25 @@ done
 # --------------------------------------------------------------------------------------------------
 # read
 
-read -e -n10 -p "my prompt: " value  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
+read -e -n10 -p 'my prompt: ' value  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
 read -t2 key  # read into key variable  with a 2 seconds timeout
 read -ern1  # throw var away -e: makes read print a newline after character is read  -n1: read 1 char; -r mangle backslashes: shellcheck likes it
 
 
-read -p "Please type your password: " -s  # -s: input not prompted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
+read -p 'Please type your password: ' -s  # -s: input not prompted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
 
 read -n1 -p 'Press any key to exit' -s; echo  # does not work with -e, therefore echo afterwards
 trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
 
 
-echo "Really?"
-read -r -p "<ctrl+c> to escape or press enter to proceed"
+echo 'Really?'
+read -r -p '<ctrl+c> to escape or press enter to proceed'
 
 
 # --------------------------------------------------------------------------------------------------
 # read a variable line by line.
 while read -r line; do  # trims lines and trims trailing newlines
-    echo "..." $line
+    echo '...' $line
 done <<< "$some_multiline_string"
 
 # OR
@@ -1475,6 +1475,9 @@ show_help() {
 
 # --------------------------------------------------------------------------------------------------
 # have a die function
+
+{ printf 'Some Message\n'; exit 1; }
+
 
 # simple
 die() {
