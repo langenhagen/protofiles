@@ -1050,7 +1050,7 @@ trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
 
 
 echo 'Really?'
-read -r -p '<ctrl+c> to escape or press enter to proceed'
+read -r -p '<ctrl+c> to escape or press <Enter> to proceed'
 
 
 # --------------------------------------------------------------------------------------------------
