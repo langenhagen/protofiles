@@ -147,3 +147,16 @@ UPDATE mytable SET name = "Damian", city = "Berlin" WHERE customer_id = 666;
 
 DELETE FROM mytable                -- delete everything from mytable
 DELETE FROM mytable mt WHERE mt.mycol = "nooo"
+
+----------------------------------------------------------------------------------------------------
+-- alter table
+
+ALTER TABLE mytable DROP COLUMN mycolumn;
+
+
+ALTER TABLE mytable ADD COLUMN column_name VARCHAR(15);
+
+
+ALTER TABLE mytable
+    DROP COLUMN mycolumn,
+    ADD COLUMN column_name VARCHAR(16);
