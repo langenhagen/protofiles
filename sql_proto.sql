@@ -160,3 +160,13 @@ ALTER TABLE mytable ADD COLUMN column_name VARCHAR(15);
 ALTER TABLE mytable
     DROP COLUMN mycolumn,
     ADD COLUMN column_name VARCHAR(16);
+
+
+-- rename a column in old MySQL
+ALTER TABLE mytable
+    CHANGE oldcolname newcolname varchar(20);
+
+
+-- rename a column in common new SQL
+ALTER TABLE mytable
+    RENAME COLUMN oldcolname TO newcolname;
