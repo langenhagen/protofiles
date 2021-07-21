@@ -48,6 +48,12 @@ CREATE DATABASE mydb
 DROP DATABASE mydb
 
 ----------------------------------------------------------------------------------------------------
+-- types
+
+bool        -- tinyint(1)
+tinyint(1)  -- same as bool
+
+----------------------------------------------------------------------------------------------------
 -- table fundamentals
 
 CREATE TABLE accounts (
@@ -170,3 +176,9 @@ ALTER TABLE mytable
 -- rename a column in common new SQL
 ALTER TABLE mytable
     RENAME COLUMN oldcolname TO newcolname;
+
+----------------------------------------------------------------------------------------------------
+-- show permissions
+
+-- mysql for current user
+SHOW GRANTS
