@@ -23,6 +23,12 @@ CREATE USER my_user WITH PASSWORD 'test123' IN GROUP my_group
 REVOKE CONNECT ON DATABASE postgres FROM PUBLIC  -- disable group PUBLIC users access to database `postres`
 
 
+----------------------------------------------------------------------------------------------------
+-- show permissions
+
+-- mysql for current user
+SHOW GRANTS
+
 
 ----------------------------------------------------------------------------------------------------
 -- the interactive fundamentals
@@ -176,9 +182,3 @@ ALTER TABLE mytable
 -- rename a column in common new SQL
 ALTER TABLE mytable
     RENAME COLUMN oldcolname TO newcolname;
-
-----------------------------------------------------------------------------------------------------
--- show permissions
-
--- mysql for current user
-SHOW GRANTS
