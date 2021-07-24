@@ -564,7 +564,8 @@ cat > "my-file.txt" << MYFILE_EOF
   indentations.
 MYFILE_EOF
 
-cat > "my-file.txt" <<- MYFILE_EOF  # using <<- is also possible. I miss to see the difference to <<
+# using <<- is also possible. I miss to see the difference to <<
+cat > "my-file.txt" <<- MYFILE_EOF
    This is the input of the file
   It can span
  several lines
