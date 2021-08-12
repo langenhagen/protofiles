@@ -730,6 +730,7 @@ fi
 
 
 # flexible & short but unstable, eg. when you call `./myscript please-helpme`
+# bash has issues with word regexes with boundaries
 if [[ "$*" =~ (-h|--help) ]]; then
     show_help
     exit 0
