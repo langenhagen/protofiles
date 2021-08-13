@@ -22,8 +22,12 @@ set -o pipefail     # bail out when a command at one pipe returns with a non-zer
 
 set -u      # treat unset variables as an error and exit immediately upon their usage
 
+shopt globstar  # show the current value of a shell option
 
 shopt -s extglob  # activate extendend globbing capabilities in a script, like, I guesss: `ls "foo/"*bar*`
+
+shopt -s globstar  # activate double asterisk `**` for nested globbing for like: ``ls ** | grep '.txt$'`
+
 
 # --------------------------------------------------------------------------------------------------
 # output and streams
