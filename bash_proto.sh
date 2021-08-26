@@ -30,6 +30,18 @@ shopt -s globstar  # activate double asterisk `**` for nested globbing for like:
 
 
 # --------------------------------------------------------------------------------------------------
+# inspect agiven thing
+
+type pwd  # pwd is a builtin
+type date  # date is /bin/date
+type cd  # prints the definiton of `cd`
+
+type -t file  # results `file``
+type -t pwd   # results `builtin`
+type -t cd   # results `function`
+
+
+# --------------------------------------------------------------------------------------------------
 # output and streams
 
 printf 'Output into nothing / silence the output\n' >/dev/null
@@ -1049,7 +1061,7 @@ read -t2 key  # read into key variable  with a 2 seconds timeout
 read -ern1  # throw var away -e: makes read print a newline after character is read  -n1: read 1 char; -r mangle backslashes: shellcheck likes it
 
 
-read -p 'Please type your password: ' -s  # -s: input not prompted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
+read -p 'Please type your password: ' -s;  # -s: input not prompted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
 
 read -n1 -p 'Press any key to exit' -s; echo  # does not work with -e, therefore echo afterwards
 trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
@@ -1097,7 +1109,7 @@ sleep 5d # Waits 5 days.
 # --------------------------------------------------------------------------------------------------
 # find a program
 
-command -v  MYPRGRAM  # similar to `which`, but builtin, and thus generally preferred
+command -v  myprogram  # similar to `which`, but builtin, and thus generally preferred
 
 command -v xcrun >/dev/null || die 'Xcode command line tools are mandatory'
 command -v xcrun >/dev/null && echo 'Program exists, do something'
@@ -1110,6 +1122,16 @@ fi
 if ! command -v brew >/dev/null; then
     printf 'brew does not exist\n'
 fi
+
+
+which myprogram  # search for binaries
+
+
+whereis myprogram  # search for binaries and manpages
+whereis -s myprogram  # search for sources
+whereis -b myprogram  # search for binaries
+whereis -m search for manpages  # search for manpages
+
 
 
 # --------------------------------------------------------------------------------------------------
