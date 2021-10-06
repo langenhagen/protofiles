@@ -1067,8 +1067,8 @@ read -n1 -p 'Press any key to exit' -s; echo  # does not work with -e, therefore
 trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
 
 
-echo 'Really?'
-read -r -p '<ctrl+c> to escape or press <Enter> to proceed'
+printf 'Really?\n'
+read -r -p 'Press <ctrl+c> to escape or press <Enter> to proceed'
 
 
 # --------------------------------------------------------------------------------------------------
