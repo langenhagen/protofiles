@@ -47,7 +47,8 @@ use mydatabase  -- also important in sql scripts
 \c              -- use database in postgres
 
 show tables
-\dt            -- in postgres show tables
+\dt            -- show tables in postgres
+.tables        -- show tables in sqlite
 
 DESCRIBE mytable  -- show meta information about the table
 DESC mytable  -- short form of DESCRIBE mytable
