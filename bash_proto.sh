@@ -518,7 +518,12 @@ if [ "$a" == 'yes' ]; then
    trap on_exit EXIT
 fi
 
-trap - EXIT  # disable a trap
+# delete a temporary file on exit
+tmp=$(mktemp)
+trap "rm -f $tmp" EXIT
+
+# disable a trap
+trap - EXIT
 
 # Other Signals:
 SIGHUP
