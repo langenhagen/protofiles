@@ -369,6 +369,11 @@ for value in {1..5}; do                # doesn't work with variables
     echo "$value"  # prints 1 2 3 4 5
 done
 
+# throwaway variables
+for _ in {1..5}; do
+    ehco 'Hi!'
+done
+
 for value in $(seq 5); do
     echo "$value" # prints 1 2 3 4 5
 done
