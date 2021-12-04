@@ -149,6 +149,10 @@ echo "$my_var" # prints 'has value'
 my_substituted_var="${my_var:-default value}"
 echo "$my_substituted_var" # prints 'has value'
 
+# you can also use variables in the defaults
+default=42
+myvar=${my_nonexisting_or_null_var:-${default}}
+
 # the following substitutes non-existing vars:
 myvar_with_default_value="${my_nonexisting_var-I am the default value}"
 echo "$myvar_with_default_value" # prints 'I am the default value'
