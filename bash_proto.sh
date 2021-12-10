@@ -1082,7 +1082,7 @@ trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
 
 
 printf 'Really?\n'
-read -r -p 'Press <ctrl+c> to escape or press <Enter> to proceed'
+read -r -p 'Press [ENTER] to continue or Ctrl-c to cancel.'
 
 
 # --------------------------------------------------------------------------------------------------
