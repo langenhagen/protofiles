@@ -26,7 +26,7 @@ shopt globstar  # show the current value of a shell option
 
 shopt -s extglob  # activate extendend globbing capabilities in a script, like, I guesss: `ls "foo/"*bar*`
 
-shopt -s globstar  # activate double asterisk `**` for nested globbing for like: ``ls ** | grep '.txt$'`
+shopt -s globstar  # activate double asterisk `**` globbing like: `ls **`; otherwise, `**` globbing only returns 1 result
 
 
 # --------------------------------------------------------------------------------------------------
