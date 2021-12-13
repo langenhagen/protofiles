@@ -265,8 +265,8 @@ my_array=(
     'c'
 )
 my_array+=('d')             # add a new element
-my_other_array=(${my_array[@]})  # copy an array
-my_array+=(${my_other_array[@]})  # append another array
+my_other_array=("${my_array[@]}")  # copy an array
+my_array+=("${my_other_array[@]}")  # append an array
 echo "${my_array}"            # print just a
 echo "${my_array[1]}"         # print b
 echo "${my_array[2]}"         # print c
