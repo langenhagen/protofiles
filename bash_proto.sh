@@ -50,7 +50,6 @@ printf 'Append output stream to file and error stream to same as output stream\n
 >&2 echo 'This outputs to the stderr error stream.'
 (>&2 echo 'error')  # To avoid interaction with other redirections use subshell
 
-
 # print every character repeatedly for a fixed number
 printf '=%.0s' {1..100}  # doesn't work with variables
 
@@ -1518,18 +1517,18 @@ show_help() {
 # --------------------------------------------------------------------------------------------------
 # have a die function
 
-{ printf 'Some Message\n'; exit 1; }
+{ >&2 printf 'Error: MyMessage'; exit 1; }
 
 
 # simple
 die() {
-    printf '%s\n' "$*"
+    >&2 printf '%s\n' "$*"
     exit 1
 }
 
 # elaborate, flexible
 die() {
-    printf '%s\n' "$1"
+    >&2 printf '%s\n' "$1"
     exit "${2:-1}"
 }
 
