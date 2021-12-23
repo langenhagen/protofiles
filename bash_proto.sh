@@ -1472,13 +1472,13 @@ generate_random_pronounceable_word() {
 # --------------------------------------------------------------------------------------------------
 # show usage  - show usage, but no help
 
-show_usage() {
+#() {
     script_name="${0##*/}"
 
-    msg="Usage:\n"
+    msg="Usage:\n\n"
     msg+="  ${script_name} <search-pattern> <file-pattern>...\n"
     msg+="\n"
-    msg+="Examples:\n"
+    msg+="Examples:\n\n"
     msg+="  ${script_name} 'foo' *.sh            # explain a bit in plain text here\n"
     # shellcheck disable=SC2059
     printf "$msg"
@@ -1493,10 +1493,10 @@ show_help() {
     msg="${script_name}\n"
     msg+="Replace strings in files in a directory tree.\n"
     msg+="\n"
-    msg+="Usage:\n"
+    msg+="Usage:\n\n"
     msg+="  ${script_name} <search-pattern> <file-pattern>...\n"
     msg+="\n"
-    msg+="Examples:\n"
+    msg+="Examples:\n\n"
     msg+="  ${script_name} 'foo' *.sh            # explain a bit in plain text here\n"
     # shellcheck disable=SC2059
     printf "$msg"
