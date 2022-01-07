@@ -560,6 +560,9 @@ echo "[$0] vs. [${BASH_SOURCE[0]}]"
 # in the following some copy-pasteable snippets
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || { echo 'Error: Failed to cd to project root'; exit 1; }
+
+
 absolute_script_dir_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # directory of the current script, i.e. script or sourced script
 absolute_script_dir_path_followed_through_symlinks="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 relative_script_file_path="$(dirname ${BASH_SOURCE[0]})"  # path to the script from where you are
