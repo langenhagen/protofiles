@@ -188,3 +188,15 @@ ALTER TABLE mytable
 -- rename a column in common new SQL
 ALTER TABLE mytable
     RENAME COLUMN oldcolname TO newcolname;
+
+
+----------------------------------------------------------------------------------------------------
+-- extensions
+
+\dx -- show extensions in postrges
+select * FROM pg_extension; -- show extension in postrges via sql code
+select * FROM pg_available_extensions  -- show available extensions in postrges
+
+
+create extension "uuid-ossp";
+create extension if not exists "uuid-ossp";
