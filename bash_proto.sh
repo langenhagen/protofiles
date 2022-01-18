@@ -815,6 +815,8 @@ done
 # less elegant but allows for combined one-letter options in arbtrary order, like e.g. netstat tulpn
 logfile='my.log'
 send_alive_pushover=false
+file=
+args=()
 while [ "$#" -gt 0 ]; do
     case "$1" in
     --alive)
@@ -840,7 +842,11 @@ while [ "$#" -gt 0 ]; do
         [[ "$1" =~ a ]] && send_alive_pushover=true
         [[ "$1" =~ y ]] && logfile='yesterday.log'
         ;;
-    *) # unknown option
+    *)
+        file="$1"
+        shift
+        args=("$@")
+        break
         ;;
     esac
     shift # past argument or value
