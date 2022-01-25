@@ -374,7 +374,7 @@ done
 
 # throwaway variables
 for _ in {1..5}; do
-    ehco 'Hi!'
+    echo 'Hi!'
 done
 
 for value in $(seq 5); do
