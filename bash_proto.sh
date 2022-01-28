@@ -161,7 +161,7 @@ myvar_with_default_value="${my_existing_var-I am the default value}"
 echo "$myvar_with_default_value" # prints 'Hello'
 
 # --------------------------------------------------------------------------------------------------
-# string substitution / parameter substitution / parameter expansion
+# string substitution / parameter substitution aka parameter expansion
 
 first_string='I am a Cat'
 second_string='Cat'
@@ -559,6 +559,8 @@ echo "[$0] vs. [${BASH_SOURCE[0]}]"
 
 # in the following some copy-pasteable snippets
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+parent_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.." || { echo 'Error: Failed to cd to project root'; exit 1; }
 
