@@ -641,7 +641,7 @@ printf "Copy me to clipboard" | xclip -i -f -selection primary | xclip -i -selec
 # Use local variables within functions
 # functions seem to work with /bin/bash but not with /bin/sh
 
-myFunction() {
+my_function() {
     local my_var=42  # local var does not leak outside function scope
     return "$my_var"
 }
@@ -650,12 +650,12 @@ myFunction() {
 echo "Script file name: " "$0"
 echo "Script's first parameter: " "$1"
 
-myFunction2() {
+my_function2() {
     echo "USAGE"
     echo "Script's file name: " "$0"
-    echo "myFunction2's first param" "$1"  # != $1 of the script
+    echo "my_function2's first param" "$1"  # != $1 of the script
 }
-myFunction2 "The first param given to the function"
+my_function2 "The first param given to the function"
 
 
 # --------------------------------------------------------------------------------------------------
