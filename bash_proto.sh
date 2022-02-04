@@ -509,6 +509,7 @@ echo "`pwd`"  # `..` is legacy, cannot be nested, like $(..)
 # traps
 # code that will be executed on certain signals
 
+# Cleanup actions at program end.
 on_exit() {
   : # cleanup code goes here
 }
