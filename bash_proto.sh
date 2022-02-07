@@ -364,12 +364,12 @@ done
 # for loops
 # you can use  continue  and  break
 
-for value in 0 1 3; do
-    echo "$value"  # prints 0 1 and 3
+for i in 0 1 3; do
+    echo "$i"  # prints 0 1 and 3
 done
 
-for value in {1..5}; do                # doesn't work with variables
-    echo "$value"  # prints 1 2 3 4 5
+for i in {1..5}; do                # doesn't work with variables
+    echo "$i"  # prints 1 2 3 4 5
 done
 
 # throwaway variables
