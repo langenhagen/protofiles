@@ -50,8 +50,9 @@ show tables
 \dt            -- show tables in postgres
 .tables        -- show tables in sqlite
 
-DESCRIBE mytable  -- show meta information about the table
-DESC mytable  -- short form of DESCRIBE mytable
+describe mytable  -- show meta information about the table
+desc mytable  -- short form of describe mytable
+.schema mytable -- sqlite version of describe; don't add a semicolon to this command
 
 ----------------------------------------------------------------------------------------------------
 -- database fundamentals
