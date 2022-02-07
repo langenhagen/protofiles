@@ -385,7 +385,7 @@ for value in $(seq 3 5); do
     echo "$value" # prints 3 4 5
 done
 
-my_array=("one" "two" "three")
+my_array=('one' 'two' 'three')
 for value in "${my_array[@]}"; do
     echo "$value"
 done
