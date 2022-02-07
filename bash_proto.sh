@@ -785,7 +785,7 @@ fi
 # --------------------------------------------------------------------------------------------------
 # command line option parsing -- simple and complete. I believe this is the best general way
 
-logfile='my.log'
+logfile='default.log'
 send_alive_pushover=false
 while [ "$#" -gt 0 ]; do
     case "$1" in
@@ -809,6 +809,7 @@ while [ "$#" -gt 0 ]; do
         exit 0
         ;;
     *) # unknown option
+        main_arg="$1"
         ;;
     esac
     shift
