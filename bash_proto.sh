@@ -1576,3 +1576,11 @@ curl \
   --request POST \
   --data '{"service_id": "ovs_shz","store": "SHZ"}' \
   https://api-proxy.shz.de/celeraone/user/register
+
+
+# --------------------------------------------------------------------------------------------------
+
+# Convert a string into a viable filename.
+slugify() {
+    sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g;s/./\L&/g' <<< "$*"
+}
