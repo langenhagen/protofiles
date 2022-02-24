@@ -797,7 +797,7 @@ while [ "$#" -gt 0 ]; do
         shift # past argument
         ;;
     -y|--yesterday)
-        logfile="yesterday.log"
+        logfile='yesterday.log'
         ;;
     --)
         shift
