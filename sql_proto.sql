@@ -51,6 +51,7 @@ show tables
 .tables        -- show tables in sqlite
 
 describe mytable  -- show meta information about the table
+\d mytable        -- in postgres, describe the table
 desc mytable  -- short form of describe mytable
 .schema mytable -- sqlite version of describe; don't add a semicolon to this command
 
