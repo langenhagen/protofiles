@@ -1366,31 +1366,31 @@ printf '%s' "$current_results"  | grep -i 'hello' # using '%s'  retains possible
                                                     # "$current_results"  would do
 
 
+# Given a file path and a grep pattern,
+# finds corresponding line in the given file and applies an +1 increment
+# to the last column in the line.
+# The line's last column must consist of a number.
+# There should exactly be one matching line.
+# The file should exist.
+# The function does no erroch checking!
+#
+# Parameters:
+#   $1:  the grep-pattern for which to look for.
+#   $2:  the file name in which to find the line whose last column is to be incremented.
+#
+# Example:
+#   contents of myfile.txt before execution:
+#       Hello world,
+#       The current count is: 0
+#
+#   # invoke function
+#   increment_count "current count is: " "path/to/my/file.txt"
+#
+#   contents of myfile.txt after execution:
+#       Hello world,
+#       The current count is: 1
+# .
 increment_count() {
-    # Given a file path and a grep pattern,
-    # finds corresponding line in the given file and applies an +1 increment
-    # to the last column in the line.
-    # The line's last column must consist of a number.
-    # There should exactly be one matching line.
-    # The file should exist.
-    # The function does no erroch checking!
-    #
-    # Parameters:
-    #   $1:  the grep-pattern for which to look for.
-    #   $2:  the file name in which to find the line whose last column is to be incremented.
-    #
-    # Example:
-    #   contents of myfile.txt before execution:
-    #       Hello world,
-    #       The current count is: 0
-    #
-    #   # invoke function
-    #   increment_count "current count is: " "path/to/my/file.txt"
-    #
-    #   contents of myfile.txt after execution:
-    #       Hello world,
-    #       The current count is: 1
-    # .
 
     local line
     line="$(grep "$1" "$2")"
@@ -1403,10 +1403,10 @@ increment_count() {
     sed -i "s/$line/$new_line/" "$2"
 }
 
+# Checks if the given unix system is a mac by checking the home directory
+# There are other ways, but this is one.
+# .
 check_if_this_computer_is_a_mac() {
-    # Checks if the given unix system is a mac by checking the home directory
-    # There are other ways, but this is one.
-    # .
     if echo $HOME | grep -v -q "/Users/"; then  # grep -q: quiet
         echo "we're not on mac"
     else
@@ -1414,10 +1414,10 @@ check_if_this_computer_is_a_mac() {
     fi
 }
 
+# Checks if the given unix system is a mac by checking the home directory
+# There are other ways, but this is one.
+# .
 check_if_this_computer_is_a_mac_2() {
-    # Checks if the given unix system is a mac by checking the home directory
-    # There are other ways, but this is one.
-    # .
     if [ "$(uname)" != "Darwin" ]; then
         printf "we're not on mac\n"
     else
@@ -1425,10 +1425,10 @@ check_if_this_computer_is_a_mac_2() {
     fi
 }
 
+# Checks if the given folder is empty.
+# Beware of whitespaces, maybe.
+# .
 is_folder_empty() {
-    # Checks if the given folder is empty.
-    # Beware of whitespaces, maybe.
-    # .
     if [ -z "$(ls -A "$1")" ]; then
         printf 'given folder is empty\n'
     else
@@ -1436,32 +1436,32 @@ is_folder_empty() {
     fi
 }
 
+# taken from: https://stackoverflow.com/questions/23356779/how-can-i-store-find-command-result-as-arrays-in-bash
 write_find_output_into_array() {
-    # taken from: https://stackoverflow.com/questions/23356779/how-can-i-store-find-command-result-as-arrays-in-bash
     array=()
     while IFS=  read -r -d $'\0'; do
         array+=("$REPLY")
     done < <(find . -type d -print0)
 }
 
+# Prints the number of occurences of a given substring $1 in a given string $2.
+# Found on:  https://stackoverflow.com/questions/26212889/bash-counting-substrings-in-a-string
 count_occurences_of_substring_in_string() {
-    # Prints the number of occurences of a given substring $1 in a given string $2.
-    # Found on:  https://stackoverflow.com/questions/26212889/bash-counting-substrings-in-a-string
     local recuced_string=${2//"$1"}
     echo "$(((${#2} - ${#recuced_string}) / ${#1}))"
 }
 
+# Given a word length, generates a random pronounceable word in lower case and returns it.
+# The word is created letter by letter, i.e. each character is added sequentially. A vovel is
+# created with the chance of 1/3 and an a consonant with the chance of 2/3, but no more than 2
+# consonants are created after one another.
+#
+# Usage:
+#   ${FUNCNAME[0]} <number>
+#
+# Example:
+#   ${FUNCNAME[0]} 7
 generate_random_pronounceable_word() {
-    # Given a word length, generates a random pronounceable word in lower case and returns it.
-    # The word is created letter by letter, i.e. each character is added sequentially. A vovel is
-    # created with the chance of 1/3 and an a consonant with the chance of 2/3, but no more than 2
-    # consonants are created after one another.
-    #
-    # Usage:
-    #   ${FUNCNAME[0]} <number>
-    #
-    # Example:
-    #   ${FUNCNAME[0]} 7
 
     local word_length="$1"
     local num_consonants_since_last_vovel=0
@@ -1551,15 +1551,15 @@ die() {
 # --------------------------------------------------------------------------------------------------
 # Compare semantic versions
 
+# Check whether the second given semantic version is at least as big as the
+# first given semantic version.
+#
+# Usage:
+# version_lte 3.8 3.9   # returns true
+# version_lte 3.8 3.8   # returns true
+# version_lte 3.8.1 3.8   # returns false
+# version_lte 4 3.1.2   # returns false
 version_lte() {
-    # Check whether the second given semantic version is at least as big as the
-    # first given semantic version.
-    #
-    # Usage:
-    # version_lte 3.8 3.9   # returns true
-    # version_lte 3.8 3.8   # returns true
-    # version_lte 3.8.1 3.8   # returns false
-    # version_lte 4 3.1.2   # returns false
     [ "$1" = "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" ]
 }
 
