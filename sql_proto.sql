@@ -108,6 +108,9 @@ SELECT * FROM mytable WHERE mycol LIKE "%jack%jones%"   -- match strings case in
 
 SELECT name, lastname from students WHERE name BETWEEN "A" AND "N"  -- check ranges with BETWEEN
 
+select token, uuid from skills where token in ('andi','mandi','sugar','candy');
+
+
 ----------------------------------------------------------------------------------------------------
 -- postgres query JSON
 -- https://www.postgresql.org/docs/9.5/functions-json.html
