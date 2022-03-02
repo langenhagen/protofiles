@@ -1579,8 +1579,13 @@ curl \
 
 
 # --------------------------------------------------------------------------------------------------
-
 # Convert a string into a viable filename.
 slugify() {
     sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g;s/./\L&/g' <<< "$*"
 }
+
+# --------------------------------------------------------------------------------------------------
+# remove a folder from variable safely
+# without running the risk that an unitialized variable could cause deletion of most of your system
+
+rm -rf "${mydir:?}/"  # if mydir is empty or not set, bash will issue a message `mydir: parameter null or not set`
