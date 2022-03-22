@@ -368,6 +368,7 @@ for i in 0 1 3; do
     echo "$i"  # prints 0 1 and 3
 done
 
+# {1..5} not sh compatible
 for i in {1..5}; do                # doesn't work with variables
     echo "$i"  # prints 1 2 3 4 5
 done
@@ -377,6 +378,7 @@ for _ in {1..5}; do
     echo 'Hi!'
 done
 
+# sh compatible
 for value in $(seq 5); do
     echo "$value" # prints 1 2 3 4 5
 done
