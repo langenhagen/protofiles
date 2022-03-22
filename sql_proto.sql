@@ -140,21 +140,28 @@ SELECT * FROM my_brands abb WHERE brand LIKE @my_variable;
 
 
 ----------------------------------------------------------------------------------------------------
--- instertion of rows
+-- insertion of rows
 
-INSERT INTO mytable (brand, pic_url) VALUES ("Wildling","Wildling.png")
+INSERT INTO mytable (name, type) VALUES ('MyName','g00d')
 
+-- long version with fields specified
 INSERT INTO events (
     aggregate_id,
     timestamp,
     body
 )
 VALUES (
-    '83f7fd3a-51fe-4ec0-80ca-ad4d3f2c0dcd',             -- apparently posgre wants single quotes ' '
+    '83f7fd3a-51fe-4ec0-80ca-ad4d3f2c0dcd',         -- apparently postgres wants single quotes ' '
     '2019-09-22T23:07:01',
     '{"this":"is", "my":2, "friend":{"jason":[1,2,3,5]}}'
 )
 
+-- short version
+INSERT INTO events VALUES (
+    '83f7fd3a-51fe-4ec0-80ca-ad4d3f2c0dcd',
+    '2019-09-22T23:07:01',
+    '{"this":"is", "my":3, "friend":{"jake":[6,7,8]}}'
+)
 
 INSERT INTO my_table SELECT * FROM other_table;  -- insert results from a select query
 
@@ -162,14 +169,14 @@ INSERT INTO my_table SELECT * FROM other_table;  -- insert results from a select
 ----------------------------------------------------------------------------------------------------
 -- update rows
 
-UPDATE mytable SET name = "Damian", city = "Berlin" WHERE customer_id = 666;
+UPDATE mytable SET name = 'Damian', city = 'Berlin' WHERE customer_id = 666;
 
 
 ----------------------------------------------------------------------------------------------------
 -- deletion
 
 DELETE FROM mytable                -- delete everything from mytable
-DELETE FROM mytable mt WHERE mt.mycol = "nooo"
+DELETE FROM mytable mt WHERE mt.mycol = 'nooo'
 
 ----------------------------------------------------------------------------------------------------
 -- alter table
