@@ -489,12 +489,12 @@ fi
 case "$status_code" in
     "200")
         return 0
-        ;;              ## ;; is how end a case clause
+        ;;  # ;; is how end a case clause
     "404"|"666")
         return 1
         ;;
     *)
-        die "Url $transpiler_url returned status code $status_code"
+        die "Program returned status code ${status_code}"
         ;;
 esac
 
