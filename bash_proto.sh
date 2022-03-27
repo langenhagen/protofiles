@@ -138,7 +138,7 @@ source_env .env
 # --------------------------------------------------------------------------------------------------
 # defaults - parameter substitution / parameter expansion
 
-# the following substitutes non-existent and empty vars:
+# the following substitutes non-existent or empty vars:
 echo "$my_nonexisting_or_null_var"  # empty / non-existent
 my_substituted_var="${my_nonexisting_or_null_var:-default value}"
 echo "$my_substituted_var"  # prints 'default value'
@@ -159,6 +159,7 @@ echo "$myvar_with_default_value" # prints 'I am the default value'
 my_existing_var="Hello"
 myvar_with_default_value="${my_existing_var-I am the default value}"
 echo "$myvar_with_default_value" # prints 'Hello'
+
 
 # --------------------------------------------------------------------------------------------------
 # string substitution / parameter substitution aka parameter expansion
