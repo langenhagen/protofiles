@@ -747,8 +747,8 @@ fi
 # --------------------------------------------------------------------------------------------------
 # command line option parsing -- very simple with defaults -- very concice
 
-myval="${1:-mydefault}"
-myotherval="${2:-myotherdefault}"
+myval="${1-mydefault}"
+myotherval="${2-myotherdefault}"
 
 # --------------------------------------------------------------------------------------------------
 # command line option parsing -- very simple
@@ -941,7 +941,7 @@ fi
 # test changes the last return value. if you test against several cases, use either switch or put
 # the return value into a variable:
 git pull --rebase origin master
-code="${?}"
+code="$?"
 if [ "$code" == 0 ]; then
     echo 'all good'
 elif [ "$code" == 1 ]; then
