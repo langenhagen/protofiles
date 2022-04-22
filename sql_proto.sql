@@ -142,7 +142,9 @@ SELECT * FROM my_brands abb WHERE brand LIKE @my_variable;
 ----------------------------------------------------------------------------------------------------
 -- insertion of rows
 
-INSERT INTO mytable (name, type) VALUES ('MyName','g00d')
+INSERT INTO mytable (name, type) VALUES ('MyName','g00d');
+INSERT INTO mytable (name, type) VALUES ('MyName','g00d'),('OtherName','b4d');
+
 
 -- long version with fields specified
 INSERT INTO events (
