@@ -53,7 +53,12 @@ show tables
 describe mytable  -- show meta information about the table
 \d mytable        -- in postgres, describe the table
 desc mytable  -- short form of describe mytable
-.schema mytable -- sqlite version of describe; don't add a semicolon to this command
+.schema mytable -- sqlite similar to describe; shows how the table was created; don't add a semicolon to this command
+pragma table_info(skill_iteration);  -- sqlite similar to describe; get info about table's columns
+
+
+.indexes  -- list indexes in SQLite
+
 
 ----------------------------------------------------------------------------------------------------
 -- database fundamentals
@@ -172,6 +177,8 @@ INSERT INTO my_table SELECT * FROM other_table;  -- insert results from a select
 -- update rows
 
 UPDATE mytable SET name = 'Damian', city = 'Berlin' WHERE customer_id = 666;
+
+UPDATE alembic_version SET version_num = '448f011cf715';
 
 
 ----------------------------------------------------------------------------------------------------
