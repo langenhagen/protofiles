@@ -84,7 +84,7 @@ CREATE TABLE accounts (
     last_login TIMESTAMP
 );
 
-DROP TABLE mytable
+DROP TABLE mytable;
 
 ----------------------------------------------------------------------------------------------------
 -- table types
