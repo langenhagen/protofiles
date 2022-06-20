@@ -6,7 +6,13 @@
 ----------------------------------------------------------------------------------------------------
 -- pitfalls
 
--- apparently, postgres wants single quotes
+-- apparently, postgres wants single quotes; best use single quotes
+
+----------------------------------------------------------------------------------------------------
+-- meta administrative stuff
+
+select sqlite_version();
+
 
 ----------------------------------------------------------------------------------------------------
 -- administrative stuff - groups and users
@@ -75,7 +81,7 @@ tinyint(1)  -- same as bool
 ----------------------------------------------------------------------------------------------------
 -- table fundamentals
 
-CREATE TABLE accounts (
+CREATE TABLE mytable (
     user_id serial PRIMARY KEY,
     username VARCHAR ( 50 ) UNIQUE NOT NULL,
     password VARCHAR ( 50 ) NOT NULL,
@@ -191,10 +197,10 @@ DELETE FROM mytable mt WHERE mt.mycol = 'nooo'
 ----------------------------------------------------------------------------------------------------
 -- alter table
 
-ALTER TABLE mytable DROP COLUMN mycolumn;
+ALTER TABLE mytable DROP COLUMN mycolumn;  -- doesn't work with asncient SQLite DBs.
 
 
-ALTER TABLE mytable ADD COLUMN column_name VARCHAR(15);
+ALTER TABLE mytable ADD COLUMN mycolumn VARCHAR(15);
 
 
 ALTER TABLE mytable
