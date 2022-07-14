@@ -50,6 +50,8 @@ printf 'Append output stream to file and error stream to same as output stream\n
 >&2 echo 'This outputs to the stderr error stream.'
 (>&2 echo 'error')  # To avoid interaction with other redirections use subshell
 
+./myprogram.sh |& tee -a  # since Bash version 4 you may use  |&  as an abbreviation for  2>&1 |
+
 # print every character repeatedly for a fixed number
 printf '=%.0s' {1..100}  # doesn't work with variables
 
