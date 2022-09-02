@@ -17,6 +17,10 @@ select sqlite_version();
 ----------------------------------------------------------------------------------------------------
 -- administrative stuff - groups and users
 
+
+export PGPASSWORD=pass  # in bash; a way to set the PostgreSQL password via env variable
+
+
 CREATE GROUP my_group
 SELECT groname FROM pg_group;  -- show groups
 
