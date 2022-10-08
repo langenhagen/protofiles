@@ -225,6 +225,21 @@ script_name="${0##*/}"
 
 
 # --------------------------------------------------------------------------------------------------
+# indirect redirection
+# specify variables in clear text use clear text variables:
+
+my_var='my_other_var'
+my_other_var='hello indirect redirection'
+
+echo ${my_var}  # my_other_var
+echo ${!my_var}  # hello indirect redirection
+
+
+my_var='not_a_variable'
+echo ${my_var}  # my_other_var
+echo ${!my_var}  # empty string ''
+
+# --------------------------------------------------------------------------------------------------
 # cd-ing in scripts:
 
 cd some/where || exit 1
@@ -338,7 +353,7 @@ typeset -a my_other_explicit_array=()       # declare and typeset are exact syno
 
 
 # --------------------------------------------------------------------------------------------------
-# dictionaries, or associative arrays
+# dictionaries, or associative arrays aka maps
 # note: the dictionary might be reordered internally.
 
 declare -A animals
