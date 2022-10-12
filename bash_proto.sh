@@ -164,6 +164,35 @@ echo "$myvar_with_default_value" # prints 'Hello'
 
 
 # --------------------------------------------------------------------------------------------------
+# + Use alternative value if variable is declared or set, otherwise use empty value
+
+myvar=${my_undefined_var+xyz}
+echo "myvar = $myvar"      # myvar =
+
+my_empty_var=
+myvar=${my_empty_var+xyz}
+echo "myvar = $myvar"      # myvar = xyz
+
+my_set_var=123
+echo ${my_set_var+xyz}
+echo "myvar = $myvar"      # myvar = xyz
+
+# --------------------------------------------------------------------------------------------------
+# :+ Use alternative value if variable is set, otherwise use empty value;
+# :+ is weaker than +
+
+myvar=${my_undefined_var:+xyz}
+echo "myvar = $myvar"      # myvar =
+
+my_empty_var=
+myvar=${my_empty_var:+xyz}
+echo "myvar = $myvar"      # myvar =     ; different from  myvar=${my_empty_var+xyz} which would give xyz
+
+my_set_var=123
+myvar=${my_set_var:+xyz}
+echo "myvar = $myvar"      # myvar = xyz
+
+# --------------------------------------------------------------------------------------------------
 # string substitution / parameter substitution aka parameter expansion
 
 first_string='I am a Cat'
