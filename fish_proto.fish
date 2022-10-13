@@ -19,8 +19,7 @@ end
 
 while true;
     clear -x;
-    du -sh myfile;
-    echo;
+    du -sh *.ts;
     sleep 5;
 end
 
