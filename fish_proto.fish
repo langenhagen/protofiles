@@ -18,6 +18,7 @@ end
 # while loops
 
 while true;
+    clear -x;
     du -sh myfile;
     echo;
     sleep 5;
