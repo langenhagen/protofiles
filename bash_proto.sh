@@ -166,31 +166,31 @@ echo "$myvar_with_default_value" # prints 'Hello'
 # --------------------------------------------------------------------------------------------------
 # + Use alternative value if variable is declared or set, otherwise use empty value
 
-myvar=${my_undefined_var+xyz}
+myvar=${my_undefined_var+'my alternative value'}
 echo "myvar = $myvar"      # myvar =
 
 my_empty_var=
-myvar=${my_empty_var+xyz}
-echo "myvar = $myvar"      # myvar = xyz
+myvar=${my_empty_var+'my alternative value'}
+echo "myvar = $myvar"      # myvar = my alternative value
 
 my_set_var=123
-echo ${my_set_var+xyz}
-echo "myvar = $myvar"      # myvar = xyz
+echo ${my_set_var+'my alternative value'}
+echo "myvar = $myvar"      # myvar = my alternative value
 
 # --------------------------------------------------------------------------------------------------
 # :+ Use alternative value if variable is set, otherwise use empty value;
 # :+ is weaker than +
 
-myvar=${my_undefined_var:+xyz}
+myvar=${my_undefined_var:+'my alternative value'}
 echo "myvar = $myvar"      # myvar =
 
 my_empty_var=
-myvar=${my_empty_var:+xyz}
-echo "myvar = $myvar"      # myvar =     ; different from  myvar=${my_empty_var+xyz} which would give xyz
+myvar=${my_empty_var:+'my alternative value'}
+echo "myvar = $myvar"      # myvar =     ; different from  myvar=${my_empty_var+'my alternative value'} which would give 'my alternative value'
 
 my_set_var=123
-myvar=${my_set_var:+xyz}
-echo "myvar = $myvar"      # myvar = xyz
+myvar=${my_set_var:+'my alternative value'}
+echo "myvar = $myvar"      # myvar = 'my alternative value'
 
 # --------------------------------------------------------------------------------------------------
 # string substitution / parameter substitution aka parameter expansion
