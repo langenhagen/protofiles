@@ -324,7 +324,7 @@ unset my_array[2]  # delete the element from the array at the given index
 my_array=( "${my_array[@]//b/foo}" )  # replace all occurences of pattern in every string in every item with foo
 my_array=( "${my_array[@]/b/foo}" )  # replace first occurence of pattern in every string in every item with foo
 
-echo ${#my_array[@]}        # print 3, i.e. the length of the array
+echo "Array has length ${#my_array[@]}"        # print 3, i.e. the length of the array
 
 # print array - print an array with preceeding > and newline delimiting each entry
 printf '> %s\n' "${my_array[@]}"
