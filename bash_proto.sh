@@ -1126,7 +1126,7 @@ printf '%b\n' '\e[1mSOMETHING IN BOLD\e[m'  # works
 # Print a color palette
 # found here: https://askubuntu.com/questions/558280/changing-colour-of-text-and-background-of-terminal
 
-for((i=16; i<256; i++)); do
+for ((i=16; i<256; i++)); do
     printf "\e[48;5;${i}m%03d" $i;  # apparently, 48 is for background colors, 38 would affect background colors
     printf '\e[0m';
     [ ! $(((i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
