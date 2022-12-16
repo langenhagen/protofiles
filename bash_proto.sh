@@ -342,6 +342,11 @@ for i in "${my_array[@]}"; do
     echo "jo $i"
 done
 
+# index-wise iteration
+for i in "${!my_array[@]}"; do
+    echo "${i}  ${my_array[$i]}"  # "0  a", then "1 b" and so on
+done
+
 
 my_folders_array=('.' '..' $(ls))  # puts ., .. and all the files/folders given by `ls` into an array
 
