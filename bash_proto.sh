@@ -198,8 +198,8 @@ echo "myvar = $myvar"      # myvar = 'my alternative value'
 first_string='I am a Cat'
 second_string='Cat'
 third_string='Dog'
-echo "${first_string/Cat/$third_string}"    # print "I am a Dog"
-echo "${first_string/$second_string/Dog}"    # print "I am a Dog"
+echo "${first_string/Cat/$third_string}"    # "I am a Dog"
+echo "${first_string/$second_string/Bear}"    # "I am a Bear"
 echo "${first_string/Cat/}"  # print "I am a" - remove first occurence, do not overwrite original var
 
 my_var='Hello, Andi, Andi and Andi'
@@ -539,10 +539,10 @@ fi
 # switch case
 
 case "$status_code" in
-    "200")
+    '200')
         return 0
         ;;  # ;; is how end a case clause
-    "404"|"666")
+    '404'|'666')
         return 1
         ;;
     *)
