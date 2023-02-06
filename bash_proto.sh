@@ -1138,7 +1138,7 @@ done
 
 read -e -n10 -p 'my prompt: ' value  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
 read -t2 key  # read into key variable  with a 2 seconds timeout
-read -ern1  # throwaway var -e: makes read print a newline after character is read  -n1: read 1 char; -r mangle backslashes: shellcheck likes it
+read -ern1  # throwaway var -e: make read print a newline after character is read  -n1: read 1 char; -r mangle backslashes: shellcheck likes it
 
 
 read -p 'Please type your password: ' -rs pass;  # -r interpret backslashes verbatim; -s: input not prompted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
