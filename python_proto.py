@@ -780,6 +780,34 @@ a, b = 2, 3
 a, b = b, a  # swap two vars without using a tmp var
 
 # --------------------------------------------------------------------------------------------------
+# Drop to shell
+
+# drop into Python shell after program execution
+
+python -i my_script.py
+
+# or
+
+import code
+code.interact(locals=locals())
+
+# into a PDB shell
+
+import pdb
+pdb.set_trace()
+
+# into an IPython shell
+
+import IPython
+IPython.embed()
+
+# into a BPython shell
+
+from bpython import embed
+embed(locals_=locals(), banner="\nDropping to interactive shell\n")
+
+
+# --------------------------------------------------------------------------------------------------
 # Python pitfalls
 
 # def foo( from = None):  # from causes invalid syntax; from is a word that you use in impoirt .. from
