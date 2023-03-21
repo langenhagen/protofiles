@@ -42,3 +42,9 @@ end
 say_hi
 say_hi everbody!
 say_hi you and you and you
+
+
+# --------------------------------------------------------------------------------------------------
+# tests
+
+test (random) -eq 1 && echo 'yay!'
