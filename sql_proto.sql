@@ -239,3 +239,15 @@ select * FROM pg_available_extensions  -- show available extensions in postrges
 
 create extension "uuid-ossp";
 create extension if not exists "uuid-ossp";
+
+
+----------------------------------------------------------------------------------------------------
+-- complex transactions with BEGIN - COMMIT
+
+BEGIN;
+select id into temp table mytemptable from table1 where box_id=19 and token!='123456';
+select id into temp table myothertemptable from table2 where skill_id in (select id from mytemptable);
+delete from table1 where id in (select id from mytemptable);
+delete from table3 where iteration_id in (select id from myothertemptable);
+delete from table2 where skill_id in (select id from mytemptable);
+COMMIT;
