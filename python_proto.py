@@ -612,9 +612,9 @@ print(json.dumps(my_mapping, indent=4, sort_keys=True))
 # --------------------------------------------------------------------------------------------------
 # pathlib - deal with paths and files and do some file operations
 
-import pathlib
+from pathlib import Path
 
-p = pathlib.Path("path/to/my/file.tar.gz")
+p = Path("path/to/my/file.tar.gz")
 
 p.parent  # path/to/my
 
@@ -626,10 +626,21 @@ p.suffixes  # [".tar", ".gz"]
 
 p.unlink(missing_ok=False)  # delete the file
 
+# get the absolute script file path
+print(__file__)
+
+# get the CWD old schoolish
+from os import getcwd
+current_cwd = getcwd()
 
 # get the current script directory
-script_dir = pathlib.Path(__file__).parent.absolute()
+script_dir = Path(__file__).parent.absolute()
 
+
+# change the CWD to the directory of __file__
+from os import chdir
+script_dir = Path(__file__).parent
+chdir(script_dir)
 
 # --------------------------------------------------------------------------------------------------
 # pandas - 3rd party library
