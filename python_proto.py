@@ -790,6 +790,16 @@ raise ValueError("I can serve as a log message")
 a, b = 2, 3
 a, b = b, a  # swap two vars without using a tmp var
 
+
+# Write to a frozen dataclass object
+@dataclass(frozen=True)
+class C:
+    pass
+
+c = C()
+
+object.__setattr__(c, "myfield", 42)
+
 # --------------------------------------------------------------------------------------------------
 # Drop to shell
 
@@ -822,3 +832,4 @@ embed(locals_=locals(), banner="\nDropping to interactive shell\n")
 # better do:
 # def foo(from_=None):
 #   pass
+

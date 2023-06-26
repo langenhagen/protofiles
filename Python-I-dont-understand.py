@@ -3,7 +3,7 @@
 import pathlib
 import requests
 def download_file(url: str, tar_path: pathlib.Path, **request_kwargs):
-    with tar_path.open("wb")as f:
+    with tar_path.open("wb") as f:
         response = requests.get(url, stream=True, **request_kwargs)
         for chunk in response.iter_content(chunk_size=1024):
             if chunk:  # filter out keep-alive new chunks
