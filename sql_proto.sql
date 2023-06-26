@@ -132,6 +132,8 @@ select token, uuid from skills where token in ('andi','mandi','sugar','candy');
 
 SELECT mycol -> 'my_jsonkey' -> 'my_nested_json_key' ->> 69 FROM mytable  -- postgres select a nested JSON array at index 69
 
+SELECT * from MYTABLE where my_json_col->>'myfield' = 'foobar';
+
 
 ----------------------------------------------------------------------------------------------------
 -- count rows
