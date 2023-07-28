@@ -14,11 +14,16 @@
 select sqlite_version();
 
 
+\pset pager off  -- postgres disable pager, i.e. print all to stdout
+
 ----------------------------------------------------------------------------------------------------
 -- administrative stuff - groups and users
 
 
 export PGPASSWORD=pass  # in bash; a way to set the PostgreSQL password via env variable
+
+pg_dump --host='myhost' --port=5432 --username=postgres --dbname=mydb --table='mytable' --schema-only   > myschema.txt  # in bash, dump the shema of a table
+
 
 
 CREATE GROUP my_group
@@ -97,7 +102,7 @@ CREATE TABLE mytable (
 DROP TABLE mytable;
 
 ----------------------------------------------------------------------------------------------------
--- table types
+-- column types
 
 varchar ( <n> ) -- variable length char of max length <n>
 serial          -- autoincrement posgres
@@ -130,9 +135,12 @@ select token, uuid from skills where token in ('andi','mandi','sugar','candy');
 -- postgres query JSON
 -- https://www.postgresql.org/docs/9.5/functions-json.html
 
-SELECT mycol -> 'my_jsonkey' -> 'my_nested_json_key' ->> 69 FROM mytable  -- postgres select a nested JSON array at index 69
+SELECT mycol -> 'my_jsonkey' -> 'my_nested_json_key' ->> 69 FROM mytable;  -- postgres select a nested JSON array at index 69
+
+SELECT mycol ->> 'myfield' from mytable;
 
 SELECT * from MYTABLE where my_json_col->>'myfield' = 'foobar';
+
 
 
 ----------------------------------------------------------------------------------------------------
