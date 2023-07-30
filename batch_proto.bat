@@ -47,7 +47,7 @@ echo Hello there!
 rem ------------------------------------------------------------------------------------------------
 rem PATH variable
 
-SET PATH=%PATH%;C:\foo\bar
+SET PATH=%PATH%;C:\foo\spaces are allowed\without quotation marks
 echo %PATH%
 
 rem ------------------------------------------------------------------------------------------------
