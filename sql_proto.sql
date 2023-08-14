@@ -133,14 +133,15 @@ select token, uuid from skills where token in ('andi','mandi','sugar','candy');
 
 ----------------------------------------------------------------------------------------------------
 -- postgres query JSON
--- https://www.postgresql.org/docs/9.5/functions-json.html
+-- see: https://www.postgresql.org/docs/9.5/functions-json.html
 
 SELECT mycol -> 'my_jsonkey' -> 'my_nested_json_key' ->> 69 FROM mytable;  -- postgres select a nested JSON array at index 69
 
-SELECT mycol ->> 'myfield' from mytable;
+SELECT mycol ->> 'myfield' FROM mytable;
 
-SELECT * from MYTABLE where my_json_col->>'myfield' = 'foobar';
+SELECT * FROM mytable WHERE my_json_col->>'myfield' = 'foobar';
 
+SELECT * FROM mytable WHERE (mycol -> 'myfield') is null;
 
 
 ----------------------------------------------------------------------------------------------------
@@ -155,6 +156,8 @@ SELECT COUNT(DISTINCT weekday) FROM birthdays   -- likely yields 7
 
 SELECT DISTINCT mt.mycol FROM mytable mt WHERE mt.myothercol = "miau"
 
+
+SELECT DISTINCT mt.mycol FROM mytable mt WHERE mt.myothercol = "miau" ORDER BY ASC
 
 ----------------------------------------------------------------------------------------------------
 -- variables
