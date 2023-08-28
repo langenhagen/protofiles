@@ -16,6 +16,13 @@ select sqlite_version();
 
 \pset pager off  -- postgres disable pager, i.e. print all to stdout
 
+\s  -- postgres show command history
+
+
+.headers on   -- sqlite, show headers
+.mode column  -- sqlite, delimit columns by tabstops instead of pipes `|` ; might cut off long cell values
+
+
 ----------------------------------------------------------------------------------------------------
 -- administrative stuff - groups and users
 
