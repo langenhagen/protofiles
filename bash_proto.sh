@@ -862,7 +862,7 @@ while [ "$#" -gt 0 ]; do
         show_help
         exit 0
         ;;
-    *) # unknown option
+    *)
         main_arg="$1"
         ;;
     esac
