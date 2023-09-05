@@ -18,14 +18,27 @@ API[REST API worker]
 DB[(My Database)]
 API -->|Reads data,\nWrites data| DB
 
-subgraph "Worker Nodes"
+subgraph W[Worker Nodes]
     direction TB  %% apparently, TD does not work in directions
     W1[Worker 1]
     W2[Worker 2]
     Wn[Worker n]
 end
 
-X[Node A]:::This_is_a_des
+N1[Node 1]:::This_is_a_description_dont_know_what_its_good_for
+N2[Node 2]
+N3[Node 3]
+N4[Node 4]
+N5[Node 5]
+N6[Node 6]
+
+N1 --> N2
+N2 <--> N3
+N3 ---> N4
+N3 ---> N4
+N3 ---> N4
+N4 -..-> N5
+N5 ...-> N6
 ```
 
 
