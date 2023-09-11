@@ -18,6 +18,14 @@ API[REST API worker]
 DB[(My Database)]
 API -->|Reads data,\nWrites data| DB
 
+A1[Rectangle]
+A2(Rounded)
+A3((Circle))
+A4[(Database)]
+A4([Strong Rounded])
+
+B1["Wrap stuff in parentheses (if necessary)"]
+
 subgraph W[Worker Nodes]
     direction TB  %% apparently, TD does not work in directions
     W1[Worker 1]
