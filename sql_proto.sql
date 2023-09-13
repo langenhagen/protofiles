@@ -69,6 +69,7 @@ use mydatabase  -- also important in sql scripts
 \c              -- use database in postgres
 
 show tables
+\d             -- show things in postgres
 \dt            -- show tables in postgres
 .tables        -- show tables in sqlite
 
