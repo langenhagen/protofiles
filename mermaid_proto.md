@@ -49,6 +49,16 @@ N3 ---> N4
 N3 ---> N4
 N4 -..-> N5
 N5 ...-> N6
+
+subgraph SG[Subgraph definitions coalesce]
+    direction TB  %% apparently, TD does not work in directions
+    SG1
+    SG2
+end
+
+subgraph SG
+    SG3
+end
 ```
 
 
