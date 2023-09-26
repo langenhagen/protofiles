@@ -32,9 +32,10 @@ around docstrings. Use r\"\"\"raw triple double quotes\"\"\"
 if you use any backslashes in your docstrings.
 For Unicode docstrings, use u\"\"\"Unicode triple-quoted strings."""
 
-def foo:
-"""One-Line Docstrings are fine. note: there's no blank line between docstring and code."""
+def foo():
+    """One-Line Docstrings are fine. note: there's no blank line between docstring and code."""
     pass
+
 
 u"""I may be a unicode Docstring 😁😁😁."""
 
@@ -808,7 +809,7 @@ python -i my_script.py
 
 # or
 import code
-code.interact(locals=locals())
+code.interact(local=locals())
 
 # into a PDB shell
 import pdb
