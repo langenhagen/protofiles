@@ -113,7 +113,9 @@ print(f"PI is {pi}")
 # --------------------------------------------------------------------------------------------------
 # input
 
-my_input = input('please enter a number: ');  # type(my_input) will be 'str'
+my_input = input('please enter a number: ')  # type(my_input) will be 'str'
+
+input('->')
 
 # --------------------------------------------------------------------------------------------------
 # pretty printing
