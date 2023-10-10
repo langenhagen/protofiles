@@ -835,4 +835,3 @@ embed(locals_=locals(), banner="\nDropping to interactive shell\n")
 # better do:
 # def foo(from_=None):
 #   pass
-
