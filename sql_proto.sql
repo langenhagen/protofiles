@@ -18,6 +18,8 @@ select sqlite_version();
 
 \s  -- postgres show command history
 
+SHOW wal_level  -- postgres, show setting
+
 
 .headers on   -- sqlite, show headers
 .mode column  -- sqlite, delimit columns by tabstops instead of pipes `|` ; might cut off long cell values
