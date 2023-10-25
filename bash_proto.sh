@@ -317,6 +317,8 @@ echo "${my_array}"            # print just a
 echo "${my_array[1]}"         # print b
 echo "${my_array[2]}"         # print c
 echo "${my_array[11000]}"     # print nothing
+echo "${my_array[-1]}"  # print c, the last element
+echo "${my_array[-2]}"  # print b, the second-to-last element
 printf '%s\n' "${my_array[@]}"         # @ return all values as sep string (here in a new line each)
 printf '%s\n' "${my_array[*]}"         # * return all values as one string (here in the same line each)
 
@@ -331,7 +333,7 @@ printf '> %s\n' "${my_array[@]}"
 printf '> %s\n' "${my_array[@]:0:2}"  # sub-array from 0 with length 2
 printf '> %s\n' "${my_array[@]:2}"  # sub-array from index 2 til end
 
-# transform an array inoto a regex
+# transform an array into a regex
 tmp="${my_array[@]}"
 regex="(${tmp// /|})"
 echo "$regex"
