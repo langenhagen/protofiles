@@ -636,6 +636,10 @@ if [ $# != 1 ]; then
     exit 1
 fi
 
+# alternative
+[ $# != 1 ] && { printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"; exit 1; }
+
+
 # use ${FUNCNAME[0]} to refer to the current function's name
 foo() {
     echo "${FUNCNAME[0]}"  # prints foo
@@ -1136,7 +1140,7 @@ done
 
 
 # --------------------------------------------------------------------------------------------------
-# read
+# read - user keyboard input
 
 read myvar  # read a line into myvar
 read myvar othervar  # read the first word into myvar and the rest into othervar
