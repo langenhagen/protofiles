@@ -33,10 +33,30 @@ set -lx PIP_REQUIRE_VIRTUALENV false  # temporary env var; -l|--local: local -x|
 
 
 # --------------------------------------------------------------------------------------------------
+# arrays
+
+set my_array value1 value2 value3
+
+set my_array[1] value4  # fish arrays are 1-indexed
+set my_array[2] value5
+set my_array[3] value6
+
+echo "the array: $my_array"         # value4 value5 value6
+echo "at index 2: $my_array[2]"     # value5; fish arrays are 1-indexed
+echo "at index 99: $my_array[99]"   # emptpy, no error
+
+for item in $my_array
+    echo "> $item"
+end
+
+
+
+# --------------------------------------------------------------------------------------------------
 # functions
 
 function say_hi
     echo "Hi $argv"
+    echo "ftr: $argv[1]"  # fish array indices start at 1
 end
 
 say_hi
