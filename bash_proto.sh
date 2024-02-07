@@ -324,7 +324,10 @@ echo "${my_array[-2]}"  # print b, the second-to-last element
 printf '%s\n' "${my_array[@]}"         # @ return all values as sep string (here in a new line each)
 printf '%s\n' "${my_array[*]}"         # * return all values as one string (here in the same line each)
 
-unset my_array[2]  # delete the element from the array at the given index
+unset my_array[2]  # delete the element from the array at the given index, the other elements dont fill back the index!
+unset my_array[0]  # delete the first element, the second element staying my_array[1] however!
+unset my_array[${#my_array[@]}-1]  # delete the last element
+
 my_array=( "${my_array[@]//b/foo}" )  # replace all occurences of pattern in every string in every item with foo
 my_array=( "${my_array[@]/b/foo}" )  # replace first occurence of pattern in every string in every item with foo
 
@@ -1158,8 +1161,7 @@ read -n1 -p 'Press any key to exit' -s; echo  # does not work with -e, therefore
 trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
 
 
-printf 'Really?\n'
-read -r -p 'Press [ENTER] to continue or Ctrl-c to cancel.'
+read -r -p $'Really?\nPress [ENTER] to continue or Ctrl-c to cancel.'  # $'...' enables ANSI C-style escape sequences in single(!) quotes
 
 
 # --------------------------------------------------------------------------------------------------
