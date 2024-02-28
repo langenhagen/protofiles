@@ -542,6 +542,12 @@ if [ ! -f 'myfile' ] || [ -x 'myexecutable' ] && [ -f 'mythirdfile' ]; then
     echo 'Complex if-statement with files and and / or concatenators'
 fi
 
+if [[ 'mysite.com/demo/v1' =~ mysite\.com/(demo|stage)/v1 ]]; then
+    echo "Matches"
+fi
+
+
+
 # --------------------------------------------------------------------------------------------------
 # switch case
 
@@ -1390,13 +1396,13 @@ fi
 # --------------------------------------------------------------------------------------------------
 # Temporary dirs - possible workflow
 
-tmp_dir_path="$(mktemp -d)"
+tmp_dir="$(mktemp -d)"
 cleanup() {
-    rm -rf "$tmp_dir_path"
+    rm -rf "$tmp_dir"
 }
 trap cleanup EXIT
 
-cd "$tmp_dir_path"
+cd "$tmp_dir"
 # ...
 
 # --------------------------------------------------------------------------------------------------
