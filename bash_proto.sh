@@ -1662,3 +1662,19 @@ slugify() {
 # without running the risk that an unitialized variable could cause deletion of most of your system
 
 rm -rf "${mydir:?}/"  # if mydir is empty or not set, bash will issue a message `mydir: parameter null or not set`
+
+
+----------------------------------------------------------------------------------------------------
+# GPG
+
+gpg --full-gen-key  # interactive; best for learning; leave PW empty for no passphrase security
+
+# non-interactive way
+gpg --batch --generate-key <<EOF
+%no-protection
+Key-Type: RSA
+Key-Length: 4096
+Name-Real: my-key42
+Name-Email: andreasl@example.com
+Expire-Date: 0
+EOF
