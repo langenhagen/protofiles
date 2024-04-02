@@ -254,6 +254,11 @@ echo "${file_path%%.*}"  # path/to/looong/my/file; remove longest file extension
 
 script_name="${0##*/}"
 
+# --------------------------------------------------------------------------------------------------
+# missing variable messages
+
+ls "${my_unset_variable:?Message gets displayed by bash if the variable does not exist}"  # bash: my_unset_variable: Message gets displayed by bash if the variable does not exist
+
 
 # --------------------------------------------------------------------------------------------------
 # indirect redirection
@@ -1664,7 +1669,7 @@ slugify() {
 rm -rf "${mydir:?}/"  # if mydir is empty or not set, bash will issue a message `mydir: parameter null or not set`
 
 
-----------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------
 # GPG
 
 gpg --full-gen-key  # interactive; best for learning; leave PW empty for no passphrase security
@@ -1678,3 +1683,12 @@ Name-Real: my-key42
 Name-Email: andreasl@example.com
 Expire-Date: 0
 EOF
+
+# --------------------------------------------------------------------------------------------------
+# PID
+
+# process ID
+echo "Current PID ${$}"
+
+# parent process ID
+ps -o ppid= $$
