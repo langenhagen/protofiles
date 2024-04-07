@@ -606,11 +606,18 @@ trap "rm -f $tmp" EXIT
 # disable a trap
 trap - EXIT
 
+# ask for a readline between every command
+trap 'read -p "Press enter to continue..."' DEBUG
+
+# A nice debug readline before every command. Looks like:
+trap '$(read -p "[${BASH_SOURCE}:${LINENO}] ${BASH_COMMAND}")' DEBUG      # print [/path/to/myscript.sh:6] echo "Hello $name"  before every command
+trap '$(read -p "[${BASH_SOURCE##*/}:${LINENO}] ${BASH_COMMAND}")' DEBUG  # or omit path to file the alternative [myscript.sh:6] echo "Hello $name"
+
 # Other Signals:
 SIGHUP
 SIGINT
 SIGTERM
-
+DEBUG
 
 # Have only 1 exit trap
 foo() { echo "Hello" }
