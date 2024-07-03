@@ -215,10 +215,10 @@ echo "${my_multiline_string//$'\n'/,}"  # replace all newlines with commas ,
 echo "${my_var#Hello, }"  # nongreedy remove any prefix from the expanded value that matches the pattern
 echo "${my_var%, Andi and Andi}"  # nongreedy remove any suffx from the expanded value that matches the pattern
 
-echo "${my_var#*,}"  # get the substring after the first comma , - nongreedy
-echo "${my_var##*,}"  # get the substring after the last comma , - greedy
-echo "${my_var%,*}"  # get the substring before the last comma , - nongreedy
-echo "${my_var%%,*}"  # get the substring before the first comma , - greedy
+echo "${my_var#*,}"  # remove substring before comma, - nongreedy aka lazy
+echo "${my_var##*,}"  # remove substring before comma , - greedy aka eager
+echo "${my_var%,*}"  # remove substring after last comma , - nongreedy aka lazy
+echo "${my_var%%,*}"  # remove substring after first comma , - greedy aka eager
 
 my_var='  Something untrimmed   '
 echo "${my_var##*( )}"      # greedy trim all leading spaces; apparently only works on the repl
@@ -1170,10 +1170,10 @@ read myvar othervar  # read the first word into myvar and the rest into othervar
 
 read -e -n10 -p 'my prompt: ' value  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
 read -t2 key  # read into key variable  with a 2 seconds timeout
-read -ern1  # throwaway var -e: make read print a newline after character is read  -n1: read 1 char; -r mangle backslashes: shellcheck likes it
+read -rn1  # throwaway var  -n1: read 1 char; -r mangle backslashes: shellcheck likes it
 
 
-read -p 'Please type your password: ' -rs pass;  # -r interpret backslashes verbatim; -s: input not prompted to command line; -s doesn't work together with -e; -s shows key symbol, if -n not specified
+read -p 'Please type your password: ' -rs pass;  # -r interpret backslashes verbatim; -s: input not prompted to command line; -s shows key symbol, if -n not specified
 
 read -n1 -p 'Press any key to exit' -s; echo  # does not work with -e, therefore echo afterwards
 trap "read -n1 -p 'Press any key to exit' -s; echo" EXIT
