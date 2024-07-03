@@ -228,6 +228,10 @@ my_keyworded_vararg_function('AAAAA', **my_params)
 #my_params = {'a': 'BBBBB'}
 #my_keyworded_vararg_function('AAAAA', **my_params)
 
+# discard vlues from tuples/lists upon assignment
+x, *_ = [1 ,2 , 3]  # x = 1
+
+
 # --------------------------------------------------------------------------------------------------
 # string types
 
