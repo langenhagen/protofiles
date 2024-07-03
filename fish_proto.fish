@@ -68,3 +68,8 @@ say_hi you and you and you
 # tests
 
 test (random) -eq 1 && echo 'yay!'
+
+# --------------------------------------------------------------------------------------------------
+# read  -  read is a little bit different in fish than in Bash
+
+read -P 'print this string'  # -P is equivalent to -p in Bash
