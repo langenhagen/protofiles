@@ -642,6 +642,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 parent_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+cd "$(dirname "${BASH_SOURCE[0]}")"
 cd "$(dirname "${BASH_SOURCE[0]}")/.." || { echo 'Error: Failed to cd to project root'; exit 1; }
 
 
