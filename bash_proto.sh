@@ -84,8 +84,14 @@ for i in A B C; do
 done
 
 
+
 while :; do
   echo 'Infinite loop'
+  sleep 1
+done
+
+while true; do
+  echo 'Also Infinite loop'
   sleep 1
 done
 
