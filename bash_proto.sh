@@ -1574,6 +1574,21 @@ generate_random_pronounceable_word() {
     printf '%s\n' "$random_word"
 }
 
+
+# bulk-edit / id3 tag a music album
+set_id3_tags() {
+    artist='Sarah Jaffe'
+    album="The Body Wins"
+    year=2012
+
+    track_number=1
+    for file in *.mp3; do
+      id3v2 --artist "$artist" --album "$album" --year="$year" --track "$track_number" "$file"
+      track_number=$((track_number + 1))
+    done
+}
+
+
 # --------------------------------------------------------------------------------------------------
 # show usage  - show usage, but no help
 
