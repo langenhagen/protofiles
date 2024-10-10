@@ -1,4 +1,4 @@
-# author: langenhagen
+# author: andreasl
 
 #!/usr/bin/env python              # the correct shebang for a Python script
 
