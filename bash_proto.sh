@@ -30,7 +30,7 @@ shopt -s globstar  # activate double asterisk `**` globbing like: `ls **`; other
 
 
 # --------------------------------------------------------------------------------------------------
-# inspect agiven thing
+# inspect a given thing
 
 type pwd  # pwd is a builtin
 type date  # date is /bin/date
@@ -1278,6 +1278,10 @@ read -r -e -n1 -p 'Continue? [yY/nN]: ' yes_no
 if [ $(date +%w) -eq 0 ]; then
     echo "date +%w  prints weekday with 0 being Sunday"
 fi
+
+
+now="$(date '+%Y-%m-%d--%H-%M-%S')"  # human readable and parseable format
+now="$(date +%s)"  # timestamp in seconds since epoch; good for comparisons
 
 
 # --------------------------------------------------------------------------------------------------
