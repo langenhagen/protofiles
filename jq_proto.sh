@@ -42,7 +42,11 @@ cat myarrayfile.json | jq '.[] | .state' | sort -u  # bash-y way
 # count
 
 # count array lenghts
+cat myarrayfile.json | jq length
+
+# count array field lenghts
 cat myarrayfile.json | jq 'map(.myfield) | unique | length'
+
 
 
 ###############################################################################
