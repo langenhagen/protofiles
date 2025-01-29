@@ -681,12 +681,26 @@ foo() {
 # --------------------------------------------------------------------------------------------------
 # Use cat or better read or echo to create a file or a long text inside a variable
 
+# warning: when using ``<< MYFILE_EOF` while writing bash code to a file, this thing
+# interprets/evaluats subshells. if you want to prohibit that, put MYFILE_EOF into single quotes like
+# so: << 'MYFILE_EOF'
+
 cat > "my-file.txt" << MYFILE_EOF
    This is the input of the file
   It can span
  several lines
    and retains
   indentations.
+MYFILE_EOF
+
+
+cat > "my-file.txt" << 'MYFILE_EOF'
+#!/bin/bash
+echo use single quotes to prohibit subshells being evaluated.
+
+limit=$(cat '/sys/fs/cgroup/memory/memory.limit_in_bytes')  # gets not evaluated upon write
+usage=$(cat '/sys/fs/cgroup/memory/memory.usage_in_bytes')
+remaining=$((limit - usage))
 MYFILE_EOF
 
 # using <<- is also possible. I miss to see the difference to <<
