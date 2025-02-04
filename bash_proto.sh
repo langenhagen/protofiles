@@ -83,17 +83,16 @@ for i in A B C; do
     :                   # empty loop is not possible without noOp, syntax error
 done
 
-
-
-while :; do
-  echo 'Infinite loop'
-  sleep 1
-done
-
 while true; do
   echo 'Also Infinite loop'
   sleep 1
 done
+
+while :; do
+  echo 'Also infinite loop'
+  sleep 1
+done
+
 
 
 # --------------------------------------------------------------------------------------------------
