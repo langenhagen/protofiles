@@ -14,6 +14,12 @@ for i in (seq 10)
     echo "$i"
 end
 
+
+for f in file1 otherfile fileC
+   echo "$f"
+end
+
+
 # --------------------------------------------------------------------------------------------------
 # while loops
 
