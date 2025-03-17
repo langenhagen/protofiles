@@ -226,9 +226,8 @@ echo "${my_var%,*}"  # remove substring after last comma , - nongreedy aka lazy
 echo "${my_var%%,*}"  # remove substring after first comma , - greedy aka eager
 
 my_var='  Something untrimmed   '
-echo "${my_var##*( )}"      # greedy trim all leading spaces; apparently only works on the repl
-echo "${my_var%%*( )}!"     # greedy trim all trailing spaces; may only work on the repl
-
+echo "${my_var##*( )}"      # greedy trim all leading spaces; needs `shopt -s extglob` set
+echo "${my_var%%*( )}!"     # greedy trim all trailing spaces; needs `shopt -s extglob` set
 
 echo ${my_var:18:3} # retieve a substring by offset and length
 echo ${my_var::5} # retieve a substring with no offset and and length 5
