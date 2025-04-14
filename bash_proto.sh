@@ -1167,7 +1167,7 @@ white="$(tput setaf 7)"
 
 # You can't colorize text from printf given via %s, but via %s:
 printf '%s\n' '\e[1mSOMETHING IN BOLD\e[m'  # doesn't work
-printf '%b\n' '\e[1mSOMETHING IN BOLD\e[m'  # works
+printf '%b\n' '\e[1mSOMETHING IN BOLD\e[m'  # works; %b honor backslash escapes like \n or \e
 
 
 # --------------------------------------------------------------------------------------------------
