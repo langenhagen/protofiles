@@ -377,6 +377,8 @@ mapfile -t my_array <<< "$my_multiline_string"  # its items may contain whitespa
 
 printf '%s\n' "${my_array[@]}"    # prints 'this' 'is my'  'multiline\nstring' in separate lines
 
+IFS=,; echo "${my_array[*]}"  # set internal Field Separator (IFS) to comma `,`, so that "multiline,string"
+
 for file in "${my_array[@]}"; do  # iterates safely over an array and retain whitespaces
     echo "$file"
 done
@@ -384,7 +386,7 @@ done
 
 # create an array from a string with custom delimeter
 my_array_string='Hello;From;Bash!\nHulk\nSmash!'
-IFS=';' read -ra my_array <<< "$my_array_string"  # IFS stands for "internal field separator"
+IFS=';' read -ra my_array <<< "$my_array_string"  # IFS stands for "internal field separator"; defines here where to split the array
 printf '%s\n' "${my_array[@]}"    # prints 'Hello' 'From'  'Bash!\nHulk\nSmash!' in separate lines
 
 # create a string from array with custom nice delimeters
