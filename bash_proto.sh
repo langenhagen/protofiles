@@ -832,6 +832,11 @@ for a in $@; do
     echo $a;  # prints five lines: 'some' 'input' 'some' 'more' 'input'
 done
 
+# short form: for a; do
+for a; do
+    echo $a;  # prints three lines: 'some' 'input' 'some more input'
+done
+
 
 # --------------------------------------------------------------------------------------------------
 # command line option parsing -- naive -- it's so simple, don't do it
