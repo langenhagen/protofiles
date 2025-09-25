@@ -28,8 +28,11 @@ cat myarrayfile.json | jq -r '.[] | .location'   # get the location fields witho
 cat myarrayfile.json | jq '.[] | select(.state == "some_state") | "\(.loc), \(.sku)"'
 cat myndjsonfile.json | jq 'select(.state == "some_state") | "\(.loc), \(.sku)"'      # for newline-delimited json
 
+cat myndjsonfile.json | jq -r '.subject | select(startswith("nova."))'
+
 # more complicated query
 cat myndjsonfile.json | jq 'select((.main_image | length > 0) and .location_code != null)'
+
 
 
 ###############################################################################
