@@ -68,3 +68,41 @@ Boolean(null) == false; // = true
 Boolean(undefined) == false; // = true
 undefined == null; // = thrue, but gives warning
 undefined === null; // = false, gives no warning
+
+
+// -------------------------------------------------------------------------------------------------
+// Array destructuring - take values from an array into variables
+
+const arr = ['ignore', 'keepme'];
+const [, token] = arr; // skips first, token = 'keepme'
+
+
+// -------------------------------------------------------------------------------------------------
+// Object destructuring
+
+// call the function, await its result, then take only the `myfield` property from that returned object
+const { myfield } = await openAPIHandler.handle(...);
+/*
+Equivalent to:
+
+const result = await openAPIHandler.handle(...);
+const myfield = result.myfield;
+*/
+
+
+// -------------------------------------------------------------------------------------------------
+// Nullish coalescing operator  `?? []`
+//
+// ?? (nullish coalescing) only falls back if the left side is null or undefined.
+// || (logical OR) falls back if the left side is falsy (null, undefined, 0, false, '', NaN).
+
+const maybeNull = null
+const value = maybeNull ?? 'fallback';
+
+
+// -------------------------------------------------------------------------------------------------
+// !!   converts any value to a strict boolean; it's shorthand for "is this truthy?"
+
+!!'abc'   // true
+!!0       // false
+!!null    // false
