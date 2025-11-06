@@ -258,6 +258,19 @@ echo "${file_path%%.*}"  # path/to/looong/my/file; remove longest file extension
 
 script_name="${0##*/}"
 
+
+# --------------------------------------------------------------------------------------------------
+# lowercasing, uppercasing
+
+my_var='This Is a tESt'
+pattern='tESt'
+
+echo ${myvar,,}  # this is a test; convert entire value of myvar to lowercase
+echo ${myvar^^}  # THIS IS A TEST; convert to uppercase
+echo ${myvar,,[S-T]}  # this Is a tEst; lowercase only chars matching given glob pattern
+echo ${myvar^^[s-t]}  # ThiS IS a TEST; uppercase only chars matching given glob pattern
+
+
 # --------------------------------------------------------------------------------------------------
 # missing variable messages
 
