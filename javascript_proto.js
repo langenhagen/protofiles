@@ -106,3 +106,9 @@ const value = maybeNull ?? 'fallback';
 !!'abc'   // true
 !!0       // false
 !!null    // false
+
+
+// -------------------------------------------------------------------------------------------------
+// optional chaining
+
+const store = stores.stores?.find((s) => s.name === "mystore");
