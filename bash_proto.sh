@@ -262,13 +262,13 @@ script_name="${0##*/}"
 # --------------------------------------------------------------------------------------------------
 # lowercasing, uppercasing
 
-my_var='This Is a tESt'
-pattern='tESt'
+myvar='This Is an eXperiment'
+pattern='eXperiment'
 
-echo ${myvar,,}  # this is a test; convert entire value of myvar to lowercase
-echo ${myvar^^}  # THIS IS A TEST; convert to uppercase
-echo ${myvar,,[S-T]}  # this Is a tEst; lowercase only chars matching given glob pattern
-echo ${myvar^^[s-t]}  # ThiS IS a TEST; uppercase only chars matching given glob pattern
+echo ${myvar,,}  # this is am experiment; convert entire value of myvar to lowercase
+echo ${myvar^^}  # THIS IS AN EXPERIMENT; convert to uppercase
+echo ${myvar,,[S-X]}  # this Is an experiment; convert only chars matching given glob pattern to lowercase 
+echo ${myvar^^[s-t]}  # ThiS IS an eXperimenT; convert only chars matching given glob pattern to uppercase
 
 
 # --------------------------------------------------------------------------------------------------
@@ -1041,6 +1041,7 @@ echo "p = ${p}"
 
 # --------------------------------------------------------------------------------------------------
 # test -- aka [ ]
+
 
 [ "hallo" ]; echo $?        # prints 0
 [ "" ]; echo $?             # prints 1
