@@ -112,3 +112,9 @@ const value = maybeNull ?? 'fallback';
 // optional chaining
 
 const store = stores.stores?.find((s) => s.name === "mystore");
+
+
+// -------------------------------------------------------------------------------------------------
+// async sleep
+
+await new Promise((resolve) => setTimeout(resolve, 2345));  // in ms; resolve is just a dummy var
