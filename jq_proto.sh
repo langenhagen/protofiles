@@ -57,3 +57,9 @@ cat myarrayfile.json | jq 'map(.myfield) | unique | length'
 
 # group all json objects with the same value for `myfield` into arrays, yielding several arrays
 cat myarrayfile.json| jq 'group_by(.myfield)'
+
+
+###############################################################################
+# // - if missing/null replacement
+
+jq --raw-output '.my_non_existing_field // "replacement"'
