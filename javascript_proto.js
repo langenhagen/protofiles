@@ -73,8 +73,10 @@ undefined === null; // = false, gives no warning
 // -------------------------------------------------------------------------------------------------
 // Array destructuring - take values from an array into variables
 
-const arr = ['ignore', 'keepme'];
-const [, token] = arr; // skips first, token = 'keepme'
+const arr = ['first', 'second'];
+const [, token] = arr; // skips first, token = 'second'
+
+const [item] = arr;  // takes first item `item == 'first'`
 
 
 // -------------------------------------------------------------------------------------------------
