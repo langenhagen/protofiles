@@ -689,8 +689,6 @@ foo() {
 }
 
 
-
-
 # --------------------------------------------------------------------------------------------------
 # Use cat or better read or echo to create a file or a long text inside a variable
 
@@ -760,10 +758,12 @@ printf "Copy me to clipboard" | xclip -i -f -selection primary | xclip -i -selec
 # functions seem to work with /bin/bash but not with /bin/sh
 
 my_function() {
+    echo "${FUNCNAME[0]}"  # prints foo
+    echo "I run in the same shell and am thus NOT isolated"
+
     local my_var=42  # local var does not leak outside function scope
     return "$my_var"
 }
-
 
 echo "Script file name: " "$0"
 echo "Script's first parameter: " "$1"
@@ -774,6 +774,14 @@ my_function2() {
     echo "my_function2's first param" "$1"  # != $1 of the script
 }
 my_function2 "The first param given to the function"
+
+
+my_subshell_function() (
+    # note the normal body braces () as opposed to the curly braces {}
+    set -euxo pipefail      
+    echo "${FUNCNAME[0]}"
+    echo "I run in a subshell and am thus isolated, no option leaking all that jazz"
+)
 
 
 # --------------------------------------------------------------------------------------------------
