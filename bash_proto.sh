@@ -75,7 +75,7 @@ source "path/to/file/to/be/sourced.inc" 'sourcing accepts' 'parameters' ':)'
 
 
 # --------------------------------------------------------------------------------------------------
-# the no-op
+# the no-op :
 
 : # noOp as in the following loop:
 
@@ -93,6 +93,7 @@ while :; do
   sleep 1
 done
 
+: "${myvar:?Error: myvar is required}"  # no op evaluates the var which errs out when missing
 
 
 # --------------------------------------------------------------------------------------------------
@@ -272,10 +273,11 @@ echo ${myvar^^[s-t]}  # ThiS IS an eXperimenT; convert only chars matching given
 
 
 # --------------------------------------------------------------------------------------------------
-# missing variable messages
+# missing variable messages with :?
 
 ls "${my_unset_variable:?Message gets displayed by bash if the variable does not exist}"  # bash: my_unset_variable: Message gets displayed by bash if the variable does not exist
 
+: "${myvar:?Error: myvar is required}"  # no op that evaluates but doesnt run the variables and errs out when missing
 
 # --------------------------------------------------------------------------------------------------
 # indirect redirection
@@ -484,9 +486,19 @@ for f in *; do
 done
 
 # modern bash, c-style-ish for-loops
+
 for ((i = 0; i < 10; i++)) {
     echo "${i} is a number"
 }
+
+# continue 2
+
+for f in *; do
+    echo " file: $f";
+    for ignore in "${ignores[@]}"; do
+        [[ $f == $ignore ]] && continue 2  # continue 2: `continue` on the the outer loop
+    done
+done
 
 
 # --------------------------------------------------------------------------------------------------
@@ -1046,6 +1058,15 @@ shift $((OPTIND-1))
 
 echo "s = ${s}"
 echo "p = ${p}"
+
+----------------------------------------------------------------------------------------------------
+# $! aka last background process ID
+
+sleep 5 &
+pid=$!
+echo $pid 
+wait $pid
+echo '5 seconds later...' 
 
 # --------------------------------------------------------------------------------------------------
 # test -- aka [ ]
