@@ -40,7 +40,7 @@ def foo():
 u"""I may be a unicode Docstring 😁😁😁."""
 
 
-# function with a one-line focstring, perfectly fine
+# function with a one-line docstring, perfectly fine
 def add(a, b):
     """Add two numbers and return the result."""
     return a + b
@@ -70,7 +70,7 @@ def random_number_generator(arg1, arg2):
 
 
 # Use Sphinx to compile ReStructuredText (.rst files) Docstrings for python
-# The Sphinx-Extension  sphinx.ext.napoleon  can handly Numpy-Syle Docstrings
+# The Sphinx-Extension  sphinx.ext.napoleon can handle Numpy-Style Docstrings
 
 # see: https://www.python.org/dev/peps/pep-0257/
 

@@ -9,7 +9,7 @@
 /**
  * Reads a file from a given path and with a given charset into a string which it returns.
  * @param path The path to a file.
- * @param encoding A charset encodding.
+ * @param encoding A charset encoding.
  * @return A string containing the contents of the file.
  * @throws IOException
  */

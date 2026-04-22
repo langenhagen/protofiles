@@ -44,10 +44,10 @@ cat myarrayfile.json | jq '.[] | .state' | sort -u  # bash-y way
 ###############################################################################
 # count
 
-# count array lenghts
+# count array lengths
 cat myarrayfile.json | jq length
 
-# count array field lenghts
+# count array field lengths
 cat myarrayfile.json | jq 'map(.myfield) | unique | length'
 
 

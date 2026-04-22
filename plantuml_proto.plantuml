@@ -19,7 +19,7 @@ allow_mixing
 
 ' care first about the data and then about the layout. It likely changes.
 
-' this one maes lines orthogonally straight
+' this one makes lines orthogonally straight
 ' skinparam linetype ortho
 
 ' this on makes lines straight with knicks
@@ -86,7 +86,7 @@ class BlueClass #blue {
     + foo()
 }
 
-note "This is Me, a floatig note" as Note1
+note "This is Me, a floating note" as Note1
 
 note "This is me\n\
 a multiline note.\n\
@@ -106,7 +106,7 @@ you can only have one legend.
 endlegend
 
 
-' the lenght of the arrows indicates the togetherness of the classes!
+' the length of the arrows indicates the togetherness of the classes!
 Together1 -[hidden]--- Together2
 TogetherLeft -[hidden]right- TogetherRight
 TogetherLeft -[hidden]down- TogetherDown

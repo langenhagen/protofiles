@@ -10,7 +10,7 @@ end
 ----------------------------------------------------------------------------------------------------
 -- tables
 
-t = {}    -- construct an empty table and assign it to variable "t"LU
+t = {}    -- construct an empty table and assign it to variable "t"
 
 t["foo"] = 123
 t[3] = "bar"
@@ -46,7 +46,7 @@ print(table.getn(a))         --> (number of lines read)
 -- string manipulation
 
 
-string.gsub("banana", "(an)", "%1-")    -- capture any occurences of "an" and replace
+string.gsub("banana", "(an)", "%1-")    -- capture any occurrences of "an" and replace
 -- returns   ban-an-a
 string.gsub("banana", "a(n)", "a(%1)")  -- brackets around n's which follow a's
 -- returns   ba(n)a(n)a

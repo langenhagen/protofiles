@@ -61,6 +61,6 @@ last_occurence = line.scan(/\d+/)[-1].to_i
 
 
 # --------------------------------------------------------------------------------------------------
-# Filehandling
+# File handling
 
 file = File.new("filename", "r", :encoding => 'ISO-8859-1')

@@ -1,4 +1,4 @@
-method create_traffic_options:without_db {              // the stuff after the  colon :  this is some kind of overload-identifier
+method create_traffic_options:without_db {              // suffix after ':' is an overload identifier
         in {
             String language_marc_code
             UInt32 request_radius_km
@@ -31,7 +31,7 @@ LteKey[] lte_keys                   // array?
 // -------------------------------------------------------------------------------------------------
 
 enumeration ErrorCode {
-        <** @description: No error occurred **>                             // just another way of documenting ?
+        <** @description: No error occurred **>                             // alternative doc-comment style
 
 // -------------------------------------------------------------------------------------------------
 
@@ -39,5 +39,5 @@ method init {
         in {
             KeyValueStorage.Instance storage
         }
-        error CommonTypes.ErrorCode                                        // like "throws"?
+        error CommonTypes.ErrorCode                                        // error type, similar to "throws"
     }

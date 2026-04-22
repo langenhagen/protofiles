@@ -3,7 +3,7 @@
 
 // bash
 mongo localhost:30000  // connect to mongo which sits on port 3000
-mongo localhost:30000/my_db  // connect to the mongodb and directly connect to the catabase my_db
+mongo localhost:30000/my_db  // connect to MongoDB and directly switch to the database my_db
 
 
 conn = new Mongo()      // create a Mongo instance
@@ -29,7 +29,7 @@ if (!db.runCommand("isMaster").ismaster) {
 }
 
 db   // show the current database
-db = db.getSiblingDB('mydb')  // get or create mydb; eqiov to conn.getDB("mydb")
+db = db.getSiblingDB('mydb')  // get or create mydb; equiv to conn.getDB("mydb")
 use mydb  // shortcut for conn.getDB("mydb") switch to mydb
 
 

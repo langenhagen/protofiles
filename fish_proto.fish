@@ -49,7 +49,7 @@ set my_array[3] value6
 
 echo "the array: $my_array"         # value4 value5 value6
 echo "at index 2: $my_array[2]"     # value5; fish arrays are 1-indexed
-echo "at index 99: $my_array[99]"   # emptpy, no error
+echo "at index 99: $my_array[99]"   # empty, no error
 
 for item in $my_array
     echo "> $item"
@@ -66,7 +66,7 @@ function say_hi
 end
 
 say_hi
-say_hi everbody!
+say_hi everybody!
 say_hi you and you and you
 
 

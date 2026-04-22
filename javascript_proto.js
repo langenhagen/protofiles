@@ -7,7 +7,7 @@
 
 ; // semicolons are not necessarily necessary. If not decided otherwise, I recommend them
 
-triple === equals operator is stricter than the double == equals operator
+// Triple equals (===) is stricter than double equals (==).
 
 // -------------------------------------------------------------------------------------------------
 // vars and consts
@@ -39,7 +39,7 @@ const myAggregate = {
 }
 
 
-funcion foo(myInput) {
+function foo(myInput) {
 
     // You can use maps to move around complex objects, even functions.
     let myVar = myInput.innerValue;
@@ -59,14 +59,14 @@ foo(myAggregate);
 // -------------------------------------------------------------------------------------------------
 // null vs. undefined
 
-typeof null  == object; // is true
+typeof null  == "object"; // is true
 
 var myVar
-typeof myvar == undefined; // is true
+typeof myVar == "undefined"; // is true
 
 Boolean(null) == false; // = true
 Boolean(undefined) == false; // = true
-undefined == null; // = thrue, but gives warning
+undefined == null; // = true, but gives warning
 undefined === null; // = false, gives no warning
 
 

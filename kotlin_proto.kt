@@ -13,7 +13,7 @@ val myConst = "Ima const"
 var myVar = "Ima var"
 
 var myInt: Int = 3
-var myNUllableInt: Int? = 3
+var myNullableInt: Int? = 3
 
 
 // -------------------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ fun myFunction(i: Int): Int {
     return 42
 }
 
-fun myNamedInlineFunctiom(a: String, b: String): Boolean = a.length < b.length
+fun myNamedInlineFunction(a: String, b: String): Boolean = a.length < b.length
 
 
 // -------------------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ myFavoriteFunction("inputparam-1",2)
 class MyClassWithCompanion {
     companion object {
         fun similarToAStaticMethod() {
-            println("This is similar to static in Java, but its not interoperable with Java in a static way")
+            println("This is similar to static in Java, but it's not interoperable with Java in a static way")
         }
 
         @JvmStatic // works only in companion object or object scope

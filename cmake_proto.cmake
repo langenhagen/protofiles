@@ -231,7 +231,7 @@ target_link_libraries(MyApp libMySharedLib)
 
 
 # --------------------------------------------------------------------------------------------------
-# Exepmplaric CMake function in a file
+# Exemplary CMake function in a file
 
 if(DEFINED includeguard_MyIncludeGuardNamedExactlyLikeTheFile)
   return()
@@ -788,7 +788,7 @@ target_compile_features(lib
     PUBLIC cxx_auto_type
     PRIVATE cxx_variadic_templates)
 
-if(CMAKE_COMPIER_IS_GNUCXX)
+if(CMAKE_COMPILER_IS_GNUCXX)
     target_compile_options(foo
         PUBLIC -fno-elide-constructors
         )

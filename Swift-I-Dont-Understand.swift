@@ -128,7 +128,7 @@ let _ = fileManager.fileExists(atPath: itemSrcURL.path, isDirectory: &srcIsDirec
 
 open
 public
-interal
+internal
 private
 
 

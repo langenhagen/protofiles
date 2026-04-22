@@ -53,8 +53,8 @@ endif()
 # --------------------------------------------------------------------------------------------------
 # Do not quote variable that are booleans
 
-set(mybvar ON)
-set(mybvar OFF)
+set(myvar ON)
+set(myvar OFF)
 if (myvar)
 # ...
 endif()

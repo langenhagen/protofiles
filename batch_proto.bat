@@ -4,7 +4,7 @@ rem ----------------------------------------------------------------------------
 rem rem is for comments
 
 rem ------------------------------------------------------------------------------------------------
-rem run a command form outside a command shell
+rem run a command from outside a command shell
 cmd /c
 cmd.exe /c
 
@@ -51,7 +51,7 @@ SET PATH=%PATH%;C:\foo\spaces are allowed\without quotation marks
 echo %PATH%
 
 rem ------------------------------------------------------------------------------------------------
-rem %cd$ is the $PWD equivalent
+rem %cd% is the $PWD equivalent
 
 echo %cd%
 
@@ -70,7 +70,7 @@ dir myfolder
 
 rem ------------------------------------------------------------------------------------------------
 rem Create a file
-type nul > myfolder\\myfile.txt"
+type nul > myfolder\\myfile.txt
 
 rem ------------------------------------------------------------------------------------------------
 rem `cat` equivalent

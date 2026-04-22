@@ -31,7 +31,7 @@ SHOW wal_level  -- postgres, show setting
 
 export PGPASSWORD=pass  # in bash; a way to set the PostgreSQL password via env variable
 
-pg_dump --host='myhost' --port=5432 --username=postgres --dbname=mydb --table='mytable' --schema-only   > myschema.txt  # in bash, dump the shema of a table
+pg_dump --host='myhost' --port=5432 --username=postgres --dbname=mydb --table='mytable' --schema-only   > myschema.txt  # in bash, dump the schema of a table
 
 
 
@@ -248,7 +248,7 @@ ALTER TABLE mytable
 ----------------------------------------------------------------------------------------------------
 -- get the currnt time
 
-select Now();  -- postres
+select Now();  -- postgres
 
 
 

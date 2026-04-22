@@ -9,7 +9,7 @@ They look ugly. Use #
 =end
 
 # important tools ruby gems (package utility)
-# irb interactive rooby
+# irb interactive ruby
 # ri ruby interactive reference such as man
 
 puts __FILE__
@@ -287,7 +287,7 @@ END {
 module M
     PI = 3.141592654
     def M.foo
-        puts 'Module function that can be used wwit M.foo'
+        puts 'Module function that can be used with M.foo'
     end
 
     def bar

@@ -5,7 +5,7 @@
 
 @synthesize         // what is this?
 
-__block             // ?:w
+__block             // what does this do?
 
 
 //What is the difference between Nullable and _Nullable ?

@@ -23,7 +23,7 @@ A2(Rounded)
 A3((Circle))
 A4[(Database)]
 A5([Strong Rounded])
-A6{Rombus}
+A6{Rhombus}
 A7{{Long Diamond}}
 
 B1["Wrap stuff in parentheses (if necessary)"]

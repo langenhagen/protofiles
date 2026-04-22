@@ -51,7 +51,7 @@ print(greeting)
 
 let name: String? = nil
 let defaultName: String = "John Appleseed"
-let myString = "Hi \(name ?? defaultName)"  // ?? choses name, and defaultName, if name is nil
+let myString = "Hi \(name ?? defaultName)"  // ?? chooses name, and defaultName, if name is nil
 let myString2 = "Hi \(name ?? "also a default :)")"  // ?? default
 
 
@@ -116,7 +116,7 @@ switch myEnumInstance {
 case .mauz:
     print("MauZ")
     // I dont need no 'break' statement :)))
-caus .miep:
+case .miep:
     break  // 'case' label in a 'switch' should have at least one executable statement!, so, if no other statement is there
 case .wau:
     // I also don't need to specify the whole EnumType.enumValue
@@ -599,4 +599,3 @@ public class ObjCClass {
 
 // -------------------------------------------------------------------------------------------------
 // unsorted
-

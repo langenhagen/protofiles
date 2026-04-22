@@ -2,7 +2,7 @@
 # Prototypical bash snippets.
 # Use as reference.
 # If there are several ways of solving a specific task, the snippets here exhibit the, to our
-# knowledge and belief, best ways af doing things.
+# knowledge and belief, best ways of doing things.
 #
 # author: andreasl
 
@@ -24,7 +24,7 @@ set -u      # treat unset variables as an error and exit immediately upon their 
 
 shopt globstar  # show the current value of a shell option
 
-shopt -s extglob  # activate extendend globbing capabilities in a script, like, I guesss: `ls "foo/"*bar*`
+shopt -s extglob  # activate extended globbing capabilities in a script, like: `ls "foo/"*bar*`
 
 shopt -s globstar  # activate double asterisk `**` globbing like: `ls **`; otherwise, `**` globbing only returns 1 result
 
@@ -230,11 +230,11 @@ my_var='  Something untrimmed   '
 echo "${my_var##*( )}"      # greedy trim all leading spaces; needs `shopt -s extglob` set
 echo "${my_var%%*( )}!"     # greedy trim all trailing spaces; needs `shopt -s extglob` set
 
-echo ${my_var:18:3} # retieve a substring by offset and length
-echo ${my_var::5} # retieve a substring with no offset and and length 5
-echo ${my_var:((-4)):4} # retieve a substring by negative offset and length
+echo ${my_var:18:3} # retrieve a substring by offset and length
+echo ${my_var::5} # retrieve a substring with no offset and length 5
+echo ${my_var:((-4)):4} # retrieve a substring by negative offset and length
 
-offest=-4
+offset=-4
 echo ${my_var:$offset:4} # works, too
 
 
