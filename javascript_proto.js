@@ -58,6 +58,8 @@ foo(myAggregate);
 
 // -------------------------------------------------------------------------------------------------
 // null vs. undefined
+// `undefined` means a variable has been declared but has not been assigned a value.
+// `null` is an intentional assignment of "no value" or "empty".
 
 typeof null  == "object"; // is true
 
