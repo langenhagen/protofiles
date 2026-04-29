@@ -1,5 +1,4 @@
-# author: langenhagen
-# version: 17-08-05
+# author: andreasl
 
 # --------------------------------------------------------------------------------------------------
 # get current file name

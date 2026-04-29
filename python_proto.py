@@ -1,6 +1,5 @@
-# author: andreasl
-
-#!/usr/bin/env python              # the correct shebang for a Python script
+#!/usr/bin/env python3
+# above is a correct shebang for a Python script
 
 # --------------------------------------------------------------------------------------------------
 # general help

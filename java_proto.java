@@ -1,6 +1,4 @@
-// author: langenhagen
-// version: 17-12-08
-
+// author: andreasl
 
 // -------------------------------------------------------------------------------------------------
 // read a file into string ("a compact, robust Java 7 idiom")
