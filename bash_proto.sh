@@ -115,7 +115,7 @@ my_short_var=${my_long_var#bla}  # cuts the first part of the given var, i.e. "b
 echo ${my_short_var}
 
 readonly var=32
-#var=128  # does not work
+# var=128  # does not work; var is immutable
 
 echo "$_"    # prints "echo"; $_ is the invoking command
 printf "$_"  # prints "printf"
