@@ -318,6 +318,16 @@ for i, elem in enumerate(range(3)):
     print(f'{i}: {elem}')    # prints 0: 0 \n 1: 1 \n 2: 2
 
 
+# (shallow) copy a list
+l: list[int] = [1, 2, 3]
+mycopy1 = l.copy()  # explicit copy
+mycopy2 = list(l)  # create a new list based on the given one
+mycopy3 = l[:]  # slice of all pieces
+
+
+
+
+
 # --------------------------------------------------------------------------------------------------
 # Classes
 
