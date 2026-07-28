@@ -103,6 +103,15 @@ printf "stuff inside double quotation marks expands, e.g. ${variables}, $variabl
 printf 'stuff inside single quotation marks does not expand, at least not ${variables}, $variables, but special\nchars like \\ and \ '
 echo -e stuff without quotation resolves into several arguments which expand, at least not ${variables}, $variables, but special\nchars like \\ and \
 
+# ANSI-C quoted strings: interpret C-style escape sequences inside single quotes
+# See: https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html
+tab=$'\t'              # assign literal tab to a variable
+echo  "tab\tbetween${tab}words"   #  tab\tbetween    words
+echo $"tab\tbetween${tab}words"   #  tab\tbetween    words
+echo $'tab\tbetween${tab}words'   # tab between${tab}words
+
+echo $'\x41'         # hex byte: A
+
 
 # --------------------------------------------------------------------------------------------------
 # Variables
